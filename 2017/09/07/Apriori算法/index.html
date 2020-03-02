@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis）或者关联规则学习（association rule learning）。这里的主要问题在于，寻找物品的不同组合是一项十分耗时的任务，所需的计算代价很高，蛮力搜索方法并不能解决这个问题，所以需要用更智能的方法在合理的时间范围内找到频繁项集。 关联分析是在大规模数据集中寻找有趣关系的任务。这些关系可以有两种形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apriori算法">
+<meta property="og:url" content="http://yoursite.com/2017/09/07/Apriori算法/index.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis）或者关联规则学习（association rule learning）。这里的主要问题在于，寻找物品的不同组合是一项十分耗时的任务，所需的计算代价很高，蛮力搜索方法并不能解决这个问题，所以需要用更智能的方法在合理的时间范围内找到频繁项集。 关联分析是在大规模数据集中寻找有趣关系的任务。这些关系可以有两种形">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png">
+<meta property="og:updated_time" content="2018-10-22T13:44:58.103Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apriori算法">
+<meta name="twitter:description" content="从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis）或者关联规则学习（association rule learning）。这里的主要问题在于，寻找物品的不同组合是一项十分耗时的任务，所需的计算代价很高，蛮力搜索方法并不能解决这个问题，所以需要用更智能的方法在合理的时间范围内找到频繁项集。 关联分析是在大规模数据集中寻找有趣关系的任务。这些关系可以有两种形">
+<meta name="twitter:image" content="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/07/Apriori算法/">
+
+
+
+
+
+  <title>Apriori算法 | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/Apriori算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/Gold.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiyuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Apriori算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-07T16:46:22+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从大规模数据集中寻找物品间的隐含关系被称作<strong>关联分析（association analysis）</strong>或者<strong>关联规则学习（association rule learning）</strong>。这里的主要问题在于，寻找物品的不同组合是一项十分耗时的任务，所需的计算代价很高，蛮力搜索方法并不能解决这个问题，所以需要用更智能的方法在合理的时间范围内找到频繁项集。</p>
+<p>关联分析是在大规模数据集中寻找有趣关系的任务。这些关系可以有两种形式：</p>
+<ul>
+<li>频繁项集</li>
+<li>关联规则</li>
+</ul>
+<p><strong>频繁项集（frequent item sets）</strong>是经常出现在一块儿的物品的集合，<br><strong>关联规则（association rules）</strong>暗示两种物品之间可能存在很强的关系。</p>
+<p>借用一个《机器学习实战》里的例子：<br><img src="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png" alt="image_1bp3v8eit353acj4l41pf7fmgm.png-7.6kB"></p>
+<p>比如说 <strong>{尿布，豆奶}</strong> 就是一个频繁项集，因为这个组合在例子中经常出现；<br>然后我们从这个频繁项集出发分析，是不是买尿布的人就经常也买豆奶呢？<br>就得出了一个： <strong>尿布 $\rightarrow$ 豆奶</strong> 这样一个关联规则，或者<br><strong>豆奶 $\rightarrow$ 尿布</strong>， 但是两者不等价，后面会说</p>
+<p>再来两个概念 <strong>支持度（support)</strong> 和 <strong>可信度（confidence)</strong><br>支持度：数据集中包含该项集的记录所占的比例<br>可信度：比如有两个集合 P,H; 则关联规则P $\rightarrow$ H 的可信度为： $\frac{support(P \cup H)}{support(P)}$</p>
+<p>举几个简单的例子：</p>
+<ul>
+<li>{尿布，豆奶} 的 support 为 3/5，因为在 5 个交易中，{尿布，豆奶} 的组合出现了 3 次</li>
+<li>那如果我们求 尿布 $\rightarrow$ 豆奶 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({尿布})}=\frac{3/5}{4/5}=\frac{3}{4}$</li>
+<li>那么豆奶 $\rightarrow$ 尿布 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({豆奶})}=\frac{3/5}{4/5}=\frac{3}{4}$ ，…还是 3/4 ，很不幸的巧合，但是我们还是可以看出来，其实计算过程是不一样的</li>
+</ul>
+<h2 id="Apriori原理"><a href="#Apriori原理" class="headerlink" title="Apriori原理"></a>Apriori原理</h2><h3 id="频繁项集"><a href="#频繁项集" class="headerlink" title="频繁项集"></a>频繁项集</h3><blockquote>
+<p>支持度和可信度是用来量化关联分析是否成功的方法，假设想找到支持度大于 0.8 的所有项集，应该如何去做？一个办法是生成一个物品所有可能组合的清单，然后对每一种组合统计它出现的频繁程度，但是当物品数量成千上万时，上述做法非常慢</p>
+</blockquote>
+<p>我们可以这么想，如果一个项集是频繁的， 那么它的所有子集也都是频繁的；<br>接着：<strong>如果一个项集是非频繁的，那么它的所有超集也都是非频繁的。</strong></p>
+<p>这条结论就在于，之前我们说，列出所有可能的组合很麻烦，有了这个结论，我们如果找到一些非频繁项集，那么他们的超集就可以全部不用考虑了，这样就简化了很大一部分计算；这就是 <strong>Apriori原理</strong></p>
+<p>基于这样的思想，我们可以设计一个这样的算法，目标就是找到 support 大于等于一个阈值的所有频繁项集；<br>那么<br>    Input: 最小support, 数据集<br>    Output: 满足条件的所有频繁项集<br>主体思想就是：我们先算比较小的集合的support（最小就是单个元素的集合）, 把计算过程中不满足support的集合去掉，以留下来的集合和元素组合成新的集合，然后继续筛选，直到留下的项集都满足最小support，返回结果。</p>
+<p><strong>所以我们可以看到核心部分就是，如何在一轮迭代之后生成新的数据集；因为每次迭代，我们的频繁项集都只加1，那么，我们生成新的候选的频繁项集的方法就是：用上一轮的项集中只相差1个元素的集合的并集作为新一轮候选的频繁项集。</strong></p>
+<p>明确这一点，代码就不难写了；<br>用一个python代码来表示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aprioriGen</span><span class="params">(Lk, k)</span>:</span></span><br><span class="line">    retList = []</span><br><span class="line">    lenLk = len(Lk)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenLk):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, lenLk):</span><br><span class="line">            L1 = list(Lk[i])[:k<span class="number">-2</span>]; L2 = list(Lk[j])[:k<span class="number">-2</span>]</span><br><span class="line">            L1.sort(); L2.sort()</span><br><span class="line">            <span class="keyword">if</span> L1 == L2:</span><br><span class="line">                retList.append(Lk[i] | Lk[j]) <span class="comment"># 前k-2项相同时，将两个集合合并</span></span><br><span class="line">    <span class="keyword">return</span> retList</span><br></pre></td></tr></table></figure></p>
+<p>这里，是要生成集合中元素个数为 k 的候选频繁项集的，所以当前频繁项集元素个数为 k-1, 所以才有前k-2项相同时，将两个集合合并，来生成新的候选频繁项集；</p>
+<h3 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h3><p>那么其实找规则也是类似的，找到confidence 大于等于一个阈值的所有关联规则；<br>在此使用Apriori算法，说到这样一句话：<strong>如果某条规则并不满足最小可信度要求，那么该规则的所有子集也不会满足最小可信度要求</strong></p>
+<blockquote>
+<p>怎么理解一条规则的子集？<br>假设项集为 <strong>{1，2，3，4}</strong>，假设 <strong>0，1，2 -&gt; 3</strong> 的 confidence 不满足最小可信度的要求，那么任意前件为<strong>{0，1，2}</strong>的子集的关联规则的 confidence 都不满足要求；<br>或者说 任何后件中包含 <strong>3</strong> 的关联规则的confidence都不满足要求。</p>
+<p>这就产生了一个问题….一个项集产生的关联规则中一定要包含项集里所有的元素吗？比如 <strong>{0，1，2，3}</strong> 产生的规则有没有可能是 <strong>{0，2}-&gt;{3}</strong> 。或者是说我们从这个项集中没有什么证据可以说明那条规则? 没有得到一些明确的解释，所以我暂且坚持自己的思考，即认可这样一个观点：<br>基于一个项集<strong>Y</strong>的信息，将 <strong>Y</strong> 分成两个互补的子集 <strong>X, Y-X</strong>  ; 那么只能计算 <strong>X $\rightarrow$ Y-X</strong> 或者 <strong>Y-X $\rightarrow$ X</strong> 的confidence</p>
+</blockquote>
+<p>基于上面的思想，我们可以这样生成关联规则，每次只让后件的元素个数加 <strong>1</strong>，可以有效快速的剪枝<br>我们可以看如下这幅图：<br><img src="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png" alt="image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png-101.5kB"><br>假设图中深色的关联规则为不符合要求的，那么我们在第二轮发现了一个不符合要求的规则，那么我们就可以把它的所有子节点（子孙节点）全部标为深色不用再考虑，意思就是，我们就不用在下一轮考虑这个结点生成的子节点了，这样就省掉了好多计算量。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/03/svm_part2/" rel="next" title="SVM part2 核函数与SMO算法">
+                <i class="fa fa-chevron-left"></i> SVM part2 核函数与SMO算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/12/The Pilgrims/" rel="prev" title="The Pilgrims">
+                The Pilgrims <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apriori原理"><span class="nav-number">1.</span> <span class="nav-text">Apriori原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#频繁项集"><span class="nav-number">1.1.</span> <span class="nav-text">频繁项集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联规则"><span class="nav-number">1.2.</span> <span class="nav-text">关联规则</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
