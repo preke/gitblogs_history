@@ -362,31 +362,36 @@
 <li>频繁项集</li>
 <li>关联规则</li>
 </ul>
-<p><strong>频繁项集（frequent item sets）</strong>是经常出现在一块儿的物品的集合，<br><strong>关联规则（association rules）</strong>暗示两种物品之间可能存在很强的关系。</p>
-<p>借用一个《机器学习实战》里的例子：<br><img src="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png" alt="image_1bp3v8eit353acj4l41pf7fmgm.png-7.6kB"></p>
-<p>比如说 <strong>{尿布，豆奶}</strong> 就是一个频繁项集，因为这个组合在例子中经常出现；<br>然后我们从这个频繁项集出发分析，是不是买尿布的人就经常也买豆奶呢？<br>就得出了一个： <strong>尿布 $\rightarrow$ 豆奶</strong> 这样一个关联规则，或者<br><strong>豆奶 $\rightarrow$ 尿布</strong>， 但是两者不等价，后面会说</p>
-<p>再来两个概念 <strong>支持度（support)</strong> 和 <strong>可信度（confidence)</strong><br>支持度：数据集中包含该项集的记录所占的比例<br>可信度：比如有两个集合 P,H; 则关联规则P $\rightarrow$ H 的可信度为： $\frac{support(P \cup H)}{support(P)}$</p>
+<p><strong>频繁项集（frequent item sets）</strong>是经常出现在一块儿的物品的集合， <strong>关联规则（association rules）</strong>暗示两种物品之间可能存在很强的关系。</p>
+<p>借用一个《机器学习实战》里的例子： <img src="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png" alt="image_1bp3v8eit353acj4l41pf7fmgm.png-7.6kB"></p>
+<p>比如说 <strong>{尿布，豆奶}</strong> 就是一个频繁项集，因为这个组合在例子中经常出现； 然后我们从这个频繁项集出发分析，是不是买尿布的人就经常也买豆奶呢？ 就得出了一个： <strong>尿布 <span class="math inline">\(\rightarrow\)</span> 豆奶</strong> 这样一个关联规则，或者 <strong>豆奶 <span class="math inline">\(\rightarrow\)</span> 尿布</strong>， 但是两者不等价，后面会说</p>
+<p>再来两个概念 <strong>支持度（support)</strong> 和 <strong>可信度（confidence)</strong> 支持度：数据集中包含该项集的记录所占的比例 可信度：比如有两个集合 P,H; 则关联规则P <span class="math inline">\(\rightarrow\)</span> H 的可信度为： <span class="math inline">\(\frac{support(P \cup H)}{support(P)}\)</span></p>
 <p>举几个简单的例子：</p>
 <ul>
 <li>{尿布，豆奶} 的 support 为 3/5，因为在 5 个交易中，{尿布，豆奶} 的组合出现了 3 次</li>
-<li>那如果我们求 尿布 $\rightarrow$ 豆奶 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({尿布})}=\frac{3/5}{4/5}=\frac{3}{4}$</li>
-<li>那么豆奶 $\rightarrow$ 尿布 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({豆奶})}=\frac{3/5}{4/5}=\frac{3}{4}$ ，…还是 3/4 ，很不幸的巧合，但是我们还是可以看出来，其实计算过程是不一样的</li>
+<li>那如果我们求 尿布 <span class="math inline">\(\rightarrow\)</span> 豆奶 的 confidence 就是 <span class="math inline">\(\frac{support(\{尿布，豆奶\})}{support(\{尿布\})}=\frac{3/5}{4/5}=\frac{3}{4}\)</span></li>
+<li>那么豆奶 <span class="math inline">\(\rightarrow\)</span> 尿布 的 confidence 就是 <span class="math inline">\(\frac{support(\{尿布，豆奶\})}{support(\{豆奶\})}=\frac{3/5}{4/5}=\frac{3}{4}\)</span> ，…还是 3/4 ，很不幸的巧合，但是我们还是可以看出来，其实计算过程是不一样的</li>
 </ul>
-<h2 id="Apriori原理"><a href="#Apriori原理" class="headerlink" title="Apriori原理"></a>Apriori原理</h2><h3 id="频繁项集"><a href="#频繁项集" class="headerlink" title="频繁项集"></a>频繁项集</h3><blockquote>
+<h2 id="apriori原理">Apriori原理</h2>
+<h3 id="频繁项集">频繁项集</h3>
+<blockquote>
 <p>支持度和可信度是用来量化关联分析是否成功的方法，假设想找到支持度大于 0.8 的所有项集，应该如何去做？一个办法是生成一个物品所有可能组合的清单，然后对每一种组合统计它出现的频繁程度，但是当物品数量成千上万时，上述做法非常慢</p>
 </blockquote>
-<p>我们可以这么想，如果一个项集是频繁的， 那么它的所有子集也都是频繁的；<br>接着：<strong>如果一个项集是非频繁的，那么它的所有超集也都是非频繁的。</strong></p>
+<p>我们可以这么想，如果一个项集是频繁的， 那么它的所有子集也都是频繁的； 接着：<strong>如果一个项集是非频繁的，那么它的所有超集也都是非频繁的。</strong></p>
 <p>这条结论就在于，之前我们说，列出所有可能的组合很麻烦，有了这个结论，我们如果找到一些非频繁项集，那么他们的超集就可以全部不用考虑了，这样就简化了很大一部分计算；这就是 <strong>Apriori原理</strong></p>
-<p>基于这样的思想，我们可以设计一个这样的算法，目标就是找到 support 大于等于一个阈值的所有频繁项集；<br>那么<br>    Input: 最小support, 数据集<br>    Output: 满足条件的所有频繁项集<br>主体思想就是：我们先算比较小的集合的support（最小就是单个元素的集合）, 把计算过程中不满足support的集合去掉，以留下来的集合和元素组合成新的集合，然后继续筛选，直到留下的项集都满足最小support，返回结果。</p>
+<p>基于这样的思想，我们可以设计一个这样的算法，目标就是找到 support 大于等于一个阈值的所有频繁项集； 那么 Input: 最小support, 数据集 Output: 满足条件的所有频繁项集 主体思想就是：我们先算比较小的集合的support（最小就是单个元素的集合）, 把计算过程中不满足support的集合去掉，以留下来的集合和元素组合成新的集合，然后继续筛选，直到留下的项集都满足最小support，返回结果。</p>
 <p><strong>所以我们可以看到核心部分就是，如何在一轮迭代之后生成新的数据集；因为每次迭代，我们的频繁项集都只加1，那么，我们生成新的候选的频繁项集的方法就是：用上一轮的项集中只相差1个元素的集合的并集作为新一轮候选的频繁项集。</strong></p>
-<p>明确这一点，代码就不难写了；<br>用一个python代码来表示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aprioriGen</span><span class="params">(Lk, k)</span>:</span></span><br><span class="line">    retList = []</span><br><span class="line">    lenLk = len(Lk)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenLk):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, lenLk):</span><br><span class="line">            L1 = list(Lk[i])[:k<span class="number">-2</span>]; L2 = list(Lk[j])[:k<span class="number">-2</span>]</span><br><span class="line">            L1.sort(); L2.sort()</span><br><span class="line">            <span class="keyword">if</span> L1 == L2:</span><br><span class="line">                retList.append(Lk[i] | Lk[j]) <span class="comment"># 前k-2项相同时，将两个集合合并</span></span><br><span class="line">    <span class="keyword">return</span> retList</span><br></pre></td></tr></table></figure></p>
+<p>明确这一点，代码就不难写了； 用一个python代码来表示： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aprioriGen</span><span class="params">(Lk, k)</span>:</span></span><br><span class="line">    retList = []</span><br><span class="line">    lenLk = len(Lk)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenLk):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, lenLk):</span><br><span class="line">            L1 = list(Lk[i])[:k<span class="number">-2</span>]; L2 = list(Lk[j])[:k<span class="number">-2</span>]</span><br><span class="line">            L1.sort(); L2.sort()</span><br><span class="line">            <span class="keyword">if</span> L1 == L2:</span><br><span class="line">                retList.append(Lk[i] | Lk[j]) <span class="comment"># 前k-2项相同时，将两个集合合并</span></span><br><span class="line">    <span class="keyword">return</span> retList</span><br></pre></td></tr></table></figure></p>
 <p>这里，是要生成集合中元素个数为 k 的候选频繁项集的，所以当前频繁项集元素个数为 k-1, 所以才有前k-2项相同时，将两个集合合并，来生成新的候选频繁项集；</p>
-<h3 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h3><p>那么其实找规则也是类似的，找到confidence 大于等于一个阈值的所有关联规则；<br>在此使用Apriori算法，说到这样一句话：<strong>如果某条规则并不满足最小可信度要求，那么该规则的所有子集也不会满足最小可信度要求</strong></p>
+<h3 id="关联规则">关联规则</h3>
+<p>那么其实找规则也是类似的，找到confidence 大于等于一个阈值的所有关联规则； 在此使用Apriori算法，说到这样一句话：<strong>如果某条规则并不满足最小可信度要求，那么该规则的所有子集也不会满足最小可信度要求</strong></p>
 <blockquote>
-<p>怎么理解一条规则的子集？<br>假设项集为 <strong>{1，2，3，4}</strong>，假设 <strong>0，1，2 -&gt; 3</strong> 的 confidence 不满足最小可信度的要求，那么任意前件为<strong>{0，1，2}</strong>的子集的关联规则的 confidence 都不满足要求；<br>或者说 任何后件中包含 <strong>3</strong> 的关联规则的confidence都不满足要求。</p>
-<p>这就产生了一个问题….一个项集产生的关联规则中一定要包含项集里所有的元素吗？比如 <strong>{0，1，2，3}</strong> 产生的规则有没有可能是 <strong>{0，2}-&gt;{3}</strong> 。或者是说我们从这个项集中没有什么证据可以说明那条规则? 没有得到一些明确的解释，所以我暂且坚持自己的思考，即认可这样一个观点：<br>基于一个项集<strong>Y</strong>的信息，将 <strong>Y</strong> 分成两个互补的子集 <strong>X, Y-X</strong>  ; 那么只能计算 <strong>X $\rightarrow$ Y-X</strong> 或者 <strong>Y-X $\rightarrow$ X</strong> 的confidence</p>
+<p>怎么理解一条规则的子集？ 假设项集为 <strong>{1，2，3，4}</strong>，假设 <strong>0，1，2 -&gt; 3</strong> 的 confidence 不满足最小可信度的要求，那么任意前件为<strong>{0，1，2}</strong>的子集的关联规则的 confidence 都不满足要求； 或者说 任何后件中包含 <strong>3</strong> 的关联规则的confidence都不满足要求。</p>
 </blockquote>
-<p>基于上面的思想，我们可以这样生成关联规则，每次只让后件的元素个数加 <strong>1</strong>，可以有效快速的剪枝<br>我们可以看如下这幅图：<br><img src="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png" alt="image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png-101.5kB"><br>假设图中深色的关联规则为不符合要求的，那么我们在第二轮发现了一个不符合要求的规则，那么我们就可以把它的所有子节点（子孙节点）全部标为深色不用再考虑，意思就是，我们就不用在下一轮考虑这个结点生成的子节点了，这样就省掉了好多计算量。</p>
+<blockquote>
+<p>这就产生了一个问题….一个项集产生的关联规则中一定要包含项集里所有的元素吗？比如 <strong>{0，1，2，3}</strong> 产生的规则有没有可能是 <strong>{0，2}-&gt;{3}</strong> 。或者是说我们从这个项集中没有什么证据可以说明那条规则? 没有得到一些明确的解释，所以我暂且坚持自己的思考，即认可这样一个观点： 基于一个项集<strong>Y</strong>的信息，将 <strong>Y</strong> 分成两个互补的子集 <strong>X, Y-X</strong> ; 那么只能计算 <strong>X <span class="math inline">\(\rightarrow\)</span> Y-X</strong> 或者 <strong>Y-X <span class="math inline">\(\rightarrow\)</span> X</strong> 的confidence</p>
+</blockquote>
+<p>基于上面的思想，我们可以这样生成关联规则，每次只让后件的元素个数加 <strong>1</strong>，可以有效快速的剪枝 我们可以看如下这幅图： <img src="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png" alt="image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png-101.5kB"> 假设图中深色的关联规则为不符合要求的，那么我们在第二轮发现了一个不符合要求的规则，那么我们就可以把它的所有子节点（子孙节点）全部标为深色不用再考虑，意思就是，我们就不用在下一轮考虑这个结点生成的子节点了，这样就省掉了好多计算量。</p>
 
       
     </div>
@@ -613,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apriori原理"><span class="nav-number">1.</span> <span class="nav-text">Apriori原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#频繁项集"><span class="nav-number">1.1.</span> <span class="nav-text">频繁项集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联规则"><span class="nav-number">1.2.</span> <span class="nav-text">关联规则</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#apriori原理"><span class="nav-number">1.</span> <span class="nav-text">Apriori原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#频繁项集"><span class="nav-number">1.1.</span> <span class="nav-text">频繁项集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联规则"><span class="nav-number">1.2.</span> <span class="nav-text">关联规则</span></a></li></ol></li></ol></div>
             
 
           </div>

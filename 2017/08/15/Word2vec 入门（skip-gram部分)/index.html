@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="Skip-gram给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出取窗口大小为2（前后两个词）：得到一些词对： 如之中的（quick, brown)训练神经网络时：输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层：我们训练一个简单的网络来执行一个任务，但是我们实际上并没">
+<meta name="description" content="Skip-gram 给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出 取窗口大小为2（前后两个词）：得到一些词对：  如之中的（quick, brown) 训练神经网络时：  输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层： 我们训练一个简单的网络来执行一个任务，但是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Word2vec 入门（skip-gram部分)">
 <meta property="og:url" content="http://yoursite.com/2017/08/15/Word2vec 入门（skip-gram部分)/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Skip-gram给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出取窗口大小为2（前后两个词）：得到一些词对： 如之中的（quick, brown)训练神经网络时：输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层：我们训练一个简单的网络来执行一个任务，但是我们实际上并没">
+<meta property="og:description" content="Skip-gram 给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出 取窗口大小为2（前后两个词）：得到一些词对：  如之中的（quick, brown) 训练神经网络时：  输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层： 我们训练一个简单的网络来执行一个任务，但是">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png">
@@ -94,7 +94,7 @@
 <meta property="og:updated_time" content="2018-10-20T14:40:04.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Word2vec 入门（skip-gram部分)">
-<meta name="twitter:description" content="Skip-gram给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出取窗口大小为2（前后两个词）：得到一些词对： 如之中的（quick, brown)训练神经网络时：输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层：我们训练一个简单的网络来执行一个任务，但是我们实际上并没">
+<meta name="twitter:description" content="Skip-gram 给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。 输入，输出 取窗口大小为2（前后两个词）：得到一些词对：  如之中的（quick, brown) 训练神经网络时：  输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的  隐层： 我们训练一个简单的网络来执行一个任务，但是">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png">
 
 
@@ -357,26 +357,30 @@
       
 
       
-        <h1 id="Skip-gram"><a href="#Skip-gram" class="headerlink" title="Skip-gram"></a>Skip-gram</h1><p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p>
-<h2 id="输入，输出"><a href="#输入，输出" class="headerlink" title="输入，输出"></a>输入，输出</h2><p>取窗口大小为2（前后两个词）：得到一些词对：<br><img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p>
-<p>如之中的（quick, brown)<br>训练神经网络时：<br><img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"><br>输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p>
+        <h1 id="skip-gram">Skip-gram</h1>
+<p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p>
+<h2 id="输入输出">输入，输出</h2>
+<p>取窗口大小为2（前后两个词）：得到一些词对： <img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p>
+<p>如之中的（quick, brown) 训练神经网络时： <img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"> 输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p>
 <hr>
-<h2 id="隐层："><a href="#隐层：" class="headerlink" title="隐层："></a>隐层：</h2><p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p>
-<p>假设corpus里有10000个词语， 目标词向量为 300维：<br>简单做一个图来表示过程：<br>依然用（quick, brown)训练神经网络<br><img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p>
+<h2 id="隐层">隐层：</h2>
+<p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p>
+<p>假设corpus里有10000个词语， 目标词向量为 300维： 简单做一个图来表示过程： 依然用（quick, brown)训练神经网络 <img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p>
 <hr>
 <p>如果两个不同的词有相同的上下文，那么我们的模型会需要预测类似的输出。那么网络为了输出类似的预测，他就会使这两个不同词的word vector尽可能相似。所以，如果两个词有相同的上下文，我们就可以得到比较接近的word vector。</p>
 <p>那么什么词有相同的上下文？ 比如一些近义词 smart 和intelligent 再比如 一些相关的词 engine 和 transmission。</p>
 <hr>
-<h1 id="训练过程："><a href="#训练过程：" class="headerlink" title="训练过程："></a>训练过程：</h1><p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p>
+<h1 id="训练过程">训练过程：</h1>
+<p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p>
 <p><strong><em>(这里word2vec)就直接做了一个类似 去掉一些大众词汇，类似tf_idf的工作</em></strong></p>
 <hr>
 <p>训练神经网络 意味着输入一个训练样本调整weight，让它预测这个训练样本更准。换句话说，每个训练样本将会影响网络中所有的weight。像我们之前讨论的一样，我们词典的大小意味着我们有好多weight，所有都要轻微的调整。</p>
-<p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。<br>（这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p>
+<p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。 （这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p>
 <p>Ref:</p>
-<p><a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</a></p>
-<p><a href="http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/" target="_blank" rel="noopener">http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</a></p>
-<p><a href="http://blog.csdn.net/Layumi1993/article/details/72866235" target="_blank" rel="noopener">http://blog.csdn.net/Layumi1993/article/details/72866235</a></p>
-<p><a href="http://blog.csdn.net/Layumi1993/article/details/72868399" target="_blank" rel="noopener">http://blog.csdn.net/Layumi1993/article/details/72868399</a></p>
+<p>http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</p>
+<p>http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</p>
+<p>http://blog.csdn.net/Layumi1993/article/details/72866235</p>
+<p>http://blog.csdn.net/Layumi1993/article/details/72868399</p>
 
       
     </div>
@@ -603,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Skip-gram"><span class="nav-number">1.</span> <span class="nav-text">Skip-gram</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入，输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入，输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐层："><span class="nav-number">1.2.</span> <span class="nav-text">隐层：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练过程："><span class="nav-number">2.</span> <span class="nav-text">训练过程：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#skip-gram"><span class="nav-number">1.</span> <span class="nav-text">Skip-gram</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入，输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐层"><span class="nav-number">1.2.</span> <span class="nav-text">隐层：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练过程"><span class="nav-number">2.</span> <span class="nav-text">训练过程：</span></a></li></ol></div>
             
 
           </div>

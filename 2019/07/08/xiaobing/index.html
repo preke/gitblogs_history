@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.   那这些属性在生成回复的时候如何产生影响呢？这里就涉及">
+<meta name="description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
 <meta name="keywords" content="dialog system,conversation generation,personalization">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小冰如何生成个性化回复">
 <meta property="og:url" content="http://yoursite.com/2019/07/08/xiaobing/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.   那这些属性在生成回复的时候如何产生影响呢？这里就涉及">
+<meta property="og:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-129d192aff85f8f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -95,7 +95,7 @@
 <meta property="og:updated_time" content="2019-07-08T14:09:28.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小冰如何生成个性化回复">
-<meta name="twitter:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.   那这些属性在生成回复的时候如何产生影响呢？这里就涉及">
+<meta name="twitter:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -360,38 +360,58 @@
       
         <p>小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。</p>
 <blockquote>
-<p>The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor. </p>
+<p>The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.</p>
 </blockquote>
-<p>那这些属性在生成回复的时候如何产生影响呢？<br>这里就涉及到两个模块：Empathetic Computing 和 Core Chat</p>
-<h2 id="Empathetic-Computing"><a href="#Empathetic-Computing" class="headerlink" title="Empathetic Computing"></a>Empathetic Computing</h2><p>这部分包括：</p>
+<p>那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及到两个模块：Empathetic Computing 和 Core Chat</p>
+<h2 id="empathetic-computing">Empathetic Computing</h2>
+<p>这部分包括：</p>
 <ul>
 <li>Contextual Query Understanding</li>
-<li>User Understanding </li>
+<li>User Understanding</li>
 <li>Interpersonal Response Generation</li>
 </ul>
-<h3 id="Contextual-Query-Understanding"><a href="#Contextual-Query-Understanding" class="headerlink" title="Contextual Query Understanding"></a>Contextual Query Understanding</h3><p>这一部分就可以理解为是根据上下文进行query expansion, 做一些指代消歧，上下文补充等。<br>总的来说就是对输入query $Q$, 结合上下文 $C$ (历史会话信息），生成带有上下文信息的query $Q_c$:</p>
-<script type="math/tex; mode=display">
-Q_c = f_{cqu}(Q, C)</script><h3 id="User-Understanding"><a href="#User-Understanding" class="headerlink" title="User Understanding"></a>User Understanding</h3><p>这一部分是根据上下文 $C$ 和 query $Q_c$ 生成用户的信息 $e_Q$，是一个用户共情向量，包括用户的属性信息（如果有的话），对话的topic, intent；也还包括emotion 和 sentiment的分析；$e_Q$就如下图（一直用neural来表示中立，不知道是不是typo…)：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="contextual-query-understanding">Contextual Query Understanding</h3>
+<p>这一部分就可以理解为是根据上下文进行query expansion, 做一些指代消歧，上下文补充等。 总的来说就是对输入query <span class="math inline">\(Q\)</span>, 结合上下文 <span class="math inline">\(C\)</span> (历史会话信息），生成带有上下文信息的query <span class="math inline">\(Q_c\)</span>:</p>
+<p><span class="math display">\[
+Q_c = f_{cqu}(Q, C)
+\]</span></p>
+<h3 id="user-understanding">User Understanding</h3>
+<p>这一部分是根据上下文 <span class="math inline">\(C\)</span> 和 query <span class="math inline">\(Q_c\)</span> 生成用户的信息 <span class="math inline">\(e_Q\)</span>，是一个用户共情向量，包括用户的属性信息（如果有的话），对话的topic, intent；也还包括emotion 和 sentiment的分析；<span class="math inline">\(e_Q\)</span>就如下图（一直用neural来表示中立，不知道是不是typo…)：</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figcaption>image.png</figcaption>
+</figure>
 <p>形式化就是：</p>
-<script type="math/tex; mode=display">
-e_Q = f_{uu}(Q_c, C)</script><h3 id="Interpersonal-Response-Generation"><a href="#Interpersonal-Response-Generation" class="headerlink" title="Interpersonal Response Generation"></a>Interpersonal Response Generation</h3><p>这一部分是通过$e_Q$中的会话信息和小冰预设的 persona profile (key-value pairs) 生成一个回复共情向量$e_R$:</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2675254-129d192aff85f8f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image1.png"></p>
+<p><span class="math display">\[
+e_Q = f_{uu}(Q_c, C)
+\]</span></p>
+<h3 id="interpersonal-response-generation">Interpersonal Response Generation</h3>
+<p>这一部分是通过<span class="math inline">\(e_Q\)</span>中的会话信息和小冰预设的 persona profile (key-value pairs) 生成一个回复共情向量<span class="math inline">\(e_R\)</span>:</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-129d192aff85f8f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image1.png"><figcaption>image1.png</figcaption>
+</figure>
 <p>形式化就是：</p>
-<script type="math/tex; mode=display">
-e_R = f_{irg}(e_R, Persona\  profile\  of \ Xiaoice)</script><h2 id="Core-Chat"><a href="#Core-Chat" class="headerlink" title="Core Chat"></a>Core Chat</h2><p>有了上述的 ${Q_c, C, e_Q, e_R}$ 之后，在这部分结合这些信息生成回复。我这里只比较关系如何用generation-based方法去生成，如下图所示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2675254-ce68704903dae579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>模型基于RNN的seq2seq model, 将 $Q_c$ 作为 encoder的输入，得到hidden state vector再输入到decoder; 而在解码每个词的时候，都是通过一个包含了$e_Q, e_R$ 信息的向量 $v$ 去加入上下文和小冰的属性信息；而这个 $v$ 是通过如下公式来得到：</p>
-<script type="math/tex; mode=display">
-v = \sigma (W^T_Qe_Q + W^T_Re_R)</script><p>（我猜想每次结合的方式就是 $v$ 和 当前输入词向量$e_t$ concat一起之后再过一个线性层去规范维度</p>
+<p><span class="math display">\[
+e_R = f_{irg}(e_R, Persona\  profile\  of \ Xiaoice)
+\]</span></p>
+<h2 id="core-chat">Core Chat</h2>
+<p>有了上述的 <span class="math inline">\(\{Q_c, C, e_Q, e_R\}\)</span> 之后，在这部分结合这些信息生成回复。我这里只比较关系如何用generation-based方法去生成，如下图所示：</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-ce68704903dae579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figcaption>image.png</figcaption>
+</figure>
+<p>模型基于RNN的seq2seq model, 将 <span class="math inline">\(Q_c\)</span> 作为 encoder的输入，得到hidden state vector再输入到decoder; 而在解码每个词的时候，都是通过一个包含了<span class="math inline">\(e_Q, e_R\)</span> 信息的向量 <span class="math inline">\(v\)</span> 去加入上下文和小冰的属性信息；而这个 <span class="math inline">\(v\)</span> 是通过如下公式来得到：</p>
+<p><span class="math display">\[
+v = \sigma (W^T_Qe_Q + W^T_Re_R)
+\]</span></p>
+<p>（我猜想每次结合的方式就是 <span class="math inline">\(v\)</span> 和 当前输入词向量<span class="math inline">\(e_t\)</span> concat一起之后再过一个线性层去规范维度</p>
 <hr>
-<p>通过以上这两个部分，小冰就能生成个性化的回复；<br>其实还是有两个点比较简单：</p>
-<ol>
+<p>通过以上这两个部分，小冰就能生成个性化的回复； 其实还是有两个点比较简单：</p>
+<ol type="1">
 <li>对于属性的描述，用了很简单的key-value直接输入，对于具体属性如何影响回复生成并没有更深的modeling;</li>
 <li>属性的表达上，其实也是比较简单的作用在了每次解码结合同样的信息，参考Emotional Chatting Machine这篇paper的思路的话，其实表达方式上，也是有一些多变的因素的。</li>
 </ol>
 <p>当然，可能具体使用上没办法去部署比较复杂的模型，也可能是因为小冰的数据足够多，而且其实大部分都还是用检索式，所以整体呈现的效果还确实不错~</p>
-<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref:"></a>Ref:</h2><p>Zhou L, Gao J, Li D, et al. The design and implementation of XiaoIce, an empathetic social chatbot[J]. arXiv preprint arXiv:1812.08989, 2018.</p>
+<h2 id="ref">Ref:</h2>
+<p>Zhou L, Gao J, Li D, et al. The design and implementation of XiaoIce, an empathetic social chatbot[J]. arXiv preprint arXiv:1812.08989, 2018.</p>
 
       
     </div>
@@ -628,7 +648,7 @@ v = \sigma (W^T_Qe_Q + W^T_Re_R)</script><p>（我猜想每次结合的方式就
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Empathetic-Computing"><span class="nav-number">1.</span> <span class="nav-text">Empathetic Computing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Contextual-Query-Understanding"><span class="nav-number">1.1.</span> <span class="nav-text">Contextual Query Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User-Understanding"><span class="nav-number">1.2.</span> <span class="nav-text">User Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interpersonal-Response-Generation"><span class="nav-number">1.3.</span> <span class="nav-text">Interpersonal Response Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Chat"><span class="nav-number">2.</span> <span class="nav-text">Core Chat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">3.</span> <span class="nav-text">Ref:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#empathetic-computing"><span class="nav-number">1.</span> <span class="nav-text">Empathetic Computing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#contextual-query-understanding"><span class="nav-number">1.1.</span> <span class="nav-text">Contextual Query Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user-understanding"><span class="nav-number">1.2.</span> <span class="nav-text">User Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interpersonal-response-generation"><span class="nav-number">1.3.</span> <span class="nav-text">Interpersonal Response Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#core-chat"><span class="nav-number">2.</span> <span class="nav-text">Core Chat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number">3.</span> <span class="nav-text">Ref:</span></a></li></ol></div>
             
 
           </div>

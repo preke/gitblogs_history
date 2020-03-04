@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="Abstract We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Modelencoder-decoderChapter 3 &amp;amp; 4">
+<meta name="description" content="Abstract  We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Model encoder-decoder Chapter 3 &amp;amp;">
 <meta name="keywords" content="dialog system,conversation generation,style transfer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Steering Output Style and Topic in Neural Response Generation">
 <meta property="og:url" content="http://yoursite.com/2018/11/13/STO/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Abstract We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Modelencoder-decoderChapter 3 &amp;amp; 4">
+<meta property="og:description" content="Abstract  We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Model encoder-decoder Chapter 3 &amp;amp;">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png">
 <meta property="og:updated_time" content="2018-11-13T13:32:23.314Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Steering Output Style and Topic in Neural Response Generation">
-<meta name="twitter:description" content="Abstract We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Modelencoder-decoderChapter 3 &amp;amp; 4">
+<meta name="twitter:description" content="Abstract  We propose simple and flexible training and decoding methods for influencing output style and topic in neural encoder-decoder based language generation  Model encoder-decoder Chapter 3 &amp;amp;">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png">
 
 
@@ -356,47 +356,52 @@
       
 
       
-        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><ul>
+        <h2 id="abstract">Abstract</h2>
+<ul>
 <li>We propose simple and flexible training and decoding methods for <strong>influencing output style and topic</strong> in neural encoder-decoder based language generation</li>
 </ul>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><h3 id="encoder-decoder"><a href="#encoder-decoder" class="headerlink" title="encoder-decoder"></a>encoder-decoder</h3><p>Chapter 3 &amp; 4 解释了一对如何利用Bayes更好的设定目标函数从而s2s的decoder效果更好（更好的选择words)的数学解释，有点晕晕的。<br>（总之是在实验时对encoder-decoder进行了微调改进吧）</p>
-<h3 id="Chapter-5-Style"><a href="#Chapter-5-Style" class="headerlink" title="Chapter 5: Style"></a>Chapter 5: Style</h3><p>如果我们有一个数据集（database of target sentences)<br>在 neural encoder-decoder framework 的框架下，如何去影响style</p>
+<h2 id="model">Model</h2>
+<h3 id="encoder-decoder">encoder-decoder</h3>
+<p>Chapter 3 &amp; 4 解释了一对如何利用Bayes更好的设定目标函数从而s2s的decoder效果更好（更好的选择words)的数学解释，有点晕晕的。 （总之是在实验时对encoder-decoder进行了微调改进吧）</p>
+<h3 id="chapter-5-style">Chapter 5: Style</h3>
+<p>如果我们有一个数据集（database of target sentences) 在 neural encoder-decoder framework 的框架下，如何去影响style</p>
 <ul>
-<li><p>5.1 Ranking</p>
+<li>5.1 Ranking</li>
+<li>Target is fixed</li>
+<li><p>As a retrieval problem</p></li>
+<li>5.2 Multiply
 <ul>
-<li>Target is fixed </li>
-<li>As a retrieval problem</li>
-</ul>
-</li>
-<li><p>5.2 Multiply</p>
+<li>2 models
 <ul>
-<li>2 models<ul>
 <li>encoder-decoder model trained on a open-domain dataset</li>
 <li>language model trained on target dataset</li>
-</ul>
-</li>
-<li>在RNN step-by-step 生成each word 的概率为：<br>  $P(t|S)^{\lambda_1}P(t)^{\lambda_2}$<ul>
-<li>其中 $t$ 是中间要生成的词，$\lambda_1$ 表示第一个model，$\lambda_2$ 表示第二个model；$S$ 是source, 个人理解这里为latent state vector(decoder的参数）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>5.3 Finetune</p>
+</ul></li>
+<li>在RNN step-by-step 生成each word 的概率为： <span class="math inline">\(P(t|S)^{\lambda_1}P(t)^{\lambda_2}\)</span>
+<ul>
+<li>其中 <span class="math inline">\(t\)</span> 是中间要生成的词，<span class="math inline">\(\lambda_1\)</span> 表示第一个model，<span class="math inline">\(\lambda_2\)</span> 表示第二个model；<span class="math inline">\(S\)</span> 是source, 个人理解这里为latent state vector(decoder的参数）</li>
+</ul></li>
+</ul></li>
+<li>5.3 Finetune
 <ul>
 <li>For each sentences in the target dataset, we assume there is a pseudo context; （也就是说，都有一个隐藏的上下文（概率模型），这里有点像VAE)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Chapter-6-Topic"><a href="#Chapter-6-Topic" class="headerlink" title="Chapter 6: Topic"></a>Chapter 6: Topic</h3><p>Counting Grid(完全不懂…）</p>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<h3 id="chapter-6-topic">Chapter 6: Topic</h3>
+<p>Counting Grid(完全不懂…）</p>
+<h2 id="dataset">Dataset</h2>
+<ul>
 <li><a href="http://webscope.sandbox.yahoo.com/%20catalog.php?datatype=l" target="_blank" rel="noopener">Yahoo! Comprehensive Questions and Answers dataset</a> 来做ranking</li>
 <li>Twitter Conversation Dataset（Sordoni et al., 2015）（HERD用的）</li>
 </ul>
-<h2 id="Experiment-and-Metrics"><a href="#Experiment-and-Metrics" class="headerlink" title="Experiment and Metrics"></a>Experiment and Metrics</h2><p>Ranking problem: MRR P@1</p>
+<h2 id="experiment-and-metrics">Experiment and Metrics</h2>
+<p>Ranking problem: MRR P@1</p>
 <p>Style: Human Evaluations</p>
-<p><img src="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png" alt="Ranking result"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png" alt="Ranking result"><figcaption>Ranking result</figcaption>
+</figure>
 <hr>
-<h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><p>整体来说，对目前研究的问题帮助不明显，对于模型（encoder-decoder)改进方面有一些数学经验值得借鉴</p>
+<h2 id="acquisition">Acquisition：</h2>
+<p>整体来说，对目前研究的问题帮助不明显，对于模型（encoder-decoder)改进方面有一些数学经验值得借鉴</p>
 
       
     </div>
@@ -431,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/" rel="next" title="Sentiment Adaptive End-to-End Dialog Systems">
-                <i class="fa fa-chevron-left"></i> Sentiment Adaptive End-to-End Dialog Systems
+              <a href="/2018/11/12/bst/" rel="next" title="Style Transfer Through Back-Translation">
+                <i class="fa fa-chevron-left"></i> Style Transfer Through Back-Translation
               </a>
             
           </div>
@@ -441,8 +446,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/14/ECM/" rel="prev" title="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory">
-                Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/14/style_transfer/" rel="prev" title="Style Transfer in Text Exploration and Evaluation">
+                Style Transfer in Text Exploration and Evaluation <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -633,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder-decoder"><span class="nav-number">2.1.</span> <span class="nav-text">encoder-decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chapter-5-Style"><span class="nav-number">2.2.</span> <span class="nav-text">Chapter 5: Style</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chapter-6-Topic"><span class="nav-number">2.3.</span> <span class="nav-text">Chapter 6: Topic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">3.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiment-and-Metrics"><span class="nav-number">4.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Acquisition："><span class="nav-number">5.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder-decoder"><span class="nav-number">2.1.</span> <span class="nav-text">encoder-decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-5-style"><span class="nav-number">2.2.</span> <span class="nav-text">Chapter 5: Style</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-6-topic"><span class="nav-number">2.3.</span> <span class="nav-text">Chapter 6: Topic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">3.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-and-metrics"><span class="nav-number">4.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquisition"><span class="nav-number">5.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
             
 
           </div>

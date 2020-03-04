@@ -361,18 +361,18 @@
 <p>We shall go always a little further,</p>
 <p>It may be beyond the last blue mountain barred with snow,</p>
 <p>Across that angry or glimmering sea …</p>
-<p>Go as a pilgrim and seek out danger </p>
+<p>Go as a pilgrim and seek out danger</p>
 <p>Far from comfort and the well lit-avenues of life.</p>
 <p>Pit your very soul against the unknown</p>
 <p>And seek stimulation in the company of the brave.</p>
 <p>Experience cold and hunger, heat and thirst</p>
 <p>And survive to see another challenge and another dawn.</p>
-<p>Only then will you be at peace with yourself </p>
+<p>Only then will you be at peace with yourself</p>
 <p>And able to know and to say:</p>
 <p>“I looked down on the farthest side of the mountain</p>
 <p>And, fulfilled and understanding all, I am cold and hunger, heat and thirst</p>
 <p>And survive to see another challenge and another dawn.</p>
-<p>Only then will you be at peace with yourself </p>
+<p>Only then will you be at peace with yourself</p>
 <p>And able to know and to say:</p>
 <p>“I looked down on the farthest side of the mountain</p>
 <p>And, fulfilled and understanding all, I am truly content</p>
@@ -525,31 +525,36 @@
 <li>频繁项集</li>
 <li>关联规则</li>
 </ul>
-<p><strong>频繁项集（frequent item sets）</strong>是经常出现在一块儿的物品的集合，<br><strong>关联规则（association rules）</strong>暗示两种物品之间可能存在很强的关系。</p>
-<p>借用一个《机器学习实战》里的例子：<br><img src="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png" alt="image_1bp3v8eit353acj4l41pf7fmgm.png-7.6kB"></p>
-<p>比如说 <strong>{尿布，豆奶}</strong> 就是一个频繁项集，因为这个组合在例子中经常出现；<br>然后我们从这个频繁项集出发分析，是不是买尿布的人就经常也买豆奶呢？<br>就得出了一个： <strong>尿布 $\rightarrow$ 豆奶</strong> 这样一个关联规则，或者<br><strong>豆奶 $\rightarrow$ 尿布</strong>， 但是两者不等价，后面会说</p>
-<p>再来两个概念 <strong>支持度（support)</strong> 和 <strong>可信度（confidence)</strong><br>支持度：数据集中包含该项集的记录所占的比例<br>可信度：比如有两个集合 P,H; 则关联规则P $\rightarrow$ H 的可信度为： $\frac{support(P \cup H)}{support(P)}$</p>
+<p><strong>频繁项集（frequent item sets）</strong>是经常出现在一块儿的物品的集合， <strong>关联规则（association rules）</strong>暗示两种物品之间可能存在很强的关系。</p>
+<p>借用一个《机器学习实战》里的例子： <img src="http://static.zybuluo.com/Preke/qimxp8bjnwzse97myfz04djc/image_1bp3v8eit353acj4l41pf7fmgm.png" alt="image_1bp3v8eit353acj4l41pf7fmgm.png-7.6kB"></p>
+<p>比如说 <strong>{尿布，豆奶}</strong> 就是一个频繁项集，因为这个组合在例子中经常出现； 然后我们从这个频繁项集出发分析，是不是买尿布的人就经常也买豆奶呢？ 就得出了一个： <strong>尿布 <span class="math inline">\(\rightarrow\)</span> 豆奶</strong> 这样一个关联规则，或者 <strong>豆奶 <span class="math inline">\(\rightarrow\)</span> 尿布</strong>， 但是两者不等价，后面会说</p>
+<p>再来两个概念 <strong>支持度（support)</strong> 和 <strong>可信度（confidence)</strong> 支持度：数据集中包含该项集的记录所占的比例 可信度：比如有两个集合 P,H; 则关联规则P <span class="math inline">\(\rightarrow\)</span> H 的可信度为： <span class="math inline">\(\frac{support(P \cup H)}{support(P)}\)</span></p>
 <p>举几个简单的例子：</p>
 <ul>
 <li>{尿布，豆奶} 的 support 为 3/5，因为在 5 个交易中，{尿布，豆奶} 的组合出现了 3 次</li>
-<li>那如果我们求 尿布 $\rightarrow$ 豆奶 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({尿布})}=\frac{3/5}{4/5}=\frac{3}{4}$</li>
-<li>那么豆奶 $\rightarrow$ 尿布 的 confidence 就是 $\frac{support({尿布，豆奶})}{support({豆奶})}=\frac{3/5}{4/5}=\frac{3}{4}$ ，…还是 3/4 ，很不幸的巧合，但是我们还是可以看出来，其实计算过程是不一样的</li>
+<li>那如果我们求 尿布 <span class="math inline">\(\rightarrow\)</span> 豆奶 的 confidence 就是 <span class="math inline">\(\frac{support(\{尿布，豆奶\})}{support(\{尿布\})}=\frac{3/5}{4/5}=\frac{3}{4}\)</span></li>
+<li>那么豆奶 <span class="math inline">\(\rightarrow\)</span> 尿布 的 confidence 就是 <span class="math inline">\(\frac{support(\{尿布，豆奶\})}{support(\{豆奶\})}=\frac{3/5}{4/5}=\frac{3}{4}\)</span> ，…还是 3/4 ，很不幸的巧合，但是我们还是可以看出来，其实计算过程是不一样的</li>
 </ul>
-<h2 id="Apriori原理"><a href="#Apriori原理" class="headerlink" title="Apriori原理"></a>Apriori原理</h2><h3 id="频繁项集"><a href="#频繁项集" class="headerlink" title="频繁项集"></a>频繁项集</h3><blockquote>
+<h2 id="apriori原理">Apriori原理</h2>
+<h3 id="频繁项集">频繁项集</h3>
+<blockquote>
 <p>支持度和可信度是用来量化关联分析是否成功的方法，假设想找到支持度大于 0.8 的所有项集，应该如何去做？一个办法是生成一个物品所有可能组合的清单，然后对每一种组合统计它出现的频繁程度，但是当物品数量成千上万时，上述做法非常慢</p>
 </blockquote>
-<p>我们可以这么想，如果一个项集是频繁的， 那么它的所有子集也都是频繁的；<br>接着：<strong>如果一个项集是非频繁的，那么它的所有超集也都是非频繁的。</strong></p>
+<p>我们可以这么想，如果一个项集是频繁的， 那么它的所有子集也都是频繁的； 接着：<strong>如果一个项集是非频繁的，那么它的所有超集也都是非频繁的。</strong></p>
 <p>这条结论就在于，之前我们说，列出所有可能的组合很麻烦，有了这个结论，我们如果找到一些非频繁项集，那么他们的超集就可以全部不用考虑了，这样就简化了很大一部分计算；这就是 <strong>Apriori原理</strong></p>
-<p>基于这样的思想，我们可以设计一个这样的算法，目标就是找到 support 大于等于一个阈值的所有频繁项集；<br>那么<br>    Input: 最小support, 数据集<br>    Output: 满足条件的所有频繁项集<br>主体思想就是：我们先算比较小的集合的support（最小就是单个元素的集合）, 把计算过程中不满足support的集合去掉，以留下来的集合和元素组合成新的集合，然后继续筛选，直到留下的项集都满足最小support，返回结果。</p>
+<p>基于这样的思想，我们可以设计一个这样的算法，目标就是找到 support 大于等于一个阈值的所有频繁项集； 那么 Input: 最小support, 数据集 Output: 满足条件的所有频繁项集 主体思想就是：我们先算比较小的集合的support（最小就是单个元素的集合）, 把计算过程中不满足support的集合去掉，以留下来的集合和元素组合成新的集合，然后继续筛选，直到留下的项集都满足最小support，返回结果。</p>
 <p><strong>所以我们可以看到核心部分就是，如何在一轮迭代之后生成新的数据集；因为每次迭代，我们的频繁项集都只加1，那么，我们生成新的候选的频繁项集的方法就是：用上一轮的项集中只相差1个元素的集合的并集作为新一轮候选的频繁项集。</strong></p>
-<p>明确这一点，代码就不难写了；<br>用一个python代码来表示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aprioriGen</span><span class="params">(Lk, k)</span>:</span></span><br><span class="line">    retList = []</span><br><span class="line">    lenLk = len(Lk)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenLk):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, lenLk):</span><br><span class="line">            L1 = list(Lk[i])[:k<span class="number">-2</span>]; L2 = list(Lk[j])[:k<span class="number">-2</span>]</span><br><span class="line">            L1.sort(); L2.sort()</span><br><span class="line">            <span class="keyword">if</span> L1 == L2:</span><br><span class="line">                retList.append(Lk[i] | Lk[j]) <span class="comment"># 前k-2项相同时，将两个集合合并</span></span><br><span class="line">    <span class="keyword">return</span> retList</span><br></pre></td></tr></table></figure></p>
+<p>明确这一点，代码就不难写了； 用一个python代码来表示： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aprioriGen</span><span class="params">(Lk, k)</span>:</span></span><br><span class="line">    retList = []</span><br><span class="line">    lenLk = len(Lk)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenLk):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, lenLk):</span><br><span class="line">            L1 = list(Lk[i])[:k<span class="number">-2</span>]; L2 = list(Lk[j])[:k<span class="number">-2</span>]</span><br><span class="line">            L1.sort(); L2.sort()</span><br><span class="line">            <span class="keyword">if</span> L1 == L2:</span><br><span class="line">                retList.append(Lk[i] | Lk[j]) <span class="comment"># 前k-2项相同时，将两个集合合并</span></span><br><span class="line">    <span class="keyword">return</span> retList</span><br></pre></td></tr></table></figure></p>
 <p>这里，是要生成集合中元素个数为 k 的候选频繁项集的，所以当前频繁项集元素个数为 k-1, 所以才有前k-2项相同时，将两个集合合并，来生成新的候选频繁项集；</p>
-<h3 id="关联规则"><a href="#关联规则" class="headerlink" title="关联规则"></a>关联规则</h3><p>那么其实找规则也是类似的，找到confidence 大于等于一个阈值的所有关联规则；<br>在此使用Apriori算法，说到这样一句话：<strong>如果某条规则并不满足最小可信度要求，那么该规则的所有子集也不会满足最小可信度要求</strong></p>
+<h3 id="关联规则">关联规则</h3>
+<p>那么其实找规则也是类似的，找到confidence 大于等于一个阈值的所有关联规则； 在此使用Apriori算法，说到这样一句话：<strong>如果某条规则并不满足最小可信度要求，那么该规则的所有子集也不会满足最小可信度要求</strong></p>
 <blockquote>
-<p>怎么理解一条规则的子集？<br>假设项集为 <strong>{1，2，3，4}</strong>，假设 <strong>0，1，2 -&gt; 3</strong> 的 confidence 不满足最小可信度的要求，那么任意前件为<strong>{0，1，2}</strong>的子集的关联规则的 confidence 都不满足要求；<br>或者说 任何后件中包含 <strong>3</strong> 的关联规则的confidence都不满足要求。</p>
-<p>这就产生了一个问题….一个项集产生的关联规则中一定要包含项集里所有的元素吗？比如 <strong>{0，1，2，3}</strong> 产生的规则有没有可能是 <strong>{0，2}-&gt;{3}</strong> 。或者是说我们从这个项集中没有什么证据可以说明那条规则? 没有得到一些明确的解释，所以我暂且坚持自己的思考，即认可这样一个观点：<br>基于一个项集<strong>Y</strong>的信息，将 <strong>Y</strong> 分成两个互补的子集 <strong>X, Y-X</strong>  ; 那么只能计算 <strong>X $\rightarrow$ Y-X</strong> 或者 <strong>Y-X $\rightarrow$ X</strong> 的confidence</p>
+<p>怎么理解一条规则的子集？ 假设项集为 <strong>{1，2，3，4}</strong>，假设 <strong>0，1，2 -&gt; 3</strong> 的 confidence 不满足最小可信度的要求，那么任意前件为<strong>{0，1，2}</strong>的子集的关联规则的 confidence 都不满足要求； 或者说 任何后件中包含 <strong>3</strong> 的关联规则的confidence都不满足要求。</p>
 </blockquote>
-<p>基于上面的思想，我们可以这样生成关联规则，每次只让后件的元素个数加 <strong>1</strong>，可以有效快速的剪枝<br>我们可以看如下这幅图：<br><img src="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png" alt="image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png-101.5kB"><br>假设图中深色的关联规则为不符合要求的，那么我们在第二轮发现了一个不符合要求的规则，那么我们就可以把它的所有子节点（子孙节点）全部标为深色不用再考虑，意思就是，我们就不用在下一轮考虑这个结点生成的子节点了，这样就省掉了好多计算量。</p>
+<blockquote>
+<p>这就产生了一个问题….一个项集产生的关联规则中一定要包含项集里所有的元素吗？比如 <strong>{0，1，2，3}</strong> 产生的规则有没有可能是 <strong>{0，2}-&gt;{3}</strong> 。或者是说我们从这个项集中没有什么证据可以说明那条规则? 没有得到一些明确的解释，所以我暂且坚持自己的思考，即认可这样一个观点： 基于一个项集<strong>Y</strong>的信息，将 <strong>Y</strong> 分成两个互补的子集 <strong>X, Y-X</strong> ; 那么只能计算 <strong>X <span class="math inline">\(\rightarrow\)</span> Y-X</strong> 或者 <strong>Y-X <span class="math inline">\(\rightarrow\)</span> X</strong> 的confidence</p>
+</blockquote>
+<p>基于上面的思想，我们可以这样生成关联规则，每次只让后件的元素个数加 <strong>1</strong>，可以有效快速的剪枝 我们可以看如下这幅图： <img src="http://static.zybuluo.com/Preke/58ercogjbi6x5j76d3oyid25/image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png" alt="image_1bp6fn3vh1m1p1vth1hfn9n8nh79.png-101.5kB"> 假设图中深色的关联规则为不符合要求的，那么我们在第二轮发现了一个不符合要求的规则，那么我们就可以把它的所有子节点（子孙节点）全部标为深色不用再考虑，意思就是，我们就不用在下一轮考虑这个结点生成的子节点了，这样就省掉了好多计算量。</p>
 
           
         
@@ -691,163 +696,169 @@
       
         
           
-            <p>回顾我们之前的问题：<br>之前我们说到，假设我们了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 同时也求得了 $b$</p>
-<p>那么就得到了这个分类面 $w^Tx+b$  ,我们换一种表示方法：</p>
-<script type="math/tex; mode=display">
-w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\end{pmatrix}^Tx+b\\=\sum_{i=1}^m\alpha_iy^{(i)}<x^{(i)},x>+b</script><p>这里我们可以看出，新的数据点只需与那些 $\alpha_i =0$ 的临界点做内积，便可以得到分类结果。</p>
-<h2 id="核函数（Kernels"><a href="#核函数（Kernels" class="headerlink" title="核函数（Kernels)"></a>核函数（Kernels)</h2><p>先说一下直观理解吧（不一定正确，仅作直观理解），核函数就是把低维特征映射到高维，从而使得在低维情况下线性不可分的数据在高维情况下<strong>有可能</strong>能够找到那个分类面</p>
-<p>特定情况下，如果我们需要，可以将一个一维特征加以变换成多维<br>比如说要拟合曲线的时候，我们可以用一个自变量的多次方程去拟合<br>比如在一个回归问题中，观察到 $y$ 可以用关于 $x$ 的 3次多项式来拟合<br>就可以用如下变换，将 $x$ 扩展到高维，使得 $y$ 成为一个关于 $\phi(x)$ 的函数：</p>
-<script type="math/tex; mode=display">\phi(x)= \begin{bmatrix} x\\x^2\\x^3 \end{bmatrix}</script><p>如果有原来变量的内积，如 $<x,z>$  , 那么映射之后为 $&lt;\phi(x), \phi(z)&gt;$ , 那么这个核函数的形式化表出就为：</x,z></p>
-<script type="math/tex; mode=display">K(x,z)=\phi(x)^T\phi(z)</script><blockquote>
+            <p>回顾我们之前的问题： 之前我们说到，假设我们了 <span class="math inline">\(\alpha\)</span>, 又有样本点数据，我们很容易由 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span> 得出 <span class="math inline">\(w\)</span>, 同时也求得了 <span class="math inline">\(b\)</span></p>
+<p>那么就得到了这个分类面 <span class="math inline">\(w^Tx+b\)</span> ,我们换一种表示方法： <span class="math display">\[
+w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\end{pmatrix}^Tx+b\\=\sum_{i=1}^m\alpha_iy^{(i)}&lt;x^{(i)},x&gt;+b
+\]</span></p>
+<p>这里我们可以看出，新的数据点只需与那些 <span class="math inline">\(\alpha_i =0\)</span> 的临界点做内积，便可以得到分类结果。</p>
+<h2 id="核函数kernels">核函数（Kernels)</h2>
+<p>先说一下直观理解吧（不一定正确，仅作直观理解），核函数就是把低维特征映射到高维，从而使得在低维情况下线性不可分的数据在高维情况下<strong>有可能</strong>能够找到那个分类面</p>
+<p>特定情况下，如果我们需要，可以将一个一维特征加以变换成多维 比如说要拟合曲线的时候，我们可以用一个自变量的多次方程去拟合 比如在一个回归问题中，观察到 <span class="math inline">\(y\)</span> 可以用关于 <span class="math inline">\(x\)</span> 的 3次多项式来拟合 就可以用如下变换，将 <span class="math inline">\(x\)</span> 扩展到高维，使得 <span class="math inline">\(y\)</span> 成为一个关于 <span class="math inline">\(\phi(x)\)</span> 的函数： <span class="math display">\[\phi(x)= \begin{bmatrix} x\\x^2\\x^3 \end{bmatrix}\]</span></p>
+<p>如果有原来变量的内积，如 <span class="math inline">\(&lt;x,z&gt;\)</span> , 那么映射之后为 <span class="math inline">\(&lt;\phi(x), \phi(z)&gt;\)</span> , 那么这个核函数的形式化表出就为：</p>
+<p><span class="math display">\[K(x,z)=\phi(x)^T\phi(z)\]</span></p>
+<blockquote>
 <p>这里只是简单列举一个形式化表出的例子，没有直接关联原问题，但是这里可以理解，我们可以通过这个和函数，让SVM学习更高维度的特征</p>
-<font color="red"> 这里还产成了一个问题：是不是每一个核函数都能表出为类似 $\phi(x)^T\phi(z)$ 的形式呢？</font>
-
+<p><font color="red"> 这里还产成了一个问题：是不是每一个核函数都能表出为类似 <span class="math inline">\(\phi(x)^T\phi(z)\)</span> 的形式呢？</font></p>
 <p>其实我初步的思考为，只有在原低维特征向量有做内积的运算时，我们这样构造和转化会方便</p>
 <p>（好像有点废话，因为后面看到高斯核的时候在想是不是也能转化…不过是可以转化的，高斯核将低维特征转化成了无线维的特征）</p>
-<p>Andrew 在课上讲了这样一句话：每当你在原问题中遇到 $<x,z>$ ，也就是内积的形式时，你都可以把它转化成 $K(x,z)$ ，当你在做这个转化的时候，你就将低维特征映射到了高维。</x,z></p>
+<p>Andrew 在课上讲了这样一句话：每当你在原问题中遇到 <span class="math inline">\(&lt;x,z&gt;\)</span> ，也就是内积的形式时，你都可以把它转化成 <span class="math inline">\(K(x,z)\)</span> ，当你在做这个转化的时候，你就将低维特征映射到了高维。</p>
 <p>嗯，学到后面就清晰了，这个就是核函数有效性的问题</p>
 </blockquote>
 <p>这里说明一个核函数减少计算复杂度的例子：</p>
-<p>假设，$x,z$  都是 $n$ 维向量, 核函数为：$K(x,z)=(x^Tz)^2$ , 整理：</p>
-<p>$K(x,z) = \sum<em>{i=1}^n\sum</em>{j=1}^n(x_i,x_j)(z_i,z_j)=\phi(x)^T\phi(z)$ </p>
+<p>假设，<span class="math inline">\(x,z\)</span> 都是 <span class="math inline">\(n\)</span> 维向量, 核函数为：<span class="math inline">\(K(x,z)=(x^Tz)^2\)</span> , 整理：</p>
+<p><span class="math inline">\(K(x,z) = \sum_{i=1}^n\sum_{j=1}^n(x_i,x_j)(z_i,z_j)=\phi(x)^T\phi(z)\)</span></p>
 <blockquote>
-<p>不要疑惑，这里的 $\phi(x)$ 并不是上文的，而是如下：</p>
-<script type="math/tex; mode=display">if \quad n = 3:</script><script type="math/tex; mode=display">\phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\end{bmatrix}</script></blockquote>
-<p>显然，$\phi(x)$ 有 $n^2$ 项，所以计算复杂度为 $O(n^2)$ ;</p>
-<p>但是如果我们直接计算 $K(x,z)=(x^Tz)^2$ 这里的复杂度就变成了 $O(n)$ </p>
+<p>不要疑惑，这里的 <span class="math inline">\(\phi(x)\)</span> 并不是上文的，而是如下：</p>
+<p><span class="math display">\[if \quad n = 3:\]</span></p>
+<p><span class="math display">\[\phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\end{bmatrix}\]</span></p>
+</blockquote>
+<p>显然，<span class="math inline">\(\phi(x)\)</span> 有 <span class="math inline">\(n^2\)</span> 项，所以计算复杂度为 <span class="math inline">\(O(n^2)\)</span> ;</p>
+<p>但是如果我们直接计算 <span class="math inline">\(K(x,z)=(x^Tz)^2\)</span> 这里的复杂度就变成了 <span class="math inline">\(O(n)\)</span></p>
 <blockquote>
 <p>这里的理解：虽然我们还是用映射之后的高维特征来让模型学习，但是由于这个核函数的存在，我们可以从低维特征（简单的计算）同样得到高维特征的结果，这就是它<strong>减少复杂度的原因</strong></p>
 </blockquote>
 <hr>
 <p>这是一个简单的核函数，接下来就会介绍一些其他常用的核函数：</p>
 <ul>
-<li><p>$K(x,z)=(x^Tz+c)^2\ \quad\quad\quad=\sum<em>{i,j=1}^n(x_ix_j)(z_iz_j)+\sum</em>{i=1}^n(\sqrt{2c}x_i)(\sqrt{2c}z_j)+c^2$ </p>
-<p>这个核函数对应的 $\phi(x)$ 为：</p>
-<script type="math/tex; mode=display">if \quad n = 3:</script></li>
+<li><p><span class="math inline">\(K(x,z)=(x^Tz+c)^2\\ \quad\quad\quad=\sum_{i,j=1}^n(x_ix_j)(z_iz_j)+\sum_{i=1}^n(\sqrt{2c}x_i)(\sqrt{2c}z_j)+c^2\)</span></p>
+<p>这个核函数对应的 <span class="math inline">\(\phi(x)\)</span> 为：</p>
+<p><span class="math display">\[if \quad n = 3:\]</span></p></li>
 </ul>
-<script type="math/tex; mode=display">\quad\quad\quad \phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\\\sqrt{2c}x_1\\\sqrt{2c}x_2\\\sqrt{2c}x_3\\c\end{bmatrix}</script><p>如果继续扩展，扩展到 $K(x,z)=(x^Tz+c)^d$  ，对应的 $\phi(x)$ 的维度为 $C_{n+d}^d$  ，$ n $ 是 $x, z$ 的维度</p>
+<p><span class="math display">\[\quad\quad\quad \phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\\\sqrt{2c}x_1\\\sqrt{2c}x_2\\\sqrt{2c}x_3\\c\end{bmatrix}\]</span></p>
+<p>如果继续扩展，扩展到 <span class="math inline">\(K(x,z)=(x^Tz+c)^d\)</span> ，对应的 <span class="math inline">\(\phi(x)\)</span> 的维度为 <span class="math inline">\(C_{n+d}^d\)</span> ，$ n $ 是 <span class="math inline">\(x, z\)</span> 的维度</p>
 <blockquote>
 <p>为什么介绍这样一个一般化的向量内积形式的核函数呢？</p>
 <p>这里有一个直观的理解（不一定严格正确）</p>
 <p>可以看到，计算向量的内积，其实就是在衡量向量的相似度</p>
 <p>所以基于这样一种形式，如果两个特征向量，关联性很大，这样形式的核函数也会很大</p>
-<p>当然这里暂时忽略 $\phi(x)$ 对相似性的影响，所以说不一定严格正确</p>
+<p>当然这里暂时忽略 <span class="math inline">\(\phi(x)\)</span> 对相似性的影响，所以说不一定严格正确</p>
 </blockquote>
 <ul>
-<li><p>$K(x,z)=exp\begin{pmatrix}-\frac{||x-z||^2}{2\sigma^2}\end{pmatrix}$ </p>
+<li><p><span class="math inline">\(K(x,z)=exp\begin{pmatrix}-\frac{||x-z||^2}{2\sigma^2}\end{pmatrix}\)</span></p>
 <p>这个叫做，高斯核函数（因为形式很像高斯分布，也叫做径向基函数（Radial Basis Function)</p>
 <p>能够把原始特征映射到无限维。</p>
-<p>那我们现在来看一下 $x,z$ 的相似性：</p>
+<p>那我们现在来看一下 <span class="math inline">\(x,z\)</span> 的相似性：</p>
 <ul>
-<li>如果 $x,z$ 相似：$||x-z|| \approx 0$ ，$K(x,z)$ 趋向1</li>
-<li>如果 $x,z$ 相差很多：$||x-z|| \gg 0$ ，$K(x,z)$ 趋向0</li>
+<li>如果 <span class="math inline">\(x,z\)</span> 相似：<span class="math inline">\(||x-z|| \approx 0\)</span> ，<span class="math inline">\(K(x,z)\)</span> 趋向1</li>
+<li>如果 <span class="math inline">\(x,z\)</span> 相差很多：<span class="math inline">\(||x-z|| \gg 0\)</span> ，<span class="math inline">\(K(x,z)\)</span> 趋向0</li>
 </ul>
 <p>这里理解的时候可以想象正态分布的钟形图</p>
 <blockquote>
-<ol>
-<li><p>参数 $\sigma$ 是什么？</p>
-<p>在这里是没有标准差的含义的，只是一个参数而已，我们可以用交叉验证调整出最好的参数</p>
-</li>
+<ol type="1">
+<li><p>参数 <span class="math inline">\(\sigma\)</span> 是什么？</p>
+<p>在这里是没有标准差的含义的，只是一个参数而已，我们可以用交叉验证调整出最好的参数</p></li>
 </ol>
 </blockquote>
-<p>​</p>
-</li>
+<p>​</p></li>
 </ul>
-<h3 id="核函数有效性"><a href="#核函数有效性" class="headerlink" title="核函数有效性"></a>核函数有效性</h3><p>这里就是上文中讨论的问题，是不是每一个核函数 $K(x,z)$ 都能表出为 $\phi(x)^T\phi(z)$ 的形式呢？</p>
+<h3 id="核函数有效性">核函数有效性</h3>
+<p>这里就是上文中讨论的问题，是不是每一个核函数 <span class="math inline">\(K(x,z)\)</span> 都能表出为 <span class="math inline">\(\phi(x)^T\phi(z)\)</span> 的形式呢？</p>
 <p>先给出判定定理吧：</p>
 <blockquote>
 <p><strong>Mercer 定理</strong></p>
-<p>如果函数 $K$ 是 $R^n*R^n\rightarrow R$ 的映射，即两个$n$ 维向量映射到实数域，那么 $K$ 是一个有效核函数 等价于 对 ${x^{(1)},x^{(1)}…,x^{(m)}}$  ，其对应的核函数矩阵是对称半正定的。</p>
+<p>如果函数 <span class="math inline">\(K\)</span> 是 <span class="math inline">\(R^n*R^n\rightarrow R\)</span> 的映射，即两个<span class="math inline">\(n\)</span> 维向量映射到实数域，那么 <span class="math inline">\(K\)</span> 是一个有效核函数 等价于 对 <span class="math inline">\(\{x^{(1)},x^{(1)}...,x^{(m)}\}\)</span> ，其对应的核函数矩阵是对称半正定的。</p>
 </blockquote>
 <p>其中涉及到两个概念：核函数矩阵，对称半正定</p>
 <p>核函数矩阵：</p>
-<p>给定 $m$ 个训练样本（特征向量）  ${x^{(1)},x^{(1)}…,x^{(m)}}$ ，对任意的 $x^{(i)}, x^{(j)}$ 带入 $K$ ，得到 $K_{i,j} = K(x^{(i)}, x^{(j)})$ ，得到一个 $m*m$ 的矩阵如下：</p>
-<script type="math/tex; mode=display">\begin{bmatrix}K_{1,1}& K_{1,2}& \cdots&K_{1,m}\\K_{2,1}&K_{2,2}& \cdots&K_{2,m}\\\vdots&\vdots&\ddots&\vdots\\K_{m,1}&k_{m,2}&\cdots&K_{m,m}\end{bmatrix}</script><p>就是核函数矩阵，也用 $K$ 来表示</p>
+<p>给定 <span class="math inline">\(m\)</span> 个训练样本（特征向量） <span class="math inline">\(\{x^{(1)},x^{(1)}...,x^{(m)}\}\)</span> ，对任意的 <span class="math inline">\(x^{(i)}, x^{(j)}\)</span> 带入 <span class="math inline">\(K\)</span> ，得到 <span class="math inline">\(K_{i,j} = K(x^{(i)}, x^{(j)})\)</span> ，得到一个 <span class="math inline">\(m*m\)</span> 的矩阵如下：</p>
+<p><span class="math display">\[\begin{bmatrix}K_{1,1}&amp; K_{1,2}&amp; \cdots&amp;K_{1,m}\\K_{2,1}&amp;K_{2,2}&amp; \cdots&amp;K_{2,m}\\\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\K_{m,1}&amp;k_{m,2}&amp;\cdots&amp;K_{m,m}\end{bmatrix}\]</span></p>
+<p>就是核函数矩阵，也用 <span class="math inline">\(K\)</span> 来表示</p>
 <p>对称半正定，这里先不展开讲，就是一个矩阵的性质，简单理解呢，就是：</p>
-<p>如果是一个合法的核函数，即$K(x,z)$ 能表出为 $\phi(x)^T\phi(z)$ </p>
-<ol>
-<li><p>首先如上矩阵肯定是对称的，因为 $K(x,z) = K(z,x)$ </p>
-</li>
-<li><p>半正定，对于任意的 $m$ 维向量 $z$ ，$z^TKz\ge0$ </p>
-</li>
+<p>如果是一个合法的核函数，即<span class="math inline">\(K(x,z)\)</span> 能表出为 <span class="math inline">\(\phi(x)^T\phi(z)\)</span></p>
+<ol type="1">
+<li><p>首先如上矩阵肯定是对称的，因为 <span class="math inline">\(K(x,z) = K(z,x)\)</span></p></li>
+<li><p>半正定，对于任意的 <span class="math inline">\(m\)</span> 维向量 <span class="math inline">\(z\)</span> ，<span class="math inline">\(z^TKz\ge0\)</span></p></li>
 </ol>
 <p>核函数就先到这吧…</p>
-<h2 id="正则化，不可分情况"><a href="#正则化，不可分情况" class="headerlink" title="正则化，不可分情况"></a>正则化，不可分情况</h2><ul>
+<h2 id="正则化不可分情况">正则化，不可分情况</h2>
+<ul>
 <li>如果数据线性可分，可以直接用线性分类器解决</li>
 <li>如果数据线性不可分，用核函数映射到高维尝试找到分类面</li>
 <li>如果用了核函数也没找到…那就允许一些错误样例吧</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png" alt="image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png" alt="image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB"><figcaption>image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB</figcaption>
+</figure>
 <p>上图中，一个离群点的出现就会使分类面偏移很多，这样分类面很容易过拟合；更有甚者，有些离群点在另一个类中导致分类面不可分，所以我们需要正则化，也就是说，允许一小部分错误分类点，但是对于这些错误分类点，我们在目标函数中加上一些惩罚项</p>
-<p>所以设计一个新的模型：</p>
-<script type="math/tex; mode=display">
+<p>所以设计一个新的模型： <span class="math display">\[
 min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2+C\sum_{i=1}^m\xi_i \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i ,\quad\quad i=1,...,m\\\quad\quad\xi_i\geq0,\quad\quad i=1,..,m.</script><p>引入一个松弛变量 $\xi$<br>从限制条件来看，我们允许一部分点的函数间隔小于1甚至有可能是负数，对于这些点，对应的 $\xi_i$ 会很大(可以通过限制条件计算的）,那么在目标函数中表现的就很明显，这样求目标函数的最小值的约束也就会体现出来。同时，$C$ 是离群点的权重，也是一个可以调的参数</p>
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i ,\quad\quad i=1,...,m\\\quad\quad\xi_i\geq0,\quad\quad i=1,..,m.
+\]</span></p>
+<p>引入一个松弛变量 <span class="math inline">\(\xi\)</span> 从限制条件来看，我们允许一部分点的函数间隔小于1甚至有可能是负数，对于这些点，对应的 <span class="math inline">\(\xi_i\)</span> 会很大(可以通过限制条件计算的）,那么在目标函数中表现的就很明显，这样求目标函数的最小值的约束也就会体现出来。同时，<span class="math inline">\(C\)</span> 是离群点的权重，也是一个可以调的参数</p>
 <p>这种情况也称为 L1软间隔，因为正则化项是 L1-norm;</p>
-<p>再按照之前的方法求解：<br>拉格朗日公式就变成了：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}(w,b,\xi,\alpha,r)=\frac{1}{2}w^Tw+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1+\xi_i]-\sum_{i=1}^mr_i\xi_i.</script><p>有两个不等式约束,所以 $\alpha_i,r_i$都为拉格朗日乘子<br>对偶问题为：</p>
-<script type="math/tex; mode=display">
-\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j<x^{(i)},x^{(j)}>\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>与之前对偶问题的区别只有第一个限制条件变成了 $\quad 0\leq\alpha_i\leq C$,<br>同时， $b$ 的求解也发生了变化，在后面的章节中会解释；</p>
-<p><img src="http://static.zybuluo.com/Preke/s75438242r63zi5wqjlqm4sz/image_1bp353tpi1res1bsaqlrt8i17c69.png" alt="image_1bp353tpi1res1bsaqlrt8i17c69.png-22.2kB"><br>讲义中给出如上三个公式，并且吴恩达也没有详细讲，只说是用KKT条件推导来的，<br>我就自己翻了资料理解了一下，参考周志华的《机器学习》和李航的《统计学习方法》</p>
+<p>再按照之前的方法求解： 拉格朗日公式就变成了：</p>
+<p><span class="math display">\[
+\mathcal{L}(w,b,\xi,\alpha,r)=\frac{1}{2}w^Tw+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1+\xi_i]-\sum_{i=1}^mr_i\xi_i.
+\]</span> 有两个不等式约束,所以 <span class="math inline">\(\alpha_i,r_i\)</span>都为拉格朗日乘子 对偶问题为：</p>
+<p><span class="math display">\[
+\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j&lt;x^{(i)},x^{(j)}&gt;\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 与之前对偶问题的区别只有第一个限制条件变成了 <span class="math inline">\(\quad 0\leq\alpha_i\leq C\)</span>, 同时， <span class="math inline">\(b\)</span> 的求解也发生了变化，在后面的章节中会解释；</p>
+<p><img src="http://static.zybuluo.com/Preke/s75438242r63zi5wqjlqm4sz/image_1bp353tpi1res1bsaqlrt8i17c69.png" alt="image_1bp353tpi1res1bsaqlrt8i17c69.png-22.2kB"> 讲义中给出如上三个公式，并且吴恩达也没有详细讲，只说是用KKT条件推导来的， 我就自己翻了资料理解了一下，参考周志华的《机器学习》和李航的《统计学习方法》</p>
 <p>如果要得到上述对偶问题，需要满足KKT条件：</p>
-<p>分别对三个变量 $w,b,\xi$ 求偏导为 0, 就有：</p>
-<script type="math/tex; mode=display">
-w=\sum_{i=1}^m\alpha_iy_ix_i\\\sum_{i=1}^m\alpha_iy_i=0\\\alpha_i+r_i=C</script><p>对拉格朗日公式用一下K.K.T.条件，得到：</p>
-<script type="math/tex; mode=display">
+<p>分别对三个变量 <span class="math inline">\(w,b,\xi\)</span> 求偏导为 0, 就有： <span class="math display">\[
+w=\sum_{i=1}^m\alpha_iy_ix_i\\\sum_{i=1}^m\alpha_iy_i=0\\\alpha_i+r_i=C
+\]</span> 对拉格朗日公式用一下K.K.T.条件，得到： <span class="math display">\[
 \left\{
 \begin{aligned}
 \alpha_i\geq0 \\r_i\geq0\\y^{(i)}(w^Tx^{(i)}+b)-1+\xi_i\geq0\\\alpha_i(y^{(i)}(w^Tx^{(i)}+b)-1+\xi_i)=0\\\xi_i\geq0\\r_i\xi_i=0
 \end{aligned}
-\right.</script><p>在这里：</p>
+\right.
+\]</span></p>
+<p>在这里：</p>
 <ul>
-<li><p>$\alpha_i&gt;0$ 的那些点，和以前一样，还是支持向量，不过这里呢，是这个软间隔分类器的支持向量(包括在最大间隔边界，和一些函数间隔小于1的点）;</p>
-</li>
-<li><p>如果 $\alpha_i<c$，那么 $r_i>0$ , 接着就有 $\xi_i=0$, 这些点恰好就是在最大分类间隔边界上的支持向量;</c$，那么></p>
-</li>
-<li><p>如果 $\alpha_i=C$ , 则有 $r_i = 0$, 此时：</p>
+<li><p><span class="math inline">\(\alpha_i&gt;0\)</span> 的那些点，和以前一样，还是支持向量，不过这里呢，是这个软间隔分类器的支持向量(包括在最大间隔边界，和一些函数间隔小于1的点）;</p></li>
+<li><p>如果 <span class="math inline">\(\alpha_i&lt;C\)</span>，那么 <span class="math inline">\(r_i&gt;0\)</span> , 接着就有 <span class="math inline">\(\xi_i=0\)</span>, 这些点恰好就是在最大分类间隔边界上的支持向量;</p></li>
+<li>如果 <span class="math inline">\(\alpha_i=C\)</span> , 则有 <span class="math inline">\(r_i = 0\)</span>, 此时：
 <ul>
-<li>如果 $\xi_i &lt; 1$，则样本落在最大间隔内部</li>
-<li>如果 $\xi_i&gt;1$ , 则样本就被错误分类</li>
-<li>如果 $\xi_i = 1$，样本就落在超平面上</li>
-</ul>
-</li>
+<li>如果 <span class="math inline">\(\xi_i &lt; 1\)</span>，则样本落在最大间隔内部</li>
+<li>如果 <span class="math inline">\(\xi_i&gt;1\)</span> , 则样本就被错误分类</li>
+<li>如果 <span class="math inline">\(\xi_i = 1\)</span>，样本就落在超平面上</li>
+</ul></li>
 </ul>
 <blockquote>
-<p>这里，李航的《统计学习方法》里面提到我们可以用 $\frac{\xi_i}{||w||}$ 来表示样本到最大分类间隔边界的距离，也是很巧妙。</p>
+<p>这里，李航的《统计学习方法》里面提到我们可以用 <span class="math inline">\(\frac{\xi_i}{||w||}\)</span> 来表示样本到最大分类间隔边界的距离，也是很巧妙。</p>
 </blockquote>
 <hr>
 <blockquote>
 <p>对于这种SVM，假设我们求到了分类超平面（其实就是那些支持向量）在我们分类的时候，还是通过本文开头的那个判别方法来分类</p>
 </blockquote>
-<h2 id="坐标上升法"><a href="#坐标上升法" class="headerlink" title="坐标上升法"></a>坐标上升法</h2><p>其实是为了引出SMO的一个过渡方法</p>
-<p>其实原理很简单，假设要求：</p>
-<script type="math/tex; mode=display">
-\max_\alpha W(\alpha_1,\alpha_2,...,\alpha_m)</script><p>我们每次控制其他变量，只在一个变量的维度求最大值，得到之后，再在下一个变量的维度来求，循环直到最优解。伪码表示如下：<br><img src="http://static.zybuluo.com/Preke/ala1chzobgineiquo5m18lr8/image_1bp35g42uskc18271bji14s17eqm.png" alt="image_1bp35g42uskc18271bji14s17eqm.png-20.6kB"></p>
-<h2 id="SMO算法"><a href="#SMO算法" class="headerlink" title="SMO算法"></a>SMO算法</h2><p>被称为最快的二次规划优化算法, 有点6<br>特别在用于线性SVM和数据稀疏时性能更优<br>原始paper: 《 Sequential Minimal Optimization A Fast Algorithm for Training Support Vector Machines》</p>
-<p>之前说最后要解决这个对偶问题：</p>
-<script type="math/tex; mode=display">
-\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j<x^{(i)},x^{(j)}>\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>这里 $x^{(i)}, y^{(i)}, C$都是已知的，所以我们的问题就是在参数 ${\alpha_1,\alpha_2,…,\alpha_m}$ 上求 $W$ 的最大值<br>按照坐标上升的思路，我们是要固定其他维度，先选取一个参数做优化的，但是，由于我们有第二个等式约束，是无法只变动一个参数而其他参数都不改变的，所以我们至少也要选两个参数优化才可以。<br>算法思路如下：<br><img src="http://static.zybuluo.com/Preke/qsk30gn1eisq3wppvn89cw3g/image_1bp39pgg3bnf17jv9v81tp1sjo9.png" alt="image_1bp39pgg3bnf17jv9v81tp1sjo9.png-60kB"><br>循环内：</p>
-<ol>
-<li>用启发式算法去选取一对 $\alpha_i, \alpha_j$， 控制其他 $\alpha$ 不变</li>
-<li>通过 $\alpha_i, \alpha_j$ 优化得到的 $W(\alpha)$ 更新原来的值</li>
-</ol>
-<p>这里我们有这个约束： $\sum_{i=1}^m\alpha_iy^{(i)}=0$, 假设我们选取 $\alpha_1, \alpha_2$, 我们就能够得到：</p>
-<script type="math/tex; mode=display">
-\alpha_1y^{(1)}+\alpha_2y^{(2)} = -\sum_{i=3}^m\alpha_iy^{(i)} = \zeta</script><p>其中 $\zeta$ 是一个固定值，因为我们固定后面的参数不变<br>我们可以显式的把这个约束条件表示成一条直线，如下：<br><img src="http://static.zybuluo.com/Preke/lp0zyfluulhsa4b11z339g14/image_1bp3cpicr1gsikhahi81ucajofm.png" alt="image_1bp3cpicr1gsikhahi81ucajofm.png-16.3kB"></p>
-<p>横轴为 $\alpha_1$，纵轴为 $\alpha_2$， $0\leq\alpha_i\leq C$ 对应了 $\alpha$ 对应在这个方框内<br>其中的 L，H 就是 $\alpha_2$ 的 lowerbond 和 upperbond</p>
-<p>继续我们可以得到： $\alpha_1 = (\zeta-\alpha_2y^{(2)})y^{(1)}$ (这里因为 $y^{(i)}\in{1,-1}$ )是类别标签，所以乘和除是一样的，那么目标问题就表示成：</p>
-<script type="math/tex; mode=display">
-W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...,\alpha_m).</script><p>这就变成了对一个变量 $\alpha_2$ 的优化问题，带入 $W(\alpha)$ 的公式，可以将 $W(\alpha)$ 表示成类似 $a\alpha_2^2+b\alpha_2+c $ 的形式, 其中 $L\leq \alpha_2 \leq H$</p>
-<p>我们用 $\alpha_2^{new,unclipped}$ 来表示上述二次规划得到的最优值对应的 $\alpha_2$, 我们容易得到 $\alpha_2$ 的更新规则：<br><img src="http://static.zybuluo.com/Preke/lqms4kjkf47fo5pzevrodbjy/image_1bp3gbbne3r1gb813nb1f7naf1p.png" alt="image_1bp3gbbne3r1gb813nb1f7naf1p.png-22.5kB"></p>
-<p>得到之后再求出 $\alpha_1^{new}$ 就好了。</p>
+<h2 id="坐标上升法">坐标上升法</h2>
+<p>其实是为了引出SMO的一个过渡方法</p>
+<p>其实原理很简单，假设要求： <span class="math display">\[
+\max_\alpha W(\alpha_1,\alpha_2,...,\alpha_m)
+\]</span> 我们每次控制其他变量，只在一个变量的维度求最大值，得到之后，再在下一个变量的维度来求，循环直到最优解。伪码表示如下： <img src="http://static.zybuluo.com/Preke/ala1chzobgineiquo5m18lr8/image_1bp35g42uskc18271bji14s17eqm.png" alt="image_1bp35g42uskc18271bji14s17eqm.png-20.6kB"></p>
+<h2 id="smo算法">SMO算法</h2>
+<p>被称为最快的二次规划优化算法, 有点6 特别在用于线性SVM和数据稀疏时性能更优 原始paper: 《 Sequential Minimal Optimization A Fast Algorithm for Training Support Vector Machines》</p>
+<p>之前说最后要解决这个对偶问题： <span class="math display">\[
+\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j&lt;x^{(i)},x^{(j)}&gt;\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 这里 <span class="math inline">\(x^{(i)}, y^{(i)}, C\)</span>都是已知的，所以我们的问题就是在参数 <span class="math inline">\(\{\alpha_1,\alpha_2,...,\alpha_m\}\)</span> 上求 <span class="math inline">\(W\)</span> 的最大值 按照坐标上升的思路，我们是要固定其他维度，先选取一个参数做优化的，但是，由于我们有第二个等式约束，是无法只变动一个参数而其他参数都不改变的，所以我们至少也要选两个参数优化才可以。 算法思路如下： <img src="http://static.zybuluo.com/Preke/qsk30gn1eisq3wppvn89cw3g/image_1bp39pgg3bnf17jv9v81tp1sjo9.png" alt="image_1bp39pgg3bnf17jv9v81tp1sjo9.png-60kB"> 循环内： 1. 用启发式算法去选取一对 <span class="math inline">\(\alpha_i, \alpha_j\)</span>， 控制其他 <span class="math inline">\(\alpha\)</span> 不变 2. 通过 <span class="math inline">\(\alpha_i, \alpha_j\)</span> 优化得到的 <span class="math inline">\(W(\alpha)\)</span> 更新原来的值</p>
+<p>这里我们有这个约束： <span class="math inline">\(\sum_{i=1}^m\alpha_iy^{(i)}=0\)</span>, 假设我们选取 <span class="math inline">\(\alpha_1, \alpha_2\)</span>, 我们就能够得到： <span class="math display">\[
+\alpha_1y^{(1)}+\alpha_2y^{(2)} = -\sum_{i=3}^m\alpha_iy^{(i)} = \zeta
+\]</span> 其中 <span class="math inline">\(\zeta\)</span> 是一个固定值，因为我们固定后面的参数不变 我们可以显式的把这个约束条件表示成一条直线，如下： <img src="http://static.zybuluo.com/Preke/lp0zyfluulhsa4b11z339g14/image_1bp3cpicr1gsikhahi81ucajofm.png" alt="image_1bp3cpicr1gsikhahi81ucajofm.png-16.3kB"></p>
+<p>横轴为 <span class="math inline">\(\alpha_1\)</span>，纵轴为 <span class="math inline">\(\alpha_2\)</span>， <span class="math inline">\(0\leq\alpha_i\leq C\)</span> 对应了 <span class="math inline">\(\alpha\)</span> 对应在这个方框内 其中的 L，H 就是 <span class="math inline">\(\alpha_2\)</span> 的 lowerbond 和 upperbond</p>
+<p>继续我们可以得到： <span class="math inline">\(\alpha_1 = (\zeta-\alpha_2y^{(2)})y^{(1)}\)</span> (这里因为 <span class="math inline">\(y^{(i)}\in\{1,-1\}\)</span> )是类别标签，所以乘和除是一样的，那么目标问题就表示成： <span class="math display">\[
+W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...,\alpha_m).
+\]</span> 这就变成了对一个变量 <span class="math inline">\(\alpha_2\)</span> 的优化问题，带入 <span class="math inline">\(W(\alpha)\)</span> 的公式，可以将 <span class="math inline">\(W(\alpha)\)</span> 表示成类似 $a_2^2+b_2+c $ 的形式, 其中 <span class="math inline">\(L\leq \alpha_2 \leq H\)</span></p>
+<p>我们用 <span class="math inline">\(\alpha_2^{new,unclipped}\)</span> 来表示上述二次规划得到的最优值对应的 <span class="math inline">\(\alpha_2\)</span>, 我们容易得到 <span class="math inline">\(\alpha_2\)</span> 的更新规则： <img src="http://static.zybuluo.com/Preke/lqms4kjkf47fo5pzevrodbjy/image_1bp3gbbne3r1gb813nb1f7naf1p.png" alt="image_1bp3gbbne3r1gb813nb1f7naf1p.png-22.5kB"></p>
+<p>得到之后再求出 <span class="math inline">\(\alpha_1^{new}\)</span> 就好了。</p>
 <hr>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，我们还有几个问题：</p>
+<h2 id="后记">后记</h2>
+<p>至此，我们还有几个问题：</p>
 <ul>
-<li>上面提到说，软间隔中 $b$ 的更新规则变了，如何变？</li>
-<li>SMO中说到的启发式规则寻找 $\alpha_i, \alpha_j$，（感觉应该能简化一些计算量）<br>暂时只能先去参考JerryLead大神的笔记了…</li>
+<li>上面提到说，软间隔中 <span class="math inline">\(b\)</span> 的更新规则变了，如何变？</li>
+<li>SMO中说到的启发式规则寻找 <span class="math inline">\(\alpha_i, \alpha_j\)</span>，（感觉应该能简化一些计算量） 暂时只能先去参考JerryLead大神的笔记了…</li>
 </ul>
-<p>说实话，写到这里很累…<br>一度怀疑为什么网上有这么详尽的笔记，自己还要再写一遍…<br>才感觉到这才只是一个开始，SVM的世界好大，完全弄懂一个算法真的不容易…<br>以 JerryLead 大神的一个深入浅出的总结来暂时结束吧…毕竟以后还有代码实现不是~<br><img src="http://static.zybuluo.com/Preke/lpquhwg7j2nzs8oke0816qfw/image_1bp3h9i15h82ovh1qka17m91dqh16.png" alt="image_1bp3h9i15h82ovh1qka17m91dqh16.png-354.5kB"></p>
+<p>说实话，写到这里很累… 一度怀疑为什么网上有这么详尽的笔记，自己还要再写一遍… 才感觉到这才只是一个开始，SVM的世界好大，完全弄懂一个算法真的不容易… 以 JerryLead 大神的一个深入浅出的总结来暂时结束吧…毕竟以后还有代码实现不是~ <img src="http://static.zybuluo.com/Preke/lpquhwg7j2nzs8oke0816qfw/image_1bp3h9i15h82ovh1qka17m91dqh16.png" alt="image_1bp3h9i15h82ovh1qka17m91dqh16.png-354.5kB"></p>
 
           
         
@@ -989,7 +1000,8 @@ W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...
       
         
           
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先说我对线性SVM的整体理解吧：<br>其实就是一个最优间隔的二分类器（如下图）<br><img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"></p>
+            <h2 id="前言">前言</h2>
+<p>先说我对线性SVM的整体理解吧： 其实就是一个最优间隔的二分类器（如下图） <img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"></p>
 <p>目标就是找到中间那个最优的分类超平面，而如图在虚线上的点，就是所谓的支持向量（support vectors) 。在求解这一问题的时候用到了对偶问题来帮助解决（为什么要用对偶问题？）而想要这样的话，我们定义了一个满足KKT条件的原问题，这里很巧妙的一点在于，<strong>KKT 的总体思想是认为极值会在可行域边界上取得</strong>，我觉得这一点是线性SVM的核心思想。</p>
 <p>在总结下来这些的时候，我主要是根据</p>
 <ul>
@@ -998,136 +1010,141 @@ W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...
 <li>JerryLead 的中文笔记</li>
 <li>Matrix cookbook</li>
 </ul>
-<p>其实很多问题，很多人都阐述的非常清楚透彻，自己写下来只是理一下自己的思路，确认是否真正的理解；<br>我在看讲义和听课的过程中，经常暂停下来提一些奇怪的问题，有些能够解决，有些却不能，我也会在下面写出，供大家思考，这部分我用引用格式表示，如：</p>
+<p>其实很多问题，很多人都阐述的非常清楚透彻，自己写下来只是理一下自己的思路，确认是否真正的理解； 我在看讲义和听课的过程中，经常暂停下来提一些奇怪的问题，有些能够解决，有些却不能，我也会在下面写出，供大家思考，这部分我用引用格式表示，如：</p>
 <blockquote>
-<h2 id="为什么最优间隔？"><a href="#为什么最优间隔？" class="headerlink" title="为什么最优间隔？"></a>为什么最优间隔？</h2><p>最优间隔，就是这个分类器（超平面）要尽可能的离两边的样本数据都很远才好；<br>我们知道，分类器是根据已有样本数据来训练得到，以便预测测试数据的，在这一点上，我们考虑到，最优间隔的分类器，在未来的测试数据上，更保险，更不容易出错。</p>
+<h2 id="为什么最优间隔">为什么最优间隔？</h2>
+<p>最优间隔，就是这个分类器（超平面）要尽可能的离两边的样本数据都很远才好； 我们知道，分类器是根据已有样本数据来训练得到，以便预测测试数据的，在这一点上，我们考虑到，最优间隔的分类器，在未来的测试数据上，更保险，更不容易出错。</p>
 </blockquote>
-<h2 id="问题的数学表示"><a href="#问题的数学表示" class="headerlink" title="问题的数学表示"></a>问题的数学表示</h2><p>我们有很多样本点：</p>
-<script type="math/tex; mode=display">(x^{(i)}, y^{(i)}), i = 1...m</script><p>其中 $x^{(i)} = [x<em>{1}^{(i)},x</em>{2}^{(i)},…,x_{n}^{(i)}]$ 是一个向量， $y^{(i)} \in \left{ 1, -1 \right}$ 是类别标签；</p>
+<h2 id="问题的数学表示">问题的数学表示</h2>
+<p>我们有很多样本点： <span class="math display">\[(x^{(i)}, y^{(i)}), i = 1...m\]</span> 其中 <span class="math inline">\(x^{(i)} = [x_{1}^{(i)},x_{2}^{(i)},...,x_{n}^{(i)}]\)</span> 是一个向量， <span class="math inline">\(y^{(i)} \in \left\{ 1, -1 \right\}\)</span> 是类别标签；</p>
 <p>既然还是一个线性的分类器，那么我们可以将这个分类超平面定义为：</p>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[ 
 h_{w,b} = g(w^Tx+b)\\
 \\
 g(z)=\left\{ 
 \begin{aligned} 
-1, &z>=0\\
--1, &z<0\\
+1, &amp;z&gt;=0\\
+-1, &amp;z&lt;0\\
 \end{aligned}
-\right.</script><p>其中 $w, b$ 就是我们需要学习到的分类器的参数</p>
+\right.
+\]</span></p>
+<p>其中 <span class="math inline">\(w, b\)</span> 就是我们需要学习到的分类器的参数</p>
 <blockquote>
-<p>这里我想说一下这个 $g(z)$ ，我们知道：<br>在LR里面，这个 $g(z)$ 就是 sigmoid 函数<br>在softmax里面，这个 $g(z)$ 就是softmax函数<br>那么在这里，写到这的时候还没有一个 $g(z)$ 的显式表出；<br>我们考虑一个特殊情况，因为我上面说到,KKT条件的整体思想，引发了我的思考，也就是SVM的核心思想就是边界值，那么，我们索性假设有一个边界值点 $(x^{(j)}, y^{(j)}) , y^{(j)} = 0$ ：那也就是说 $g(z) = 0$<br>当然，这个边界值点在被分类数据中不会存在，但是我们先继续， $g(z) = 0$ 的唯一取到的可能就是 $z = 0$, 那此时，也就是说 $w^Tx+b = 0$;<br>既然对于一个合法的分类器来说，这个点不会存在于被分类数据中，那么在这个空间内，它唯一存在的地方就是在这个分类超平面上，也就是说，这个超平面的性质就是：</p>
-<script type="math/tex; mode=display">w^Tx+b = 0</script></blockquote>
-<h2 id="函数间隔（functional-margin-amp-几何间隔（geometric-margin"><a href="#函数间隔（functional-margin-amp-几何间隔（geometric-margin" class="headerlink" title="函数间隔（functional margin) &amp; 几何间隔（geometric margin)"></a>函数间隔（functional margin) &amp; 几何间隔（geometric margin)</h2><h3 id="函数间隔"><a href="#函数间隔" class="headerlink" title="函数间隔"></a>函数间隔</h3><p>对于一个样本点 $(x^{(i)}, y^{(i)})$，函数间隔为：$\hat \gamma^{(i)} = y^{(i)}(w^Tx^{(i)}+b)$<br>考虑到 $y $ 的正负性，则有： $\hat \gamma^{(i)} = |w^Tx^{(i)}+b|$<br>下面这点我觉得讲的很好：<br>如果$y_{(i)} &gt; 0$ , $w^Tx^{(i)}+b$应该是一个大正数，反之是个大负数<br><strong>因此函数间隔代表了我们认为特征是正例还是反例的确信度</strong></p>
-<blockquote>
-<p>这里，函数间隔还没有什么具体的实际数值意义，因为随着参数 $w,b$ 的改变，函数间隔可以随意变化</p>
+<p>这里我想说一下这个 <span class="math inline">\(g(z)\)</span> ，我们知道： 在LR里面，这个 <span class="math inline">\(g(z)\)</span> 就是 sigmoid 函数 在softmax里面，这个 <span class="math inline">\(g(z)\)</span> 就是softmax函数 那么在这里，写到这的时候还没有一个 <span class="math inline">\(g(z)\)</span> 的显式表出； 我们考虑一个特殊情况，因为我上面说到,KKT条件的整体思想，引发了我的思考，也就是SVM的核心思想就是边界值，那么，我们索性假设有一个边界值点 <span class="math inline">\((x^{(j)}, y^{(j)}) , y^{(j)} = 0\)</span> ：那也就是说 <span class="math inline">\(g(z) = 0\)</span> 当然，这个边界值点在被分类数据中不会存在，但是我们先继续， <span class="math inline">\(g(z) = 0\)</span> 的唯一取到的可能就是 <span class="math inline">\(z = 0\)</span>, 那此时，也就是说 <span class="math inline">\(w^Tx+b = 0\)</span>; 既然对于一个合法的分类器来说，这个点不会存在于被分类数据中，那么在这个空间内，它唯一存在的地方就是在这个分类超平面上，也就是说，这个超平面的性质就是： <span class="math display">\[w^Tx+b = 0\]</span></p>
 </blockquote>
-<h3 id="几何间隔"><a href="#几何间隔" class="headerlink" title="几何间隔"></a>几何间隔</h3><p>简单来说，几何间隔就是归一化的函数间隔<br>归一化之后，几何间隔就是某个样本点到分类平面的距离<br><img src="http://static.zybuluo.com/Preke/3xkz3sjhntpf9erb5621afg7/image_1bnu4e0u11fqut6917rh1jos62j3o.png" alt="image_1bnu4e0u11fqut6917rh1jos62j3o.png-23.4kB"></p>
-<p>上图中， B 点位于 <script type="math/tex">w^Tx+b = 0</script> 这个分割面上， 设 A 点到 B 点的距离用 $\gamma^{(i)}$ 表示，即 A 的几何间隔， 那么， $w$ 就是 BA 方向上的梯度， 单位向量为 $\frac {w}{||w||} $ ;</p>
+<h2 id="函数间隔functional-margin-几何间隔geometric-margin">函数间隔（functional margin) &amp; 几何间隔（geometric margin)</h2>
+<h3 id="函数间隔">函数间隔</h3>
+<p>对于一个样本点 <span class="math inline">\((x^{(i)}, y^{(i)})\)</span>，函数间隔为：<span class="math inline">\(\hat \gamma^{(i)} = y^{(i)}(w^Tx^{(i)}+b)\)</span> 考虑到 $y $ 的正负性，则有： <span class="math inline">\(\hat \gamma^{(i)} = |w^Tx^{(i)}+b|\)</span> 下面这点我觉得讲的很好： 如果<span class="math inline">\(y_{(i)} &gt; 0\)</span> , <span class="math inline">\(w^Tx^{(i)}+b\)</span>应该是一个大正数，反之是个大负数 <strong>因此函数间隔代表了我们认为特征是正例还是反例的确信度</strong></p>
 <blockquote>
-<p>这里我又瞎想了一下， $w$ 为啥是梯度呢？<br>首先这个问题是一个线性的问题，也就是 $w^Tx+b = 0$ 是一个 $x$ 的线性组合，那么我们先从二维着手，<br>假设 $x$ 就是一个一维变量，那么 $w^Tx+b = 0$ 就是一条分类直线， <strong>$w$ 就是斜率</strong><br>那么二维空间的梯度，不就是斜率吗？<br>换句话讲，梯度就是函数的走势方向，因为想想梯度下降，不就是选择函数下降最快的方向作为梯度吗？<br>或者你也可以这么理解，梯度是怎样得到的？求导得到的<br>你在二维空间，将 $wx+b$ 对 $x$ 求导就是 $w$<br>或者直接在高维将 $w^Tx+b = 0$ 对 $x$ 求导， 得到的就是 $w$<br>这里可以参考matrix cookbook, 有一系列的求导规则，这里用到了：<br><img src="http://static.zybuluo.com/Preke/18uzcewxcnack2et745ntqml/image_1bnu5ddne111f1jcq1649ebe1qpq45.png" alt="image_1bnu5ddne111f1jcq1649ebe1qpq45.png-5.9kB"></p>
+<p>这里，函数间隔还没有什么具体的实际数值意义，因为随着参数 <span class="math inline">\(w,b\)</span> 的改变，函数间隔可以随意变化</p>
 </blockquote>
-<p>回归正题：所以如果 A 是  $(x^{(i)}, y^{(i)})$ ， B 就是 $(x^{(i)} - \hat \gamma^{(i)}\frac {w}{||w||}, 0)$。 这里我一度将这个运算和上面的示意图混淆，不知道为什么这样计算 B， 但是，当我意识到， $y$ 并不是示意图的一个维度，知识一个类别标签，把这个运算单纯作为向量运算，就很明了了。<br>把 B 代入 $w^Tx+b = 0$， 运算得到：</p>
-<script type="math/tex; mode=display">\gamma^{(i)} = y^{(i)} \big( (\frac {w}{||w||})^Tx^{(i)}+\frac{b}{||w||} \big)</script><p>当 $||w|| = 1$ 时， 几何间隔就是函数间隔了，所以说几何间隔就是归一化的函数间隔；</p>
-<h2 id="最优间隔分类器"><a href="#最优间隔分类器" class="headerlink" title="最优间隔分类器"></a>最优间隔分类器</h2><p>我们的目标是寻找一个超平面，使得离超平面比较近的点能有更大的间距。也就是我们不考虑所有的点都必须远离超平面，我们关心求得的超平面能够让所有点中离它最近的点具有最大间距。将问题形式化表示：</p>
-<script type="math/tex; mode=display">
+<h3 id="几何间隔">几何间隔</h3>
+<p>简单来说，几何间隔就是归一化的函数间隔 归一化之后，几何间隔就是某个样本点到分类平面的距离 <img src="http://static.zybuluo.com/Preke/3xkz3sjhntpf9erb5621afg7/image_1bnu4e0u11fqut6917rh1jos62j3o.png" alt="image_1bnu4e0u11fqut6917rh1jos62j3o.png-23.4kB"></p>
+<p>上图中， B 点位于 <span class="math display">\[w^Tx+b = 0\]</span> 这个分割面上， 设 A 点到 B 点的距离用 <span class="math inline">\(\gamma^{(i)}\)</span> 表示，即 A 的几何间隔， 那么， <span class="math inline">\(w\)</span> 就是 BA 方向上的梯度， 单位向量为 $ $ ;</p>
+<blockquote>
+<p>这里我又瞎想了一下， <span class="math inline">\(w\)</span> 为啥是梯度呢？ 首先这个问题是一个线性的问题，也就是 <span class="math inline">\(w^Tx+b = 0\)</span> 是一个 <span class="math inline">\(x\)</span> 的线性组合，那么我们先从二维着手， 假设 <span class="math inline">\(x\)</span> 就是一个一维变量，那么 <span class="math inline">\(w^Tx+b = 0\)</span> 就是一条分类直线， <strong><span class="math inline">\(w\)</span> 就是斜率</strong> 那么二维空间的梯度，不就是斜率吗？ 换句话讲，梯度就是函数的走势方向，因为想想梯度下降，不就是选择函数下降最快的方向作为梯度吗？ 或者你也可以这么理解，梯度是怎样得到的？求导得到的 你在二维空间，将 <span class="math inline">\(wx+b\)</span> 对 <span class="math inline">\(x\)</span> 求导就是 <span class="math inline">\(w\)</span> 或者直接在高维将 <span class="math inline">\(w^Tx+b = 0\)</span> 对 <span class="math inline">\(x\)</span> 求导， 得到的就是 <span class="math inline">\(w\)</span> 这里可以参考matrix cookbook, 有一系列的求导规则，这里用到了： <img src="http://static.zybuluo.com/Preke/18uzcewxcnack2et745ntqml/image_1bnu5ddne111f1jcq1649ebe1qpq45.png" alt="image_1bnu5ddne111f1jcq1649ebe1qpq45.png-5.9kB"></p>
+</blockquote>
+<p>回归正题：所以如果 A 是 <span class="math inline">\((x^{(i)}, y^{(i)})\)</span> ， B 就是 <span class="math inline">\((x^{(i)} - \hat \gamma^{(i)}\frac {w}{||w||}, 0)\)</span>。 这里我一度将这个运算和上面的示意图混淆，不知道为什么这样计算 B， 但是，当我意识到， <span class="math inline">\(y\)</span> 并不是示意图的一个维度，知识一个类别标签，把这个运算单纯作为向量运算，就很明了了。 把 B 代入 <span class="math inline">\(w^Tx+b = 0\)</span>， 运算得到： <span class="math display">\[ \gamma^{(i)} = y^{(i)} \big( (\frac {w}{||w||})^Tx^{(i)}+\frac{b}{||w||} \big) \]</span></p>
+<p>当 <span class="math inline">\(||w|| = 1\)</span> 时， 几何间隔就是函数间隔了，所以说几何间隔就是归一化的函数间隔；</p>
+<h2 id="最优间隔分类器">最优间隔分类器</h2>
+<p>我们的目标是寻找一个超平面，使得离超平面比较近的点能有更大的间距。也就是我们不考虑所有的点都必须远离超平面，我们关心求得的超平面能够让所有点中离它最近的点具有最大间距。将问题形式化表示： <span class="math display">\[
 max_{\gamma ,w,b}\quad\gamma \\
 \quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad\gamma \\
-\quad\quad\quad\quad||w|| = 1</script><p>这里约束了 $||w|| = 1$,  $w^Tx+b$ 就是几何间隔，也就是点到分类平面的距离<br>，至此我们定义出的问题，借助这个优化目标，如果求出了 $w,b$ 就可以借助之前定义的 $h(x), g(z)$ 来判别 $y$ 的类别了。</p>
-<h3 id="其实我觉得这部分是精髓，转化的思想也可以应用到其他地方"><a href="#其实我觉得这部分是精髓，转化的思想也可以应用到其他地方" class="headerlink" title="其实我觉得这部分是精髓，转化的思想也可以应用到其他地方"></a>其实我觉得这部分是精髓，转化的思想也可以应用到其他地方</h3><p>我们虽然有了这个 $||w|| = 1$ 的约束，但是用这个约束，却有点手足无措，因为这不是一个凸函数。所以开始了<strong>奇妙的转化：</strong></p>
+\quad\quad\quad\quad||w|| = 1
+\]</span> 这里约束了 <span class="math inline">\(||w|| = 1\)</span>, <span class="math inline">\(w^Tx+b\)</span> 就是几何间隔，也就是点到分类平面的距离 ，至此我们定义出的问题，借助这个优化目标，如果求出了 <span class="math inline">\(w,b\)</span> 就可以借助之前定义的 <span class="math inline">\(h(x), g(z)\)</span> 来判别 <span class="math inline">\(y\)</span> 的类别了。</p>
+<h3 id="其实我觉得这部分是精髓转化的思想也可以应用到其他地方">其实我觉得这部分是精髓，转化的思想也可以应用到其他地方</h3>
+<p>我们虽然有了这个 <span class="math inline">\(||w|| = 1\)</span> 的约束，但是用这个约束，却有点手足无措，因为这不是一个凸函数。所以开始了<strong>奇妙的转化：</strong></p>
 <p>第一步：</p>
-<p>考虑到几何间隔和函数间隔的关系 $\gamma = \frac{\hat \gamma}{||w||}$, 先将问题转化成：</p>
-<script type="math/tex; mode=display">
+<p>考虑到几何间隔和函数间隔的关系 <span class="math inline">\(\gamma = \frac{\hat \gamma}{||w||}\)</span>, 先将问题转化成： <span class="math display">\[
 max_{\gamma ,w,b}\quad\frac{\hat \gamma}{||w||} \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad\hat\gamma \\</script><p>这里，把 $||w|| = 1$ 这个约束条件转化到优化目标问题里，我们就不用单独去考虑这个非凸优化的条件，但是优化目标还不是凸函数，那就继续</p>
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad\hat\gamma \\
+\]</span> 这里，把 <span class="math inline">\(||w|| = 1\)</span> 这个约束条件转化到优化目标问题里，我们就不用单独去考虑这个非凸优化的条件，但是优化目标还不是凸函数，那就继续</p>
 <p>第二步：</p>
-<p><img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"><br>之前简略提过，分类面的确立只与那些离分类面最近的那些点有关；<br>我们在上图中，考虑这些离分类面最近的那些点，把他们的函数间隔设为1， $\hat \gamma = 1$ ;（这里只是对 $w,b$ 进行了缩放，因为本身函数间隔的大小就是可以改变的）<br>那么他们的几何间隔 $\gamma =  \frac{\hat \gamma}{||w||} = \frac{1}{||w||}$<br>也即他们到分类面的距离。<br>那么问题就转化成：</p>
-<script type="math/tex; mode=display">
+<p><img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"> 之前简略提过，分类面的确立只与那些离分类面最近的那些点有关； 我们在上图中，考虑这些离分类面最近的那些点，把他们的函数间隔设为1， <span class="math inline">\(\hat \gamma = 1\)</span> ;（这里只是对 <span class="math inline">\(w,b\)</span> 进行了缩放，因为本身函数间隔的大小就是可以改变的） 那么他们的几何间隔 <span class="math inline">\(\gamma = \frac{\hat \gamma}{||w||} = \frac{1}{||w||}\)</span> 也即他们到分类面的距离。 那么问题就转化成： <span class="math display">\[
 max_{\gamma ,w,b}\quad\frac{1}{||w||} \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\</script><p>由于 $||w||$ 是二范数，本质还是一个数值，我们求 $\frac{1}{||w||}$ 的最大值，也就是求 $\frac{1}{2}||w||^2$的最小值<br>所以问题转化为：</p>
-<script type="math/tex; mode=display">
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\
+\]</span> 由于 <span class="math inline">\(||w||\)</span> 是二范数，本质还是一个数值，我们求 <span class="math inline">\(\frac{1}{||w||}\)</span> 的最大值，也就是求 <span class="math inline">\(\frac{1}{2}||w||^2\)</span>的最小值 所以问题转化为： <span class="math display">\[
 min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2 \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\</script><p>这就成了一个带有不等式约束的二次规划问题，带条件的优化问题，我们可以用拉格朗日乘子法来解决；</p>
-<h2 id="拉格朗日乘数法，-对偶问题，-KKT-条件"><a href="#拉格朗日乘数法，-对偶问题，-KKT-条件" class="headerlink" title="拉格朗日乘数法， 对偶问题， KKT 条件"></a>拉格朗日乘数法， 对偶问题， KKT 条件</h2><p>先看一下一般形式的拉格朗日乘数法：<br>假设有问题：</p>
-<script type="math/tex; mode=display">
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\
+\]</span></p>
+<p>这就成了一个带有不等式约束的二次规划问题，带条件的优化问题，我们可以用拉格朗日乘子法来解决；</p>
+<h2 id="拉格朗日乘数法-对偶问题-kkt-条件">拉格朗日乘数法， 对偶问题， KKT 条件</h2>
+<p>先看一下一般形式的拉格朗日乘数法： 假设有问题： <span class="math display">\[
 min_w \quad f(w)\\
 \quad\quad\quad\quad\quad\quad\quad s.t. \quad g_i(w) \leq0 \quad i = 1,...,k\\
-\quad\quad\quad\quad\quad\quad\quad\quad\quad h_i(w)=0 \quad i = 1,...,l</script><p>为了解决有两个约束（一个等式约束 $h_i(w)=0$, 一个不等式约束 $ g_i(w) \leq0$ )的优化问题，引入拉格朗日乘数法，先定义拉格朗日公式：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}(w,\alpha, \beta) = f(w) + \sum_{i=1}^k\alpha_ig_i(w)+\sum_{i=1}^l\beta_ih_i(w)</script><p>其中 $\alpha_i, \beta_i$ 是拉格朗日算子，然后联立如下方程组，就可以解出<strong>可能的</strong>极值点：</p>
-<script type="math/tex; mode=display">
+\quad\quad\quad\quad\quad\quad\quad\quad\quad h_i(w)=0 \quad i = 1,...,l
+\]</span></p>
+<p>为了解决有两个约束（一个等式约束 <span class="math inline">\(h_i(w)=0\)</span>, 一个不等式约束 $ g_i(w) 0$ )的优化问题，引入拉格朗日乘数法，先定义拉格朗日公式： <span class="math display">\[
+\mathcal{L}(w,\alpha, \beta) = f(w) + \sum_{i=1}^k\alpha_ig_i(w)+\sum_{i=1}^l\beta_ih_i(w)
+\]</span> 其中 <span class="math inline">\(\alpha_i, \beta_i\)</span> 是拉格朗日算子，然后联立如下方程组，就可以解出<strong>可能的</strong>极值点： <span class="math display">\[
 \frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial w} = 0\\
 \frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial \alpha_i} = 0\\
-\frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial \beta_i} = 0</script><blockquote>
-<p>(这部分我自己理解的时候也有点乱，条理可能不太清晰，如果看一次没看懂，再看一遍可能会有帮助）<br>至于为什么能够这样的条件约束下的优化问题能够用拉格朗日乘数法求解，<br>首先，我看到了这样一篇博客 <a href="http://www.cnblogs.com/maybe2030/p/4946256.html" target="_blank" rel="noopener">拉格朗日乘数法</a>，第二部分中数学实例的例子不错，提出了拉格朗日乘数法的思想：<br><strong>通过引入拉格朗日乘子将原来的约束优化问题转化为无约束的方程组问题</strong><br>其次这个 <a href="https://zh.wikipedia.org/wiki/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%95%B0" target="_blank" rel="noopener">维基百科</a> 的图，觉得对自己理解很有帮助<br><img src="http://static.zybuluo.com/Preke/fw2eels4sf4u6j4eu40gxbvj/image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png" alt="image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png-40.6kB"><br>简单来说，虽然还是寻找极值点，但是约束条件的存在使得这个寻找的轨迹只能由上图绿线所决定；绿线就是问题的可行域。那么我们沿着绿线的方向走，向着 $f(x,y)$ 下降（或上升，取决于问题求极大还是极小）的方向走，走到  $g(x,y)$ 的变化率为0的时候，我们就找到了极值点, 这里的图中就表现为与 $f(x,y)$ 的等高线相切。<br>此时：从图上理解，曲面相切，法向量共线，曲面的法向量就是偏导（偏导是各个分量的变化率，法向量是各个方向变化率叠加的结果，如果不太明白，推荐一篇博客：<a href="http://www.cnblogs.com/jerrylead/archive/2011/03/09/1978280.html" target="_blank" rel="noopener">小谈导数、梯度和极值</a><br>或者也可以从一元函数来理解，两个曲线相切，意味着此刻在切点，斜率相同，曲线法向量共线；<br>Anyway, 我们定义一个只有一个不等约束的拉格朗日问题方便理解，这里再从解析的角度去理解：</p>
-<script type="math/tex; mode=display">
-min_w \quad f(w)\\
- s.t. \quad g(w) \leq0</script><p>先看求解过程：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)</script><p>联立方程组：</p>
-<script type="math/tex; mode=display">
-\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = 0\quad\quad\quad\quad\quad(1) \\
-\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} = 0\quad\quad\quad\quad\quad(2)</script><p>我们先看 $(1)$ , 进一步： $\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = \frac {\partial f(w)}{\partial w}+\alpha \frac {\partial g(w)}{\partial w} = 0$<br>回想我们刚刚说的法向量共线，是不是这个公式就是对于法向量共线的解释呢？<br>我们继续看 $(2)$：$\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} =g(w)= 0$，这说明了什么？ $\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)$， 现在 $g(w) = 0$ ,那说明在极值点： $\mathcal{L}(w,\alpha) = f(w)$<br>现在再回来看 $(1)$， 相当于是在求 $\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha}$的极值点，是不是就是原问题 $f(w)$ 的极值点了呢？ 这样这种解法就能解释得通了吧。<br>不过有点不严谨的地方是，记得我们在学的时候，是有一条：就是原问题 $f(w)$ 的极值是 $ {\partial\mathcal{L}(w,\alpha)}$ 的极值的子集，之后还需继续验证<br>扩展到高维不难，如果有多个约束条件无非就是多个条件的线性组合，相信在理解的过程中是一样的。</p>
-</blockquote>
-<p>回到正题，但是我们不能直接求解，有 $g_i(w)\leq0$，求极小值可以发散到负无穷，这样我们先定义一个这样的函数：</p>
-<script type="math/tex; mode=display">\theta_\mathcal{P}(w)=\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)</script><p>作为我们的原问题。由于有 $g_i(w)\leq0$, 为了求极大值，我们这里约束 $\alpha_i \geq 0$</p>
+\frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial \beta_i} = 0
+\]</span></p>
 <blockquote>
-<p>讲义上这里直接说<br><img src="http://static.zybuluo.com/Preke/5mvvg20kv2e0gxdqdp812c8h/image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png" alt="image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png-20kB"><br>但是我觉得这个式子只有在提出KKT条件再提比较合适，因为在不满足KKT条件的情况下，$\alpha_ig_i(w)=0$ 是不一定能成立的。但是为了方便表述，这里暂且先默认满足</p>
+<p>(这部分我自己理解的时候也有点乱，条理可能不太清晰，如果看一次没看懂，再看一遍可能会有帮助） 至于为什么能够这样的条件约束下的优化问题能够用拉格朗日乘数法求解， 首先，我看到了这样一篇博客 <a href="http://www.cnblogs.com/maybe2030/p/4946256.html" target="_blank" rel="noopener">拉格朗日乘数法</a>，第二部分中数学实例的例子不错，提出了拉格朗日乘数法的思想： <strong>通过引入拉格朗日乘子将原来的约束优化问题转化为无约束的方程组问题</strong> 其次这个 <a href="https://zh.wikipedia.org/wiki/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%95%B0" target="_blank" rel="noopener">维基百科</a> 的图，觉得对自己理解很有帮助 <img src="http://static.zybuluo.com/Preke/fw2eels4sf4u6j4eu40gxbvj/image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png" alt="image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png-40.6kB"> 简单来说，虽然还是寻找极值点，但是约束条件的存在使得这个寻找的轨迹只能由上图绿线所决定；绿线就是问题的可行域。那么我们沿着绿线的方向走，向着 <span class="math inline">\(f(x,y)\)</span> 下降（或上升，取决于问题求极大还是极小）的方向走，走到 <span class="math inline">\(g(x,y)\)</span> 的变化率为0的时候，我们就找到了极值点, 这里的图中就表现为与 <span class="math inline">\(f(x,y)\)</span> 的等高线相切。 此时：从图上理解，曲面相切，法向量共线，曲面的法向量就是偏导（偏导是各个分量的变化率，法向量是各个方向变化率叠加的结果，如果不太明白，推荐一篇博客：<a href="http://www.cnblogs.com/jerrylead/archive/2011/03/09/1978280.html" target="_blank" rel="noopener">小谈导数、梯度和极值</a> 或者也可以从一元函数来理解，两个曲线相切，意味着此刻在切点，斜率相同，曲线法向量共线； Anyway, 我们定义一个只有一个不等约束的拉格朗日问题方便理解，这里再从解析的角度去理解： <span class="math display">\[
+min_w \quad f(w)\\
+s.t. \quad g(w) \leq0 
+\]</span> 先看求解过程： <span class="math display">\[
+\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)
+\]</span> 联立方程组： <span class="math display">\[
+\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = 0\quad\quad\quad\quad\quad(1) \\
+\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} = 0\quad\quad\quad\quad\quad(2) 
+\]</span> 我们先看 <span class="math inline">\((1)\)</span> , 进一步： <span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = \frac {\partial f(w)}{\partial w}+\alpha \frac {\partial g(w)}{\partial w} = 0\)</span> 回想我们刚刚说的法向量共线，是不是这个公式就是对于法向量共线的解释呢？ 我们继续看 <span class="math inline">\((2)\)</span>：<span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} =g(w)= 0\)</span>，这说明了什么？ <span class="math inline">\(\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)\)</span>， 现在 <span class="math inline">\(g(w) = 0\)</span> ,那说明在极值点： <span class="math inline">\(\mathcal{L}(w,\alpha) = f(w)\)</span> 现在再回来看 <span class="math inline">\((1)\)</span>， 相当于是在求 <span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha}\)</span>的极值点，是不是就是原问题 <span class="math inline">\(f(w)\)</span> 的极值点了呢？ 这样这种解法就能解释得通了吧。 不过有点不严谨的地方是，记得我们在学的时候，是有一条：就是原问题 <span class="math inline">\(f(w)\)</span> 的极值是 $ {(w,)}$ 的极值的子集，之后还需继续验证 扩展到高维不难，如果有多个约束条件无非就是多个条件的线性组合，相信在理解的过程中是一样的。</p>
 </blockquote>
-<p>当 $w$ 满足所有约束时，我们就可以将问题转化如下：</p>
-<script type="math/tex; mode=display">\min_w\theta_\mathcal{P}(w)=\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)</script><p>我们使用 $p^<em>$ 来表示 $\min<em>w\theta</em>\mathcal{P}(w)$<br>原问题 $p</em>$ 是先求最大，再求最小，那么我们定义一个它的对偶问题 $d*$ ，即先求最小，再求最大；<br>首先：</p>
-<script type="math/tex; mode=display">\theta_{\mathcal{D}}(\alpha, \beta)=\min_w\mathcal{L}(w,\alpha, \beta)</script><p>那么：</p>
-<script type="math/tex; mode=display">d^* = \max_{\alpha, \beta:\alpha_i\geq0}\theta_{\mathcal{D}}(\alpha, \beta)=\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)</script><p>就有:</p>
-<script type="math/tex; mode=display">d^* =\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)\leq\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)=p^*</script><blockquote>
-<p>这一点，我们有这样一个事实：</p>
-<script type="math/tex; mode=display">\max \min f(x) \leq \min \max f(x)</script></blockquote>
+<p>回到正题，但是我们不能直接求解，有 <span class="math inline">\(g_i(w)\leq0\)</span>，求极小值可以发散到负无穷，这样我们先定义一个这样的函数： <span class="math display">\[\theta_\mathcal{P}(w)=\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta) \]</span> 作为我们的原问题。由于有 <span class="math inline">\(g_i(w)\leq0\)</span>, 为了求极大值，我们这里约束 <span class="math inline">\(\alpha_i \geq 0\)</span></p>
+<blockquote>
+<p>讲义上这里直接说 <img src="http://static.zybuluo.com/Preke/5mvvg20kv2e0gxdqdp812c8h/image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png" alt="image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png-20kB"> 但是我觉得这个式子只有在提出KKT条件再提比较合适，因为在不满足KKT条件的情况下，<span class="math inline">\(\alpha_ig_i(w)=0\)</span> 是不一定能成立的。但是为了方便表述，这里暂且先默认满足</p>
+</blockquote>
+<p>当 <span class="math inline">\(w\)</span> 满足所有约束时，我们就可以将问题转化如下： <span class="math display">\[\min_w\theta_\mathcal{P}(w)=\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)\]</span></p>
+<p>我们使用 <span class="math inline">\(p^*\)</span> 来表示 <span class="math inline">\(\min_w\theta_\mathcal{P}(w)\)</span> 原问题 <span class="math inline">\(p*\)</span> 是先求最大，再求最小，那么我们定义一个它的对偶问题 <span class="math inline">\(d*\)</span> ，即先求最小，再求最大； 首先： <span class="math display">\[ \theta_{\mathcal{D}}(\alpha, \beta)=\min_w\mathcal{L}(w,\alpha, \beta)\]</span> 那么： <span class="math display">\[ d^* = \max_{\alpha, \beta:\alpha_i\geq0}\theta_{\mathcal{D}}(\alpha, \beta)=\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)\]</span> 就有: <span class="math display">\[d^* =\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)\leq\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)=p^*\]</span></p>
+<blockquote>
+<p>这一点，我们有这样一个事实： <span class="math display">\[\max \min f(x) \leq \min \max f(x)\]</span></p>
+</blockquote>
 <p>那么，再什么时候两者会等价呢？</p>
 <p><strong><em>首先，是三个假设：</em></strong></p>
 <ul>
-<li>$f,g$ 是凸函数</li>
-<li>$h$ 是仿射函数： $\exists a_i, b_i, \quad s.t. \quad h_i(w)=a_i^Tw+b_i $</li>
-<li>存在 $ w $, 使对于所有 $i$, $g_i(w)&lt;0$</li>
+<li><span class="math inline">\(f,g\)</span> 是凸函数</li>
+<li><span class="math inline">\(h\)</span> 是仿射函数： $a_i, b_i, s.t. h_i(w)=a_i^Tw+b_i $</li>
+<li>存在 $ w $, 使对于所有 <span class="math inline">\(i\)</span>, <span class="math inline">\(g_i(w)&lt;0\)</span></li>
 </ul>
 <p><strong>满足上述假设，就是一个凸优化问题</strong></p>
-<p>满足之后，一定存在 $w^<em>$ , $\alpha^</em>$ , $\beta^*$：</p>
+<p>满足之后，一定存在 <span class="math inline">\(w^*\)</span> , <span class="math inline">\(\alpha^*\)</span> , <span class="math inline">\(\beta^*\)</span>：</p>
 <ul>
-<li>$w^*$ 是原问题的解</li>
-<li>$\alpha^<em>, \beta^</em>$ 是对偶问题的解</li>
-<li>$p^<em> = d^</em> = \mathcal{L}(w^<em>,\alpha^</em>, \beta^*)$</li>
+<li><span class="math inline">\(w^*\)</span> 是原问题的解</li>
+<li><span class="math inline">\(\alpha^*, \beta^*\)</span> 是对偶问题的解</li>
+<li><span class="math inline">\(p^* = d^* = \mathcal{L}(w^*,\alpha^*, \beta^*)\)</span></li>
 </ul>
-<p>同时  $w^<em>, \alpha^</em>, \beta^*$ 满足K.K.T.条件：</p>
+<p>同时 <span class="math inline">\(w^*, \alpha^*, \beta^*\)</span> 满足K.K.T.条件：</p>
 <ul>
-<li>$\frac{\partial}{\partial w_i}\mathcal{L}(w^<em>,\alpha^</em>, \beta^*)=0, \quad i = 1,…,n$</li>
-<li>$\frac{\partial}{\partial \beta_i}\mathcal{L}(w^<em>,\alpha^</em>, \beta^*)=0, \quad i = 1,…,l$</li>
-<li>$\alpha_i^<em>g_i(w^</em>)=0, \quad\quad\quad\quad i=1,…,k$</li>
-<li>$g_i(w^*)\leq0,\quad\quad\quad\quad\quad i=1,…,k$</li>
-<li>$\alpha^*\geq0, \quad\quad\quad\quad\quad\quad\quad i=1,…,k$</li>
+<li><span class="math inline">\(\frac{\partial}{\partial w_i}\mathcal{L}(w^*,\alpha^*, \beta^*)=0, \quad i = 1,...,n\)</span></li>
+<li><span class="math inline">\(\frac{\partial}{\partial \beta_i}\mathcal{L}(w^*,\alpha^*, \beta^*)=0, \quad i = 1,...,l\)</span></li>
+<li><span class="math inline">\(\alpha_i^*g_i(w^*)=0, \quad\quad\quad\quad i=1,...,k\)</span></li>
+<li><span class="math inline">\(g_i(w^*)\leq0,\quad\quad\quad\quad\quad i=1,...,k\)</span></li>
+<li><span class="math inline">\(\alpha^*\geq0, \quad\quad\quad\quad\quad\quad\quad i=1,...,k\)</span></li>
 </ul>
-<p>我们看后三条：<br>如果我们限定 $\alpha_i &gt; 0$ 那么 $g_i(w) = 0$ 就一定成立。<br>由于 $g_i(w)$ 是限定条件， $g_i(w) = 0$ 意味着，$w$ 处于可行域的边界上</p>
-<blockquote>
-<p>这也就是我之前提到过的 (其实是别人提到过，我只是印象深刻)，K.K.T.条件是在可行域边界上取得极值；至于在可行域内部的点 $g_i(w^*)&lt;0$ 的约束是不起作用的，我总觉得这里和支持向量的思想很像；</p>
-</blockquote>
-<h2 id="最优间隔分类器-1"><a href="#最优间隔分类器-1" class="headerlink" title="最优间隔分类器"></a>最优间隔分类器</h2><p>讲了一大堆，回到刚刚的优化问题：</p>
-<script type="math/tex; mode=display">
+<p>我们看后三条： 如果我们限定 <span class="math inline">\(\alpha_i &gt; 0\)</span> 那么 <span class="math inline">\(g_i(w) = 0\)</span> 就一定成立。 由于 <span class="math inline">\(g_i(w)\)</span> 是限定条件， <span class="math inline">\(g_i(w) = 0\)</span> 意味着，<span class="math inline">\(w\)</span> 处于可行域的边界上 &gt; 这也就是我之前提到过的 (其实是别人提到过，我只是印象深刻)，K.K.T.条件是在可行域边界上取得极值；至于在可行域内部的点 <span class="math inline">\(g_i(w^*)&lt;0\)</span> 的约束是不起作用的，我总觉得这里和支持向量的思想很像；</p>
+<h2 id="最优间隔分类器-1">最优间隔分类器</h2>
+<p>讲了一大堆，回到刚刚的优化问题： <span class="math display">\[
 min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2 \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1 ,\quad\quad i=1,...,m\\</script><p>现在将约束条件改为： $g_i(w) = -y^{(i)}(w^Tx^{(i)}+b) + 1\leq 0$<br>现在原问题是凸函数，不等式约束是一个线性函数，也是一个广义的凸函数<br>所以满足了K.K.T.条件的假设前提。</p>
-<p>约束条件表明了，函数间隔为1是边界上的点<br>由K.K.T条件得知，(通常来说，在边界上的点，$ g_i(w)=0 $ 时， $\alpha_i&gt;0$, 而在其余的点上，当，$ g_i(w)&gt;0 $ 时， $\alpha_i=0$ ）</p>
-<p>现在可以构造拉格朗日函数如下：</p>
-<script type="math/tex; mode=display">\mathcal{L}(w,b, \alpha)=\frac{1}{2}||w||^2 -\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1], \quad \alpha_i\geq0</script><p>注意参数不同了，是 $w,b, \alpha$ ;<br>和上面一样，我们构造一个 $p^<em>$ ,然后找到对偶问题 $d^</em>$:</p>
-<script type="math/tex; mode=display">d^* =\max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)\leq\min_{w,b}\max_{\alpha:\alpha_i\geq0} \mathcal{L}(w,b,\alpha)=p^*</script><p>先求解$ \min_{w,b} \mathcal{L}(w,b, \alpha)$， 对 $w$ , $b$ 求偏导：</p>
-<script type="math/tex; mode=display">
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1 ,\quad\quad i=1,...,m\\
+\]</span> 现在将约束条件改为： <span class="math inline">\(g_i(w) = -y^{(i)}(w^Tx^{(i)}+b) + 1\leq 0\)</span> 现在原问题是凸函数，不等式约束是一个线性函数，也是一个广义的凸函数 所以满足了K.K.T.条件的假设前提。</p>
+<p>约束条件表明了，函数间隔为1是边界上的点 由K.K.T条件得知，(通常来说，在边界上的点，$ g_i(w)=0 $ 时， <span class="math inline">\(\alpha_i&gt;0\)</span>, 而在其余的点上，当，$ g_i(w)&gt;0 $ 时， <span class="math inline">\(\alpha_i=0\)</span> ）</p>
+<p>现在可以构造拉格朗日函数如下： <span class="math display">\[\mathcal{L}(w,b, \alpha)=\frac{1}{2}||w||^2 -\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1], \quad \alpha_i\geq0\]</span> 注意参数不同了，是 <span class="math inline">\(w,b, \alpha\)</span> ; 和上面一样，我们构造一个 <span class="math inline">\(p^*\)</span> ,然后找到对偶问题 <span class="math inline">\(d^*\)</span>: <span class="math display">\[d^* =\max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)\leq\min_{w,b}\max_{\alpha:\alpha_i\geq0} \mathcal{L}(w,b,\alpha)=p^*\]</span></p>
+<p>先求解$ _{w,b} (w,b, )$， 对 <span class="math inline">\(w\)</span> , <span class="math inline">\(b\)</span> 求偏导： <span class="math display">\[
 \frac{\partial}{\partial w}\mathcal{L}(w,b,\alpha)=w-\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}=0\\
-\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>得到 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$, 代回原拉格朗日函数：<br>（省略计算过程）</p>
-<script type="math/tex; mode=display">\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}-b\sum_{i=1}^m\alpha_iy^{(i)}</script><p>由于如上： $\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0$，最后一项为0，得：</p>
-<script type="math/tex; mode=display">\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}</script><p>现在用 $W(\alpha)$ 表示 $\min_{w,b}\mathcal{L}(w,b,\alpha)$ , 再来求最大值:</p>
-<script type="math/tex; mode=display">d^* = \max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)=\max_{\alpha:\alpha_i\geq0}W(\alpha)\\
+\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 得到 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span>, 代回原拉格朗日函数： （省略计算过程） <span class="math display">\[\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}-b\sum_{i=1}^m\alpha_iy^{(i)} \]</span> 由于如上： <span class="math inline">\(\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0\)</span>，最后一项为0，得： <span class="math display">\[\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}\]</span></p>
+<p>现在用 <span class="math inline">\(W(\alpha)\)</span> 表示 <span class="math inline">\(\min_{w,b}\mathcal{L}(w,b,\alpha)\)</span> , 再来求最大值: <span class="math display">\[d^* = \max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)=\max_{\alpha:\alpha_i\geq0}W(\alpha)\\
  \\
 \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}\\
 s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
-\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>这个问题，留给之后解决，假设我们解决了这个问题，找到了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 但是我们没有直接求出 $b$, 但是我们知道离超平面最近的正的函数间隔要等于离超平面最近的负的函数间隔，据此，可以用其他变量将 $b$ 表出：</p>
-<script type="math/tex; mode=display">b=-\frac{\max_{i:y^{(i)}=-1}w^Tx^{(i)}+\min_{i:y^{(i)}=1}w^Tx^{(i)}}{2}</script><blockquote>
-<p>这里我将 $\alpha^<em>, w^</em>, b^*$ 都用 $\alpha,w,b$ 表示，因为原问题的解和对偶问题相同</p>
+\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 这个问题，留给之后解决，假设我们解决了这个问题，找到了 <span class="math inline">\(\alpha\)</span>, 又有样本点数据，我们很容易由 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span> 得出 <span class="math inline">\(w\)</span>, 但是我们没有直接求出 <span class="math inline">\(b\)</span>, 但是我们知道离超平面最近的正的函数间隔要等于离超平面最近的负的函数间隔，据此，可以用其他变量将 <span class="math inline">\(b\)</span> 表出： <span class="math display">\[b=-\frac{\max_{i:y^{(i)}=-1}w^Tx^{(i)}+\min_{i:y^{(i)}=1}w^Tx^{(i)}}{2}\]</span></p>
+<blockquote>
+<p>这里我将 <span class="math inline">\(\alpha^*, w^*, b^*\)</span> 都用 <span class="math inline">\(\alpha,w,b\)</span> 表示，因为原问题的解和对偶问题相同</p>
 </blockquote>
-<p>这样，问题就解决了，我们只要找到那些函数间隔为1的样本点，代入上面的公式求出 $w$, 和 $b$，就能确定目标超平面 $w^Tx+b$ 了</p>
+<p>这样，问题就解决了，我们只要找到那些函数间隔为1的样本点，代入上面的公式求出 <span class="math inline">\(w\)</span>, 和 <span class="math inline">\(b\)</span>，就能确定目标超平面 <span class="math inline">\(w^Tx+b\)</span> 了</p>
 <p>所以，起到作用的只有那些“支持向量”，也就是，只有边界值决定了分类面。</p>
 <p>That’s all for now.</p>
 
@@ -1271,26 +1288,30 @@ s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
       
         
           
-            <h1 id="Skip-gram"><a href="#Skip-gram" class="headerlink" title="Skip-gram"></a>Skip-gram</h1><p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p>
-<h2 id="输入，输出"><a href="#输入，输出" class="headerlink" title="输入，输出"></a>输入，输出</h2><p>取窗口大小为2（前后两个词）：得到一些词对：<br><img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p>
-<p>如之中的（quick, brown)<br>训练神经网络时：<br><img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"><br>输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p>
+            <h1 id="skip-gram">Skip-gram</h1>
+<p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p>
+<h2 id="输入输出">输入，输出</h2>
+<p>取窗口大小为2（前后两个词）：得到一些词对： <img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p>
+<p>如之中的（quick, brown) 训练神经网络时： <img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"> 输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p>
 <hr>
-<h2 id="隐层："><a href="#隐层：" class="headerlink" title="隐层："></a>隐层：</h2><p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p>
-<p>假设corpus里有10000个词语， 目标词向量为 300维：<br>简单做一个图来表示过程：<br>依然用（quick, brown)训练神经网络<br><img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p>
+<h2 id="隐层">隐层：</h2>
+<p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p>
+<p>假设corpus里有10000个词语， 目标词向量为 300维： 简单做一个图来表示过程： 依然用（quick, brown)训练神经网络 <img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p>
 <hr>
 <p>如果两个不同的词有相同的上下文，那么我们的模型会需要预测类似的输出。那么网络为了输出类似的预测，他就会使这两个不同词的word vector尽可能相似。所以，如果两个词有相同的上下文，我们就可以得到比较接近的word vector。</p>
 <p>那么什么词有相同的上下文？ 比如一些近义词 smart 和intelligent 再比如 一些相关的词 engine 和 transmission。</p>
 <hr>
-<h1 id="训练过程："><a href="#训练过程：" class="headerlink" title="训练过程："></a>训练过程：</h1><p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p>
+<h1 id="训练过程">训练过程：</h1>
+<p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p>
 <p><strong><em>(这里word2vec)就直接做了一个类似 去掉一些大众词汇，类似tf_idf的工作</em></strong></p>
 <hr>
 <p>训练神经网络 意味着输入一个训练样本调整weight，让它预测这个训练样本更准。换句话说，每个训练样本将会影响网络中所有的weight。像我们之前讨论的一样，我们词典的大小意味着我们有好多weight，所有都要轻微的调整。</p>
-<p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。<br>（这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p>
+<p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。 （这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p>
 <p>Ref:</p>
-<p><a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</a></p>
-<p><a href="http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/" target="_blank" rel="noopener">http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</a></p>
-<p><a href="http://blog.csdn.net/Layumi1993/article/details/72866235" target="_blank" rel="noopener">http://blog.csdn.net/Layumi1993/article/details/72866235</a></p>
-<p><a href="http://blog.csdn.net/Layumi1993/article/details/72868399" target="_blank" rel="noopener">http://blog.csdn.net/Layumi1993/article/details/72868399</a></p>
+<p>http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</p>
+<p>http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</p>
+<p>http://blog.csdn.net/Layumi1993/article/details/72866235</p>
+<p>http://blog.csdn.net/Layumi1993/article/details/72868399</p>
 
           
         
@@ -1435,177 +1456,23 @@ s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
             <p>自己的一点理解，感觉还是要记下来…</p>
 <p>Softmax 是将LR用于多分类, 就按照类比的思路写下来。</p>
 <p>先简单说一下LR</p>
-<p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em><br><img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p>
-<p>假设自变量 x 是多维向量，也可以理解为多维特征吧：</p>
-<script type="math/tex; mode=display">x = [x_1, x_2, ..., x_n]</script><p>我们就可以把假设函数设为：<br><img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"><br>为了简化，$x_0 = 1$, 即 $x = [1, x_1, x_2, …, x_n] $， 就有：<br><img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
-<h3 id="此时-theta-是一个1-n-1的向量"><a href="#此时-theta-是一个1-n-1的向量" class="headerlink" title="此时 $\theta$ 是一个1 * n+1的向量"></a>此时 $\theta$ 是一个1 * n+1的向量</h3><p>然后我们在将这个假设函数代入Sigmoid函数：<br><img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p>
+<p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em> <img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p>
+<p>假设自变量 x 是多维向量，也可以理解为多维特征吧： <span class="math display">\[x = [x_1, x_2, ..., x_n] \]</span> 我们就可以把假设函数设为： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> 为了简化，<span class="math inline">\(x_0 = 1\)</span>, 即 $x = [1, x_1, x_2, …, x_n] $， 就有： <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"> ### 此时 <span class="math inline">\(\theta\)</span> 是一个1 * n+1的向量 然后我们在将这个假设函数代入Sigmoid函数： <img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p>
 <p>然后定义loss function, 做梯度下降。</p>
-<p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。<br>但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了<br>现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max<br>所以这里引入Softmax函数：<br>假设 $V = [v_1, v_2, … v_m]$<br>那么第i个元素的Softmax值：</p>
-<script type="math/tex; mode=display">S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}}</script><p>那如果现在将softmax应用到多分类：<br>依然用同样的自变量x, 同样的假设函数，如上：<br><img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"><br><img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
-<h3 id="但是这里的-theta-不再是一个1-n-1的向量，我们假设目标类别-y-有-k-个类别，-这里的-theta-是一个k-n-1的矩阵。"><a href="#但是这里的-theta-不再是一个1-n-1的向量，我们假设目标类别-y-有-k-个类别，-这里的-theta-是一个k-n-1的矩阵。" class="headerlink" title="但是这里的 $\theta$ 不再是一个1  n+1的向量，我们假设目标类别 y  有 k 个类别， 这里的 $\theta$ 是一个k  n+1的矩阵。"></a>但是这里的 $\theta$ 不再是一个1 <em> n+1的向量，我们假设目标类别 y  有 k 个类别， 这里的 $\theta$ 是一个k </em> n+1的矩阵。</h3><p>和上面一样，$\theta$就是我们要训练的参数；<br>这里可以列出LR 和 softmax的loss function 做对比：<br>LR：<br><img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"><br>Softmax:<br><img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p>
-<p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 $\textstyle k$ 个可能值进行了累加。注意在Softmax回归中将 $\textstyle x $分类为类别$ \textstyle j$ 的概率为：<br><img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>softmax对于LR来说</p>
+<p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。 但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了 现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max 所以这里引入Softmax函数： 假设 <span class="math inline">\(V = [v_1, v_2, ... v_m]\)</span> 那么第i个元素的Softmax值： <span class="math display">\[S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}} \]</span></p>
+<p>那如果现在将softmax应用到多分类： 依然用同样的自变量x, 同样的假设函数，如上： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
+<h3 id="但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵">但是这里的 <span class="math inline">\(\theta\)</span> 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 <span class="math inline">\(\theta\)</span> 是一个k * n+1的矩阵。</h3>
+<p>和上面一样，<span class="math inline">\(\theta\)</span>就是我们要训练的参数； 这里可以列出LR 和 softmax的loss function 做对比： LR： <img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"> Softmax: <img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p>
+<p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <span class="math inline">\(\textstyle k\)</span> 个可能值进行了累加。注意在Softmax回归中将 $x <span class="math inline">\(分类为类别\)</span> j$ 的概率为： <img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p>
+<h2 id="总结">总结：</h2>
+<p>softmax对于LR来说</p>
 <ul>
 <li>目标函数不同（sigmoid 和 softmax）</li>
-<li>优化参数 $\textstyle \theta$ 的形式不同</li>
+<li>优化参数 <span class="math inline">\(\textstyle \theta\)</span> 的形式不同</li>
 </ul>
 <p>至于loss function的推导，暂时还没有深究；</p>
-<h2 id="ref"><a href="#ref" class="headerlink" title="ref:"></a>ref:</h2><p><a href="http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92" target="_blank" rel="noopener">http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92</a><br><a href="http://blog.csdn.net/supercally/article/details/54234115" target="_blank" rel="noopener">http://blog.csdn.net/supercally/article/details/54234115</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/随记4.17/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiyuan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/Gold.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiyuan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/17/随记4.17/" itemprop="url">随记4.17</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T16:46:22+08:00">
-                2017-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随感/" itemprop="url" rel="index">
-                    <span itemprop="name">随感</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>学士服是租的，毕业照是学校安排的，论文是抄的，答辩是水的，实习报告是假的，三方合同是骗就业率的……一切都是假的，只有时间是真的。他每天都在告诉我们，青春，终究是要散场。</p>
-</blockquote>
-<p>看到上面一句话，感触还挺深的。</p>
-<p>好久没来写些东西了，我都怕我手生了，我都怕我不敢直面自己的想法了。<br>依然希望这里是一片净土</p>
-<p>最近看了15年，16年的中大的毕业快闪，感慨中大的人文情怀真是名不虚传，也庆幸自己能来，今年的毕业季马上就要来了~红领带，白衬衫，还是gfs特有的黑西装，蛤蟆镜，真是期待。</p>
-<p>唉，真的手生了，写不下去了，想法还没有经过沉淀还是怎样，刻意去写又不知道该写些什么好。</p>
-<p>压力是紧迫感，压力也能转化成动力<br>然而压力让你每天不能心安，不能静静的享受生活<br>突然感觉，好长好长一段时间，我都不能放空脑子，抛开一切去做一些事情了<br>也许这样的场景本身就不应该存在的</p>
-<p>总有担忧和顾虑，总觉得要想尽办法提升自己，美其名曰充实，又何尝不是忙碌得像条狗呢<br>劳逸结合可真是一个大课题，我初中开始，甚至小学开始就没有学会</p>
-<p>如果有一天我累的完全倒下，当然我知道这是不存在的<br>没有预想中的轰轰烈烈<br>生活就像温水煮青蛙一般，一点一点残蚀着你的耐心<br>就像5千米一样，我也无奈，不能拼尽全力去终点之后倒下再也站不起来<br>只能沉重的呼吸，拖着酸痛的两条腿，亦步亦趋</p>
-<p>这场修行，可真难<br>沿途的风景固然美丽，但是总觉得与我无关</p>
-<p>既然选择了远方，便只顾风雨兼程<br>这句话很早就看过，很早就不屑过<br>然而前两天重新看到，发现是会有一股温暖的力量涌上心头</p>
-<p>不是所有的结尾都是欲扬先抑，温暖的力量给自己的动力也只是支撑自己走下去这段路。<br>《云图》里说，自杀是最勇敢的行为<br>我果然，还没那么勇敢，也没那么懦弱<br>我也不能给自己贴一个标签</p>
-<p>好吧，不写了。</p>
+<h2 id="ref">ref:</h2>
+<p>http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 http://blog.csdn.net/supercally/article/details/54234115</p>
 
           
         
@@ -1809,6 +1676,161 @@ s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/随记4.17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/Gold.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiyuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/17/随记4.17/" itemprop="url">随记4.17</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T16:46:22+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随感/" itemprop="url" rel="index">
+                    <span itemprop="name">随感</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>学士服是租的，毕业照是学校安排的，论文是抄的，答辩是水的，实习报告是假的，三方合同是骗就业率的……一切都是假的，只有时间是真的。他每天都在告诉我们，青春，终究是要散场。</p>
+</blockquote>
+<p>看到上面一句话，感触还挺深的。</p>
+<p>好久没来写些东西了，我都怕我手生了，我都怕我不敢直面自己的想法了。 依然希望这里是一片净土</p>
+<p>最近看了15年，16年的中大的毕业快闪，感慨中大的人文情怀真是名不虚传，也庆幸自己能来，今年的毕业季马上就要来了~红领带，白衬衫，还是gfs特有的黑西装，蛤蟆镜，真是期待。</p>
+<p>唉，真的手生了，写不下去了，想法还没有经过沉淀还是怎样，刻意去写又不知道该写些什么好。</p>
+<p>压力是紧迫感，压力也能转化成动力 然而压力让你每天不能心安，不能静静的享受生活 突然感觉，好长好长一段时间，我都不能放空脑子，抛开一切去做一些事情了 也许这样的场景本身就不应该存在的</p>
+<p>总有担忧和顾虑，总觉得要想尽办法提升自己，美其名曰充实，又何尝不是忙碌得像条狗呢 劳逸结合可真是一个大课题，我初中开始，甚至小学开始就没有学会</p>
+<p>如果有一天我累的完全倒下，当然我知道这是不存在的 没有预想中的轰轰烈烈 生活就像温水煮青蛙一般，一点一点残蚀着你的耐心 就像5千米一样，我也无奈，不能拼尽全力去终点之后倒下再也站不起来 只能沉重的呼吸，拖着酸痛的两条腿，亦步亦趋</p>
+<p>这场修行，可真难 沿途的风景固然美丽，但是总觉得与我无关</p>
+<p>既然选择了远方，便只顾风雨兼程 这句话很早就看过，很早就不屑过 然而前两天重新看到，发现是会有一股温暖的力量涌上心头</p>
+<p>不是所有的结尾都是欲扬先抑，温暖的力量给自己的动力也只是支撑自己走下去这段路。 《云图》里说，自杀是最勇敢的行为 我果然，还没那么勇敢，也没那么懦弱 我也不能给自己贴一个标签</p>
+<p>好吧，不写了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/24/Naive_Bayes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1902,39 +1924,39 @@ s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
       
         
           
-            <p>回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记<br>然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了</p>
-<p>贝叶斯决策，基本上，从直观理解就是做了这样的事情：<br>给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。</p>
-<h3 id="贝叶斯定理："><a href="#贝叶斯定理：" class="headerlink" title="贝叶斯定理："></a>贝叶斯定理：</h3><script type="math/tex; mode=display">p(c|w) =  \frac{p(w|c)p(c)}{p(w)}</script><h3 id="为什么说是朴素贝叶斯："><a href="#为什么说是朴素贝叶斯：" class="headerlink" title="为什么说是朴素贝叶斯："></a>为什么说是朴素贝叶斯：</h3><ul>
-<li>n个特征相互独立 （为了简化条件概率的计算）</li>
-<li>n个特征同等重要</li>
-</ul>
-<h3 id="问题场景："><a href="#问题场景：" class="headerlink" title="问题场景："></a>问题场景：</h3><p>就举《机器学习实战》的例子吧，做一个文本分类，如果一段文本里，包含侮辱性词汇，标记为不当言论。</p>
-<h3 id="直观理解："><a href="#直观理解：" class="headerlink" title="直观理解："></a>直观理解：</h3><p>c is category, w is words,可以理解成邮件<br>c = 0 : 不是垃圾邮件<br>c = 1 : 是垃圾邮件</p>
-<h3 id="先看怎样运作："><a href="#先看怎样运作：" class="headerlink" title="先看怎样运作："></a>先看怎样运作：</h3><p>对一个特定的邮件 w,<br>我计算  $p(c = 1|w)$   和  $p(c = 0|w)$<br>判断这两个概率哪个大，就把文档归为哪一类。</p>
-<p>本来我们计算两个概率，是应该根据贝叶斯定理的公式（如上）的，但是对于一篇文档来说， $p(w)$ 是相同的，反正我们的目的只是比大小，定性分析，同除  $p(w)$ 并不影响结果，所以</p>
-<h3 id="目标函数："><a href="#目标函数：" class="headerlink" title="目标函数："></a>目标函数：</h3><script type="math/tex; mode=display">p(c|w) =  p(w|c)p(c)</script><p>以下阐述帮助理解，实际用时要做优化，优化在最后提一下</p>
+            <p>回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了</p>
+<p>贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。</p>
+<p>###贝叶斯定理：</p>
+<p><span class="math display">\[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\]</span></p>
+<p>###为什么说是朴素贝叶斯： * n个特征相互独立 （为了简化条件概率的计算） * n个特征同等重要</p>
+<p>###问题场景： 就举《机器学习实战》的例子吧，做一个文本分类，如果一段文本里，包含侮辱性词汇，标记为不当言论。</p>
+<p>###直观理解： c is category, w is words,可以理解成邮件 c = 0 : 不是垃圾邮件 c = 1 : 是垃圾邮件</p>
+<p>###先看怎样运作： 对一个特定的邮件 w, 我计算 <span class="math inline">\(p(c = 1|w)\)</span> 和 <span class="math inline">\(p(c = 0|w)\)</span> 判断这两个概率哪个大，就把文档归为哪一类。</p>
+<p>本来我们计算两个概率，是应该根据贝叶斯定理的公式（如上）的，但是对于一篇文档来说， <span class="math inline">\(p(w)\)</span> 是相同的，反正我们的目的只是比大小，定性分析，同除 <span class="math inline">\(p(w)\)</span> 并不影响结果，所以</p>
+<p>###目标函数：</p>
+<p><span class="math display">\[p(c|w) =  p(w|c)p(c)\]</span></p>
+<p>以下阐述帮助理解，实际用时要做优化，优化在最后提一下</p>
 <p>该如何建模？</p>
-<h3 id="生成词集模型："><a href="#生成词集模型：" class="headerlink" title="生成词集模型："></a>生成词集模型：</h3><p>把所有邮件（假设我把我目前邮箱里的所有邮件都用做训练），分词，将所有出现过的词语包含到一个set当中。</p>
-<h3 id="生成文本向量："><a href="#生成文本向量：" class="headerlink" title="生成文本向量："></a>生成文本向量：</h3><p>假设刚刚set有1000个词，那么我将每个邮件做成一个1000维的向量，每一维对应这个词是否在该文档出现，用0，1表示。</p>
-<h3 id="训练模型："><a href="#训练模型：" class="headerlink" title="训练模型："></a>训练模型：</h3><p>我们是对这样一个生成模型建模，生成模型求的是联合概率。<br>先说个简单的，$p(c)$ 是什么？是人工标记训练集中垃圾邮件的频率，是一个固定的数值，比如我的邮箱里50封邮件全都作为训练，我人工标记，有10封为垃圾邮件，那么$p(c = 1) = 0.2$； $p(c = 0) = 0.8$</p>
-<p>那么$p(w|c) $ 呢，既然朴素贝叶斯做出了特征相互独立的假设，那么我们就假定，在任意一封邮件中，每个词语出现的概率是不会相互影响的。我们设词集中1000个词分别为：$x<em>1 , x_2, … x</em>{1000}$ , 这样就有</p>
-<script type="math/tex; mode=display">p(w|c)  = \prod_{i=1}^{1000}p(x_{i}|y)</script><p>我们还是分为两部分：</p>
-<h4 id="p-w-c-1-："><a href="#p-w-c-1-：" class="headerlink" title="$p(w|c = 1) $ ："></a>$p(w|c = 1) $ ：</h4><p>在那些标记为垃圾邮件的文本向量中，假设有n个：<br>我们把他们全部加起来，得到一个向量，然后再将这个向量的每一位都除以n。</p>
-<p>好的我们就得到了一个特征向量$p<em>{1}$， 这个特征向量每一位表示对应的词语在垃圾邮件中出现的概率<br>同理可得$p</em>{0}$</p>
+<p>###生成词集模型： 把所有邮件（假设我把我目前邮箱里的所有邮件都用做训练），分词，将所有出现过的词语包含到一个set当中。</p>
+<p>###生成文本向量： 假设刚刚set有1000个词，那么我将每个邮件做成一个1000维的向量，每一维对应这个词是否在该文档出现，用0，1表示。</p>
+<p>###训练模型： 我们是对这样一个生成模型建模，生成模型求的是联合概率。 先说个简单的，<span class="math inline">\(p(c)\)</span> 是什么？是人工标记训练集中垃圾邮件的频率，是一个固定的数值，比如我的邮箱里50封邮件全都作为训练，我人工标记，有10封为垃圾邮件，那么<span class="math inline">\(p(c = 1) = 0.2\)</span>； <span class="math inline">\(p(c = 0) = 0.8\)</span></p>
+<p>那么$p(w|c) $ 呢，既然朴素贝叶斯做出了特征相互独立的假设，那么我们就假定，在任意一封邮件中，每个词语出现的概率是不会相互影响的。我们设词集中1000个词分别为：<span class="math inline">\(x_1 , x_2, ... x_{1000}\)</span> , 这样就有</p>
+<p><span class="math display">\[p(w|c)  = \prod_{i=1}^{1000}p(x_{i}|y)\]</span></p>
+<p>我们还是分为两部分：</p>
+<h4 id="pwc-1">$p(w|c = 1) $ ：</h4>
+<p>在那些标记为垃圾邮件的文本向量中，假设有n个： 我们把他们全部加起来，得到一个向量，然后再将这个向量的每一位都除以n。</p>
+<p>好的我们就得到了一个特征向量<span class="math inline">\(p_{1}\)</span>， 这个特征向量每一位表示对应的词语在垃圾邮件中出现的概率 同理可得<span class="math inline">\(p_{0}\)</span></p>
 <p>这里就可以看出，生成模型是什么，我们之前不知道参数的大小，是通过训练集生成参数，然后再来求条件概率，换句话说，我们是对参数进行了最大似然估计。</p>
-<h3 id="验证方法："><a href="#验证方法：" class="headerlink" title="验证方法："></a>验证方法：</h3><p>用了向量乘积来判别</p>
+<p>###验证方法：</p>
+<p>用了向量乘积来判别</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p1 = sum(vec2Classify * p1Vec) + log(pClass1)    <span class="comment">#element-wise mult</span></span><br><span class="line">p0 = sum(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</span><br><span class="line"><span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>vec2Classify 为待检验的文本向量；<br>这里做了一下数学处理（log）</p>
-<p>我想说的是，为什么验证方法中的前半部分是文本向量与特征向量对位相乘然后求和呢？<br>我们知道，特征向量中是对位该词出现的概率，而文本向量中是是否出现，用0，1表示<br>所以，对位相乘，粗浅理解，就是表现该文档中这些特征词一共出现了多少。</p>
-<p>换句话说吧，我们会不会有这样的疑问？<br>为什么我们不建立一个dirty words的dict，然后去扫新邮件中有没有包含dict中的词语，这样不就可以直接确定分类了么？要概率干嘛？</p>
+<p>vec2Classify 为待检验的文本向量； 这里做了一下数学处理（log）</p>
+<p>我想说的是，为什么验证方法中的前半部分是文本向量与特征向量对位相乘然后求和呢？ 我们知道，特征向量中是对位该词出现的概率，而文本向量中是是否出现，用0，1表示 所以，对位相乘，粗浅理解，就是表现该文档中这些特征词一共出现了多少。</p>
+<p>换句话说吧，我们会不会有这样的疑问？ 为什么我们不建立一个dirty words的dict，然后去扫新邮件中有没有包含dict中的词语，这样不就可以直接确定分类了么？要概率干嘛？</p>
 <p>我个人的理解，特征向量，就是最能够表示该类别特性的一个向量，那些再特征向量中出现的概率高的词，最能代表了该类别文本的特性，也就是说，如果有一个文档，包含了这些词，是有极大可能属于该类别的。</p>
 <p>所以，如果只建立dict的话，有这样的问题，垃圾邮件只是说明包含这些特征词的概率大，但是不能完全确定一封邮件只要有这个词，就是属于垃圾邮件，所以只是概率的问题。</p>
 <p>这样结合考虑，应该能够明白了吧。</p>
-<p>所以，上述只是帮助理解的一个小例子，如果实用，要优化：</p>
-<ol>
-<li>换词集为词袋，考虑文本中单词出现的频次，而不是简单用0，1表示是否出现</li>
-<li>中间步骤$p(w|c)  = \prod<em>{i=1}^{1000}p(x</em>{i}|y)$，有多个概率相乘，如果有一个概率0，则结果为0，不合理，所以用一下Laplace平滑</li>
-</ol>
+<p>所以，上述只是帮助理解的一个小例子，如果实用，要优化： 1. 换词集为词袋，考虑文本中单词出现的频次，而不是简单用0，1表示是否出现 2. 中间步骤<span class="math inline">\(p(w|c) = \prod_{i=1}^{1000}p(x_{i}|y)\)</span>，有多个概率相乘，如果有一个概率0，则结果为0，不合理，所以用一下Laplace平滑</p>
 <p>还有更多优化步骤，我就不多说了…..</p>
 
           
@@ -2077,28 +2099,29 @@ s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
       
         
           
-            <p>看了一篇影评，看完了这篇影评，原文链接在下面，这篇文章是我的摘抄，我和作者有很多共鸣；<br>作者在文中写道：我从不认为自己的此文就是终极正解，我愿忍受痛苦写这么多，就是渴盼交流<br>这与我的想法不谋而合，我也在之前的文章中写过类似的话。</p>
-<p>那样一个每天都看不清楚明天的格局的时代，那个变革的时代，青年人们一定会迷茫，思索，也必然造就了青春的别样色彩<br>我不觉得他们和当时民国时期探索救国之路的戊戌六君子，李大钊，陈独秀有什么两样，他们都是勇敢的先驱。</p>
-<p>我想起我的父亲当时也差点登上了开往北京的列车<br>我也想起父辈们跟我讲，我们这一代工农阶级确实是改革开放的既得利益者<br>摘抄的第一段很好的诠释了我们的思想<br>我们从来都爱祖国。</p>
+            <p>看了一篇影评，看完了这篇影评，原文链接在下面，这篇文章是我的摘抄，我和作者有很多共鸣； 作者在文中写道：我从不认为自己的此文就是终极正解，我愿忍受痛苦写这么多，就是渴盼交流 这与我的想法不谋而合，我也在之前的文章中写过类似的话。</p>
+<p>那样一个每天都看不清楚明天的格局的时代，那个变革的时代，青年人们一定会迷茫，思索，也必然造就了青春的别样色彩 我不觉得他们和当时民国时期探索救国之路的戊戌六君子，李大钊，陈独秀有什么两样，他们都是勇敢的先驱。</p>
+<p>我想起我的父亲当时也差点登上了开往北京的列车 我也想起父辈们跟我讲，我们这一代工农阶级确实是改革开放的既得利益者 摘抄的第一段很好的诠释了我们的思想 我们从来都爱祖国。</p>
 <p>我也感谢我的每个阶段，都有这样一个朋友能给我一些心灵上的启迪，我就是在各种思想不断碰撞中思索。</p>
-<p>我也审视过自己，写出想法有什么用？<br>是为了宣扬自己和别人不一样？<br>还是渴求遇到知音能够共同探讨？<br>或许有，但又或许都不是；<br>我们都是欲望的动物，表达本身就是一种欲望</p>
-<p>自由之路上必定鲜血淋漓<br>死在巴士底狱，死在反抗黑奴贸易，死在奥斯维辛，死在二战战场，死在南京大屠杀，死在抗日战场，死在柏林墙下，死在广场上的那些人，都是英雄</p>
-<p>社会在进步，反贪反腐有了很大的成效；<br>建立政权几十年的时候，正是我们的盛世；</p>
+<p>我也审视过自己，写出想法有什么用？ 是为了宣扬自己和别人不一样？ 还是渴求遇到知音能够共同探讨？ 或许有，但又或许都不是； 我们都是欲望的动物，表达本身就是一种欲望</p>
+<p>自由之路上必定鲜血淋漓 死在巴士底狱，死在反抗黑奴贸易，死在奥斯维辛，死在二战战场，死在南京大屠杀，死在抗日战场，死在柏林墙下，死在广场上的那些人，都是英雄</p>
+<p>社会在进步，反贪反腐有了很大的成效； 建立政权几十年的时候，正是我们的盛世；</p>
 <p>愿有生之年能看到GFW的倒塌</p>
-<p>我不怀疑过分解读，虽然有些想法被赤裸裸的说出来是有悖于文艺片本身的<br>但是我相信每一种想法都有它被表达出来的权利。<br>原文地址：<a href="http://weibo.com/p/1001603906301808764265" target="_blank" rel="noopener">http://weibo.com/p/1001603906301808764265</a></p>
-<h2 id="摘抄"><a href="#摘抄" class="headerlink" title="摘抄"></a>摘抄</h2><hr>
+<p>我不怀疑过分解读，虽然有些想法被赤裸裸的说出来是有悖于文艺片本身的 但是我相信每一种想法都有它被表达出来的权利。 原文地址：http://weibo.com/p/1001603906301808764265</p>
+<h2 id="摘抄">摘抄</h2>
+<hr>
 <p>为什么经历了文革、上山下乡、七六年“四五”天安门事件、西单民主墙、八六学潮的无情洗礼之后，这新一代年轻人仍然敢于为了祖国的未来勇敢地站出来抗争？</p>
 <hr>
-<p>“假如一间铁屋子，是绝无窗户而万难破毁的，里面有许多熟睡的人们，不久都要闷死了，然而是从昏睡入死灭，并不感到就死的悲哀。现在你大嚷起来，惊起了较为清醒的几个人，使这不幸的少数者来受无可挽救的临终的苦楚，你倒以为对得起他们么？”<br>“然而几个人既然起来，你不能说决没有毁坏这铁屋的希望。”</p>
-<p> 鲁迅《呐喊》</p>
+<p>“假如一间铁屋子，是绝无窗户而万难破毁的，里面有许多熟睡的人们，不久都要闷死了，然而是从昏睡入死灭，并不感到就死的悲哀。现在你大嚷起来，惊起了较为清醒的几个人，使这不幸的少数者来受无可挽救的临终的苦楚，你倒以为对得起他们么？” “然而几个人既然起来，你不能说决没有毁坏这铁屋的希望。”</p>
+<p>鲁迅《呐喊》</p>
 <hr>
-<p>“在1983年“严打”中，一个王姓女子因与10多名男子发生性关系而以流氓罪被判处死刑。面对死刑判决，这王姓女子说了这么一段话：性自由是我选择的一种生活方式，我的这种行为现在也许是超前的，但20年以后人们就不会这样看了。 一语成谶。在20年后的今天，尽管性自由仍未成为主流的社会道德，但人们对于性行为已经宽容多了。在刑法中流氓罪已经取消，与多人发生性关系，只要不妨害公共秩序，连犯罪也构不成了，更不用说判处死刑。<br>《1983：偶像的清晨》</p>
+<p>“在1983年“严打”中，一个王姓女子因与10多名男子发生性关系而以流氓罪被判处死刑。面对死刑判决，这王姓女子说了这么一段话：性自由是我选择的一种生活方式，我的这种行为现在也许是超前的，但20年以后人们就不会这样看了。 一语成谶。在20年后的今天，尽管性自由仍未成为主流的社会道德，但人们对于性行为已经宽容多了。在刑法中流氓罪已经取消，与多人发生性关系，只要不妨害公共秩序，连犯罪也构不成了，更不用说判处死刑。 《1983：偶像的清晨》</p>
 <hr>
-<p>八九年事件表面上的触发点是胡耀邦逝世；中层的原因是1985年起，戈尔巴乔夫在苏联推行以人道主义为核心的新思维运动，对社会主义阵营产生了广泛的影响；深层原因是单纯的经济改革遇到瓶颈，造成了高达26％的城市通胀与超过20％的全国通胀，在农村，由于政府低价强制收购粮食并且因为财政短缺而不给现金、采用“打白条”的形式进行收购，造成农民不愿种粮食，而造成粮食减产，每年约八百万农民涌向城市。在城市，由于改革的推进，一批国营企业关闭，造成全国约有数百万工人失业，而在职的工人也要承受苛刻的工作条件以及低收入面对高通胀的巨大压力，工人开始骚动不安。其实，苦日子刚过去不久，中国老百姓不是不能吃苦，但是在老百姓捱苦日子的同时，官员们却通过贪污、官倒大发其财，所谓“民不患贫而患不均”，这就是邓小平所谓“这场风波迟早要来，这是国际的大气候和中国自己的小气候所决定了的，是一定要来的，是不以人们的意志为转移的”这话的注<br>脚。<br>　　<br>所以，“为何对眼前的一切漠然，而去注目永不可期的事物呢？”这句话指出了学生失败之处：对社会的真实情况并不深刻了解，对老百姓真正关心的利益由于知识分子的清高而不识民间疾苦而漠然，所以并未获得全国民众的最广泛支持，最支持学生的，除了知识分子以外，主要是文化水平较高的部分市民。实际上，最能获得人民共鸣的口号是反贪污、反官倒，但是随着国家不断地拖延与拒绝，知识分子与学生很快心急地放弃了这些口号，转而要求民主自由、政治体制改革，这些诉求，老百姓不懂，也觉得不可能</p>
+<p>八九年事件表面上的触发点是胡耀邦逝世；中层的原因是1985年起，戈尔巴乔夫在苏联推行以人道主义为核心的新思维运动，对社会主义阵营产生了广泛的影响；深层原因是单纯的经济改革遇到瓶颈，造成了高达26％的城市通胀与超过20％的全国通胀，在农村，由于政府低价强制收购粮食并且因为财政短缺而不给现金、采用“打白条”的形式进行收购，造成农民不愿种粮食，而造成粮食减产，每年约八百万农民涌向城市。在城市，由于改革的推进，一批国营企业关闭，造成全国约有数百万工人失业，而在职的工人也要承受苛刻的工作条件以及低收入面对高通胀的巨大压力，工人开始骚动不安。其实，苦日子刚过去不久，中国老百姓不是不能吃苦，但是在老百姓捱苦日子的同时，官员们却通过贪污、官倒大发其财，所谓“民不患贫而患不均”，这就是邓小平所谓“这场风波迟早要来，这是国际的大气候和中国自己的小气候所决定了的，是一定要来的，是不以人们的意志为转移的”这话的注 脚。 　　 所以，“为何对眼前的一切漠然，而去注目永不可期的事物呢？”这句话指出了学生失败之处：对社会的真实情况并不深刻了解，对老百姓真正关心的利益由于知识分子的清高而不识民间疾苦而漠然，所以并未获得全国民众的最广泛支持，最支持学生的，除了知识分子以外，主要是文化水平较高的部分市民。实际上，最能获得人民共鸣的口号是反贪污、反官倒，但是随着国家不断地拖延与拒绝，知识分子与学生很快心急地放弃了这些口号，转而要求民主自由、政治体制改革，这些诉求，老百姓不懂，也觉得不可能</p>
 <hr>
-<p>　Whether there is freedom and love or not, in death everyone is equal. I hope that death is not your end. You adored the light, so you will never fear the darkness. </p>
+<p>　Whether there is freedom and love or not, in death everyone is equal. I hope that death is not your end. You adored the light, so you will never fear the darkness.</p>
 <hr>
-<p>《颐和园》基本上是一部情绪化的电影，它不是一部历史电影，它是一部关于情爱的、关于冲动的（电影），这个冲动，就是说爱情的冲动和政治的冲动是一样的，那是一个冲动的年代。” </p>
+<p>《颐和园》基本上是一部情绪化的电影，它不是一部历史电影，它是一部关于情爱的、关于冲动的（电影），这个冲动，就是说爱情的冲动和政治的冲动是一样的，那是一个冲动的年代。”</p>
 <hr>
 <p>89年整个就像是学生和政府的一次做爱，然后这次做爱没做好，做得很难受，很不舒服，然后政府打了学生一个耳光，然后打得太重了，流血了，政府也知道，然后他觉得那个耳光打得太重了，然后他用之后的十年来找回这个过份的举动。你从这个角度来看，六四和两个人谈恋爱是一模一样的，中国用很短的时间结束了六四的混乱、八九年的混乱，是用强硬的、军队进入的方式、军事管制的方式，那么，实际上中国是用之后的十年拼命地在不断地向前发展经济、更加地开放、更加地民主，所有这一切就象他们之间发生的爱情一样。所以我觉得就是说爱情实际上是整个世界的一片叶子——如果整个世界是一棵树的话，爱情是这棵树上的一片叶子。那么，一片叶子上面你就可以读到整棵树的信息。所以，不用这么麻烦，我只要表达爱情就可以了。我说清楚了爱情，也就说清楚了这个世界。</p>
 <hr>

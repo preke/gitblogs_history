@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="回顾我们之前的问题：之前我们说到，假设我们了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 同时也求得了 $b$ 那么就得到了这个分类面 $w^Tx+b$  ,我们换一种表示方法：  w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\en">
+<meta name="description" content="回顾我们之前的问题： 之前我们说到，假设我们了 \(\alpha\), 又有样本点数据，我们很容易由 \(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\) 得出 \(w\), 同时也求得了 \(b\) 那么就得到了这个分类面 \(w^Tx+b\) ,我们换一种表示方法： \[ w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SVM part2 核函数与SMO算法">
 <meta property="og:url" content="http://yoursite.com/2017/09/03/svm_part2/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="回顾我们之前的问题：之前我们说到，假设我们了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 同时也求得了 $b$ 那么就得到了这个分类面 $w^Tx+b$  ,我们换一种表示方法：  w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\en">
+<meta property="og:description" content="回顾我们之前的问题： 之前我们说到，假设我们了 \(\alpha\), 又有样本点数据，我们很容易由 \(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\) 得出 \(w\), 同时也求得了 \(b\) 那么就得到了这个分类面 \(w^Tx+b\) ,我们换一种表示方法： \[ w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/s75438242r63zi5wqjlqm4sz/image_1bp353tpi1res1bsaqlrt8i17c69.png">
@@ -98,7 +98,7 @@
 <meta property="og:updated_time" content="2018-10-20T14:40:04.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM part2 核函数与SMO算法">
-<meta name="twitter:description" content="回顾我们之前的问题：之前我们说到，假设我们了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 同时也求得了 $b$ 那么就得到了这个分类面 $w^Tx+b$  ,我们换一种表示方法：  w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\en">
+<meta name="twitter:description" content="回顾我们之前的问题： 之前我们说到，假设我们了 \(\alpha\), 又有样本点数据，我们很容易由 \(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\) 得出 \(w\), 同时也求得了 \(b\) 那么就得到了这个分类面 \(w^Tx+b\) ,我们换一种表示方法： \[ w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png">
 
 
@@ -361,163 +361,169 @@
       
 
       
-        <p>回顾我们之前的问题：<br>之前我们说到，假设我们了 $\alpha$, 又有样本点数据，我们很容易由 $w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}$ 得出 $w$, 同时也求得了 $b$</p>
-<p>那么就得到了这个分类面 $w^Tx+b$  ,我们换一种表示方法：</p>
-<script type="math/tex; mode=display">
-w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\end{pmatrix}^Tx+b\\=\sum_{i=1}^m\alpha_iy^{(i)}<x^{(i)},x>+b</script><p>这里我们可以看出，新的数据点只需与那些 $\alpha_i =0$ 的临界点做内积，便可以得到分类结果。</p>
-<h2 id="核函数（Kernels"><a href="#核函数（Kernels" class="headerlink" title="核函数（Kernels)"></a>核函数（Kernels)</h2><p>先说一下直观理解吧（不一定正确，仅作直观理解），核函数就是把低维特征映射到高维，从而使得在低维情况下线性不可分的数据在高维情况下<strong>有可能</strong>能够找到那个分类面</p>
-<p>特定情况下，如果我们需要，可以将一个一维特征加以变换成多维<br>比如说要拟合曲线的时候，我们可以用一个自变量的多次方程去拟合<br>比如在一个回归问题中，观察到 $y$ 可以用关于 $x$ 的 3次多项式来拟合<br>就可以用如下变换，将 $x$ 扩展到高维，使得 $y$ 成为一个关于 $\phi(x)$ 的函数：</p>
-<script type="math/tex; mode=display">\phi(x)= \begin{bmatrix} x\\x^2\\x^3 \end{bmatrix}</script><p>如果有原来变量的内积，如 $<x,z>$  , 那么映射之后为 $&lt;\phi(x), \phi(z)&gt;$ , 那么这个核函数的形式化表出就为：</x,z></p>
-<script type="math/tex; mode=display">K(x,z)=\phi(x)^T\phi(z)</script><blockquote>
+        <p>回顾我们之前的问题： 之前我们说到，假设我们了 <span class="math inline">\(\alpha\)</span>, 又有样本点数据，我们很容易由 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span> 得出 <span class="math inline">\(w\)</span>, 同时也求得了 <span class="math inline">\(b\)</span></p>
+<p>那么就得到了这个分类面 <span class="math inline">\(w^Tx+b\)</span> ,我们换一种表示方法： <span class="math display">\[
+w^Tx+b=\begin{pmatrix}\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\end{pmatrix}^Tx+b\\=\sum_{i=1}^m\alpha_iy^{(i)}&lt;x^{(i)},x&gt;+b
+\]</span></p>
+<p>这里我们可以看出，新的数据点只需与那些 <span class="math inline">\(\alpha_i =0\)</span> 的临界点做内积，便可以得到分类结果。</p>
+<h2 id="核函数kernels">核函数（Kernels)</h2>
+<p>先说一下直观理解吧（不一定正确，仅作直观理解），核函数就是把低维特征映射到高维，从而使得在低维情况下线性不可分的数据在高维情况下<strong>有可能</strong>能够找到那个分类面</p>
+<p>特定情况下，如果我们需要，可以将一个一维特征加以变换成多维 比如说要拟合曲线的时候，我们可以用一个自变量的多次方程去拟合 比如在一个回归问题中，观察到 <span class="math inline">\(y\)</span> 可以用关于 <span class="math inline">\(x\)</span> 的 3次多项式来拟合 就可以用如下变换，将 <span class="math inline">\(x\)</span> 扩展到高维，使得 <span class="math inline">\(y\)</span> 成为一个关于 <span class="math inline">\(\phi(x)\)</span> 的函数： <span class="math display">\[\phi(x)= \begin{bmatrix} x\\x^2\\x^3 \end{bmatrix}\]</span></p>
+<p>如果有原来变量的内积，如 <span class="math inline">\(&lt;x,z&gt;\)</span> , 那么映射之后为 <span class="math inline">\(&lt;\phi(x), \phi(z)&gt;\)</span> , 那么这个核函数的形式化表出就为：</p>
+<p><span class="math display">\[K(x,z)=\phi(x)^T\phi(z)\]</span></p>
+<blockquote>
 <p>这里只是简单列举一个形式化表出的例子，没有直接关联原问题，但是这里可以理解，我们可以通过这个和函数，让SVM学习更高维度的特征</p>
-<font color="red"> 这里还产成了一个问题：是不是每一个核函数都能表出为类似 $\phi(x)^T\phi(z)$ 的形式呢？</font>
-
+<p><font color="red"> 这里还产成了一个问题：是不是每一个核函数都能表出为类似 <span class="math inline">\(\phi(x)^T\phi(z)\)</span> 的形式呢？</font></p>
 <p>其实我初步的思考为，只有在原低维特征向量有做内积的运算时，我们这样构造和转化会方便</p>
 <p>（好像有点废话，因为后面看到高斯核的时候在想是不是也能转化…不过是可以转化的，高斯核将低维特征转化成了无线维的特征）</p>
-<p>Andrew 在课上讲了这样一句话：每当你在原问题中遇到 $<x,z>$ ，也就是内积的形式时，你都可以把它转化成 $K(x,z)$ ，当你在做这个转化的时候，你就将低维特征映射到了高维。</x,z></p>
+<p>Andrew 在课上讲了这样一句话：每当你在原问题中遇到 <span class="math inline">\(&lt;x,z&gt;\)</span> ，也就是内积的形式时，你都可以把它转化成 <span class="math inline">\(K(x,z)\)</span> ，当你在做这个转化的时候，你就将低维特征映射到了高维。</p>
 <p>嗯，学到后面就清晰了，这个就是核函数有效性的问题</p>
 </blockquote>
 <p>这里说明一个核函数减少计算复杂度的例子：</p>
-<p>假设，$x,z$  都是 $n$ 维向量, 核函数为：$K(x,z)=(x^Tz)^2$ , 整理：</p>
-<p>$K(x,z) = \sum<em>{i=1}^n\sum</em>{j=1}^n(x_i,x_j)(z_i,z_j)=\phi(x)^T\phi(z)$ </p>
+<p>假设，<span class="math inline">\(x,z\)</span> 都是 <span class="math inline">\(n\)</span> 维向量, 核函数为：<span class="math inline">\(K(x,z)=(x^Tz)^2\)</span> , 整理：</p>
+<p><span class="math inline">\(K(x,z) = \sum_{i=1}^n\sum_{j=1}^n(x_i,x_j)(z_i,z_j)=\phi(x)^T\phi(z)\)</span></p>
 <blockquote>
-<p>不要疑惑，这里的 $\phi(x)$ 并不是上文的，而是如下：</p>
-<script type="math/tex; mode=display">if \quad n = 3:</script><script type="math/tex; mode=display">\phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\end{bmatrix}</script></blockquote>
-<p>显然，$\phi(x)$ 有 $n^2$ 项，所以计算复杂度为 $O(n^2)$ ;</p>
-<p>但是如果我们直接计算 $K(x,z)=(x^Tz)^2$ 这里的复杂度就变成了 $O(n)$ </p>
+<p>不要疑惑，这里的 <span class="math inline">\(\phi(x)\)</span> 并不是上文的，而是如下：</p>
+<p><span class="math display">\[if \quad n = 3:\]</span></p>
+<p><span class="math display">\[\phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\end{bmatrix}\]</span></p>
+</blockquote>
+<p>显然，<span class="math inline">\(\phi(x)\)</span> 有 <span class="math inline">\(n^2\)</span> 项，所以计算复杂度为 <span class="math inline">\(O(n^2)\)</span> ;</p>
+<p>但是如果我们直接计算 <span class="math inline">\(K(x,z)=(x^Tz)^2\)</span> 这里的复杂度就变成了 <span class="math inline">\(O(n)\)</span></p>
 <blockquote>
 <p>这里的理解：虽然我们还是用映射之后的高维特征来让模型学习，但是由于这个核函数的存在，我们可以从低维特征（简单的计算）同样得到高维特征的结果，这就是它<strong>减少复杂度的原因</strong></p>
 </blockquote>
 <hr>
 <p>这是一个简单的核函数，接下来就会介绍一些其他常用的核函数：</p>
 <ul>
-<li><p>$K(x,z)=(x^Tz+c)^2\ \quad\quad\quad=\sum<em>{i,j=1}^n(x_ix_j)(z_iz_j)+\sum</em>{i=1}^n(\sqrt{2c}x_i)(\sqrt{2c}z_j)+c^2$ </p>
-<p>这个核函数对应的 $\phi(x)$ 为：</p>
-<script type="math/tex; mode=display">if \quad n = 3:</script></li>
+<li><p><span class="math inline">\(K(x,z)=(x^Tz+c)^2\\ \quad\quad\quad=\sum_{i,j=1}^n(x_ix_j)(z_iz_j)+\sum_{i=1}^n(\sqrt{2c}x_i)(\sqrt{2c}z_j)+c^2\)</span></p>
+<p>这个核函数对应的 <span class="math inline">\(\phi(x)\)</span> 为：</p>
+<p><span class="math display">\[if \quad n = 3:\]</span></p></li>
 </ul>
-<script type="math/tex; mode=display">\quad\quad\quad \phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\\\sqrt{2c}x_1\\\sqrt{2c}x_2\\\sqrt{2c}x_3\\c\end{bmatrix}</script><p>如果继续扩展，扩展到 $K(x,z)=(x^Tz+c)^d$  ，对应的 $\phi(x)$ 的维度为 $C_{n+d}^d$  ，$ n $ 是 $x, z$ 的维度</p>
+<p><span class="math display">\[\quad\quad\quad \phi(x)=\begin{bmatrix}x_1x_1\\x_1x_2\\.\\.\\.\\x_3x_3\\\sqrt{2c}x_1\\\sqrt{2c}x_2\\\sqrt{2c}x_3\\c\end{bmatrix}\]</span></p>
+<p>如果继续扩展，扩展到 <span class="math inline">\(K(x,z)=(x^Tz+c)^d\)</span> ，对应的 <span class="math inline">\(\phi(x)\)</span> 的维度为 <span class="math inline">\(C_{n+d}^d\)</span> ，$ n $ 是 <span class="math inline">\(x, z\)</span> 的维度</p>
 <blockquote>
 <p>为什么介绍这样一个一般化的向量内积形式的核函数呢？</p>
 <p>这里有一个直观的理解（不一定严格正确）</p>
 <p>可以看到，计算向量的内积，其实就是在衡量向量的相似度</p>
 <p>所以基于这样一种形式，如果两个特征向量，关联性很大，这样形式的核函数也会很大</p>
-<p>当然这里暂时忽略 $\phi(x)$ 对相似性的影响，所以说不一定严格正确</p>
+<p>当然这里暂时忽略 <span class="math inline">\(\phi(x)\)</span> 对相似性的影响，所以说不一定严格正确</p>
 </blockquote>
 <ul>
-<li><p>$K(x,z)=exp\begin{pmatrix}-\frac{||x-z||^2}{2\sigma^2}\end{pmatrix}$ </p>
+<li><p><span class="math inline">\(K(x,z)=exp\begin{pmatrix}-\frac{||x-z||^2}{2\sigma^2}\end{pmatrix}\)</span></p>
 <p>这个叫做，高斯核函数（因为形式很像高斯分布，也叫做径向基函数（Radial Basis Function)</p>
 <p>能够把原始特征映射到无限维。</p>
-<p>那我们现在来看一下 $x,z$ 的相似性：</p>
+<p>那我们现在来看一下 <span class="math inline">\(x,z\)</span> 的相似性：</p>
 <ul>
-<li>如果 $x,z$ 相似：$||x-z|| \approx 0$ ，$K(x,z)$ 趋向1</li>
-<li>如果 $x,z$ 相差很多：$||x-z|| \gg 0$ ，$K(x,z)$ 趋向0</li>
+<li>如果 <span class="math inline">\(x,z\)</span> 相似：<span class="math inline">\(||x-z|| \approx 0\)</span> ，<span class="math inline">\(K(x,z)\)</span> 趋向1</li>
+<li>如果 <span class="math inline">\(x,z\)</span> 相差很多：<span class="math inline">\(||x-z|| \gg 0\)</span> ，<span class="math inline">\(K(x,z)\)</span> 趋向0</li>
 </ul>
 <p>这里理解的时候可以想象正态分布的钟形图</p>
 <blockquote>
-<ol>
-<li><p>参数 $\sigma$ 是什么？</p>
-<p>在这里是没有标准差的含义的，只是一个参数而已，我们可以用交叉验证调整出最好的参数</p>
-</li>
+<ol type="1">
+<li><p>参数 <span class="math inline">\(\sigma\)</span> 是什么？</p>
+<p>在这里是没有标准差的含义的，只是一个参数而已，我们可以用交叉验证调整出最好的参数</p></li>
 </ol>
 </blockquote>
-<p>​</p>
-</li>
+<p>​</p></li>
 </ul>
-<h3 id="核函数有效性"><a href="#核函数有效性" class="headerlink" title="核函数有效性"></a>核函数有效性</h3><p>这里就是上文中讨论的问题，是不是每一个核函数 $K(x,z)$ 都能表出为 $\phi(x)^T\phi(z)$ 的形式呢？</p>
+<h3 id="核函数有效性">核函数有效性</h3>
+<p>这里就是上文中讨论的问题，是不是每一个核函数 <span class="math inline">\(K(x,z)\)</span> 都能表出为 <span class="math inline">\(\phi(x)^T\phi(z)\)</span> 的形式呢？</p>
 <p>先给出判定定理吧：</p>
 <blockquote>
 <p><strong>Mercer 定理</strong></p>
-<p>如果函数 $K$ 是 $R^n*R^n\rightarrow R$ 的映射，即两个$n$ 维向量映射到实数域，那么 $K$ 是一个有效核函数 等价于 对 ${x^{(1)},x^{(1)}…,x^{(m)}}$  ，其对应的核函数矩阵是对称半正定的。</p>
+<p>如果函数 <span class="math inline">\(K\)</span> 是 <span class="math inline">\(R^n*R^n\rightarrow R\)</span> 的映射，即两个<span class="math inline">\(n\)</span> 维向量映射到实数域，那么 <span class="math inline">\(K\)</span> 是一个有效核函数 等价于 对 <span class="math inline">\(\{x^{(1)},x^{(1)}...,x^{(m)}\}\)</span> ，其对应的核函数矩阵是对称半正定的。</p>
 </blockquote>
 <p>其中涉及到两个概念：核函数矩阵，对称半正定</p>
 <p>核函数矩阵：</p>
-<p>给定 $m$ 个训练样本（特征向量）  ${x^{(1)},x^{(1)}…,x^{(m)}}$ ，对任意的 $x^{(i)}, x^{(j)}$ 带入 $K$ ，得到 $K_{i,j} = K(x^{(i)}, x^{(j)})$ ，得到一个 $m*m$ 的矩阵如下：</p>
-<script type="math/tex; mode=display">\begin{bmatrix}K_{1,1}& K_{1,2}& \cdots&K_{1,m}\\K_{2,1}&K_{2,2}& \cdots&K_{2,m}\\\vdots&\vdots&\ddots&\vdots\\K_{m,1}&k_{m,2}&\cdots&K_{m,m}\end{bmatrix}</script><p>就是核函数矩阵，也用 $K$ 来表示</p>
+<p>给定 <span class="math inline">\(m\)</span> 个训练样本（特征向量） <span class="math inline">\(\{x^{(1)},x^{(1)}...,x^{(m)}\}\)</span> ，对任意的 <span class="math inline">\(x^{(i)}, x^{(j)}\)</span> 带入 <span class="math inline">\(K\)</span> ，得到 <span class="math inline">\(K_{i,j} = K(x^{(i)}, x^{(j)})\)</span> ，得到一个 <span class="math inline">\(m*m\)</span> 的矩阵如下：</p>
+<p><span class="math display">\[\begin{bmatrix}K_{1,1}&amp; K_{1,2}&amp; \cdots&amp;K_{1,m}\\K_{2,1}&amp;K_{2,2}&amp; \cdots&amp;K_{2,m}\\\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\K_{m,1}&amp;k_{m,2}&amp;\cdots&amp;K_{m,m}\end{bmatrix}\]</span></p>
+<p>就是核函数矩阵，也用 <span class="math inline">\(K\)</span> 来表示</p>
 <p>对称半正定，这里先不展开讲，就是一个矩阵的性质，简单理解呢，就是：</p>
-<p>如果是一个合法的核函数，即$K(x,z)$ 能表出为 $\phi(x)^T\phi(z)$ </p>
-<ol>
-<li><p>首先如上矩阵肯定是对称的，因为 $K(x,z) = K(z,x)$ </p>
-</li>
-<li><p>半正定，对于任意的 $m$ 维向量 $z$ ，$z^TKz\ge0$ </p>
-</li>
+<p>如果是一个合法的核函数，即<span class="math inline">\(K(x,z)\)</span> 能表出为 <span class="math inline">\(\phi(x)^T\phi(z)\)</span></p>
+<ol type="1">
+<li><p>首先如上矩阵肯定是对称的，因为 <span class="math inline">\(K(x,z) = K(z,x)\)</span></p></li>
+<li><p>半正定，对于任意的 <span class="math inline">\(m\)</span> 维向量 <span class="math inline">\(z\)</span> ，<span class="math inline">\(z^TKz\ge0\)</span></p></li>
 </ol>
 <p>核函数就先到这吧…</p>
-<h2 id="正则化，不可分情况"><a href="#正则化，不可分情况" class="headerlink" title="正则化，不可分情况"></a>正则化，不可分情况</h2><ul>
+<h2 id="正则化不可分情况">正则化，不可分情况</h2>
+<ul>
 <li>如果数据线性可分，可以直接用线性分类器解决</li>
 <li>如果数据线性不可分，用核函数映射到高维尝试找到分类面</li>
 <li>如果用了核函数也没找到…那就允许一些错误样例吧</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png" alt="image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/m7yszo1luzfakmk6r84gfbhg/image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png" alt="image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB"><figcaption>image_1bp0kkllk1b9g1fer1r1d1vcg1mq69.png-17.5kB</figcaption>
+</figure>
 <p>上图中，一个离群点的出现就会使分类面偏移很多，这样分类面很容易过拟合；更有甚者，有些离群点在另一个类中导致分类面不可分，所以我们需要正则化，也就是说，允许一小部分错误分类点，但是对于这些错误分类点，我们在目标函数中加上一些惩罚项</p>
-<p>所以设计一个新的模型：</p>
-<script type="math/tex; mode=display">
+<p>所以设计一个新的模型： <span class="math display">\[
 min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2+C\sum_{i=1}^m\xi_i \\
-\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i ,\quad\quad i=1,...,m\\\quad\quad\xi_i\geq0,\quad\quad i=1,..,m.</script><p>引入一个松弛变量 $\xi$<br>从限制条件来看，我们允许一部分点的函数间隔小于1甚至有可能是负数，对于这些点，对应的 $\xi_i$ 会很大(可以通过限制条件计算的）,那么在目标函数中表现的就很明显，这样求目标函数的最小值的约束也就会体现出来。同时，$C$ 是离群点的权重，也是一个可以调的参数</p>
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1-\xi_i ,\quad\quad i=1,...,m\\\quad\quad\xi_i\geq0,\quad\quad i=1,..,m.
+\]</span></p>
+<p>引入一个松弛变量 <span class="math inline">\(\xi\)</span> 从限制条件来看，我们允许一部分点的函数间隔小于1甚至有可能是负数，对于这些点，对应的 <span class="math inline">\(\xi_i\)</span> 会很大(可以通过限制条件计算的）,那么在目标函数中表现的就很明显，这样求目标函数的最小值的约束也就会体现出来。同时，<span class="math inline">\(C\)</span> 是离群点的权重，也是一个可以调的参数</p>
 <p>这种情况也称为 L1软间隔，因为正则化项是 L1-norm;</p>
-<p>再按照之前的方法求解：<br>拉格朗日公式就变成了：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}(w,b,\xi,\alpha,r)=\frac{1}{2}w^Tw+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1+\xi_i]-\sum_{i=1}^mr_i\xi_i.</script><p>有两个不等式约束,所以 $\alpha_i,r_i$都为拉格朗日乘子<br>对偶问题为：</p>
-<script type="math/tex; mode=display">
-\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j<x^{(i)},x^{(j)}>\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>与之前对偶问题的区别只有第一个限制条件变成了 $\quad 0\leq\alpha_i\leq C$,<br>同时， $b$ 的求解也发生了变化，在后面的章节中会解释；</p>
-<p><img src="http://static.zybuluo.com/Preke/s75438242r63zi5wqjlqm4sz/image_1bp353tpi1res1bsaqlrt8i17c69.png" alt="image_1bp353tpi1res1bsaqlrt8i17c69.png-22.2kB"><br>讲义中给出如上三个公式，并且吴恩达也没有详细讲，只说是用KKT条件推导来的，<br>我就自己翻了资料理解了一下，参考周志华的《机器学习》和李航的《统计学习方法》</p>
+<p>再按照之前的方法求解： 拉格朗日公式就变成了：</p>
+<p><span class="math display">\[
+\mathcal{L}(w,b,\xi,\alpha,r)=\frac{1}{2}w^Tw+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1+\xi_i]-\sum_{i=1}^mr_i\xi_i.
+\]</span> 有两个不等式约束,所以 <span class="math inline">\(\alpha_i,r_i\)</span>都为拉格朗日乘子 对偶问题为：</p>
+<p><span class="math display">\[
+\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j&lt;x^{(i)},x^{(j)}&gt;\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 与之前对偶问题的区别只有第一个限制条件变成了 <span class="math inline">\(\quad 0\leq\alpha_i\leq C\)</span>, 同时， <span class="math inline">\(b\)</span> 的求解也发生了变化，在后面的章节中会解释；</p>
+<p><img src="http://static.zybuluo.com/Preke/s75438242r63zi5wqjlqm4sz/image_1bp353tpi1res1bsaqlrt8i17c69.png" alt="image_1bp353tpi1res1bsaqlrt8i17c69.png-22.2kB"> 讲义中给出如上三个公式，并且吴恩达也没有详细讲，只说是用KKT条件推导来的， 我就自己翻了资料理解了一下，参考周志华的《机器学习》和李航的《统计学习方法》</p>
 <p>如果要得到上述对偶问题，需要满足KKT条件：</p>
-<p>分别对三个变量 $w,b,\xi$ 求偏导为 0, 就有：</p>
-<script type="math/tex; mode=display">
-w=\sum_{i=1}^m\alpha_iy_ix_i\\\sum_{i=1}^m\alpha_iy_i=0\\\alpha_i+r_i=C</script><p>对拉格朗日公式用一下K.K.T.条件，得到：</p>
-<script type="math/tex; mode=display">
+<p>分别对三个变量 <span class="math inline">\(w,b,\xi\)</span> 求偏导为 0, 就有： <span class="math display">\[
+w=\sum_{i=1}^m\alpha_iy_ix_i\\\sum_{i=1}^m\alpha_iy_i=0\\\alpha_i+r_i=C
+\]</span> 对拉格朗日公式用一下K.K.T.条件，得到： <span class="math display">\[
 \left\{
 \begin{aligned}
 \alpha_i\geq0 \\r_i\geq0\\y^{(i)}(w^Tx^{(i)}+b)-1+\xi_i\geq0\\\alpha_i(y^{(i)}(w^Tx^{(i)}+b)-1+\xi_i)=0\\\xi_i\geq0\\r_i\xi_i=0
 \end{aligned}
-\right.</script><p>在这里：</p>
+\right.
+\]</span></p>
+<p>在这里：</p>
 <ul>
-<li><p>$\alpha_i&gt;0$ 的那些点，和以前一样，还是支持向量，不过这里呢，是这个软间隔分类器的支持向量(包括在最大间隔边界，和一些函数间隔小于1的点）;</p>
-</li>
-<li><p>如果 $\alpha_i<c$，那么 $r_i>0$ , 接着就有 $\xi_i=0$, 这些点恰好就是在最大分类间隔边界上的支持向量;</c$，那么></p>
-</li>
-<li><p>如果 $\alpha_i=C$ , 则有 $r_i = 0$, 此时：</p>
+<li><p><span class="math inline">\(\alpha_i&gt;0\)</span> 的那些点，和以前一样，还是支持向量，不过这里呢，是这个软间隔分类器的支持向量(包括在最大间隔边界，和一些函数间隔小于1的点）;</p></li>
+<li><p>如果 <span class="math inline">\(\alpha_i&lt;C\)</span>，那么 <span class="math inline">\(r_i&gt;0\)</span> , 接着就有 <span class="math inline">\(\xi_i=0\)</span>, 这些点恰好就是在最大分类间隔边界上的支持向量;</p></li>
+<li>如果 <span class="math inline">\(\alpha_i=C\)</span> , 则有 <span class="math inline">\(r_i = 0\)</span>, 此时：
 <ul>
-<li>如果 $\xi_i &lt; 1$，则样本落在最大间隔内部</li>
-<li>如果 $\xi_i&gt;1$ , 则样本就被错误分类</li>
-<li>如果 $\xi_i = 1$，样本就落在超平面上</li>
-</ul>
-</li>
+<li>如果 <span class="math inline">\(\xi_i &lt; 1\)</span>，则样本落在最大间隔内部</li>
+<li>如果 <span class="math inline">\(\xi_i&gt;1\)</span> , 则样本就被错误分类</li>
+<li>如果 <span class="math inline">\(\xi_i = 1\)</span>，样本就落在超平面上</li>
+</ul></li>
 </ul>
 <blockquote>
-<p>这里，李航的《统计学习方法》里面提到我们可以用 $\frac{\xi_i}{||w||}$ 来表示样本到最大分类间隔边界的距离，也是很巧妙。</p>
+<p>这里，李航的《统计学习方法》里面提到我们可以用 <span class="math inline">\(\frac{\xi_i}{||w||}\)</span> 来表示样本到最大分类间隔边界的距离，也是很巧妙。</p>
 </blockquote>
 <hr>
 <blockquote>
 <p>对于这种SVM，假设我们求到了分类超平面（其实就是那些支持向量）在我们分类的时候，还是通过本文开头的那个判别方法来分类</p>
 </blockquote>
-<h2 id="坐标上升法"><a href="#坐标上升法" class="headerlink" title="坐标上升法"></a>坐标上升法</h2><p>其实是为了引出SMO的一个过渡方法</p>
-<p>其实原理很简单，假设要求：</p>
-<script type="math/tex; mode=display">
-\max_\alpha W(\alpha_1,\alpha_2,...,\alpha_m)</script><p>我们每次控制其他变量，只在一个变量的维度求最大值，得到之后，再在下一个变量的维度来求，循环直到最优解。伪码表示如下：<br><img src="http://static.zybuluo.com/Preke/ala1chzobgineiquo5m18lr8/image_1bp35g42uskc18271bji14s17eqm.png" alt="image_1bp35g42uskc18271bji14s17eqm.png-20.6kB"></p>
-<h2 id="SMO算法"><a href="#SMO算法" class="headerlink" title="SMO算法"></a>SMO算法</h2><p>被称为最快的二次规划优化算法, 有点6<br>特别在用于线性SVM和数据稀疏时性能更优<br>原始paper: 《 Sequential Minimal Optimization A Fast Algorithm for Training Support Vector Machines》</p>
-<p>之前说最后要解决这个对偶问题：</p>
-<script type="math/tex; mode=display">
-\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j<x^{(i)},x^{(j)}>\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0</script><p>这里 $x^{(i)}, y^{(i)}, C$都是已知的，所以我们的问题就是在参数 ${\alpha_1,\alpha_2,…,\alpha_m}$ 上求 $W$ 的最大值<br>按照坐标上升的思路，我们是要固定其他维度，先选取一个参数做优化的，但是，由于我们有第二个等式约束，是无法只变动一个参数而其他参数都不改变的，所以我们至少也要选两个参数优化才可以。<br>算法思路如下：<br><img src="http://static.zybuluo.com/Preke/qsk30gn1eisq3wppvn89cw3g/image_1bp39pgg3bnf17jv9v81tp1sjo9.png" alt="image_1bp39pgg3bnf17jv9v81tp1sjo9.png-60kB"><br>循环内：</p>
-<ol>
-<li>用启发式算法去选取一对 $\alpha_i, \alpha_j$， 控制其他 $\alpha$ 不变</li>
-<li>通过 $\alpha_i, \alpha_j$ 优化得到的 $W(\alpha)$ 更新原来的值</li>
-</ol>
-<p>这里我们有这个约束： $\sum_{i=1}^m\alpha_iy^{(i)}=0$, 假设我们选取 $\alpha_1, \alpha_2$, 我们就能够得到：</p>
-<script type="math/tex; mode=display">
-\alpha_1y^{(1)}+\alpha_2y^{(2)} = -\sum_{i=3}^m\alpha_iy^{(i)} = \zeta</script><p>其中 $\zeta$ 是一个固定值，因为我们固定后面的参数不变<br>我们可以显式的把这个约束条件表示成一条直线，如下：<br><img src="http://static.zybuluo.com/Preke/lp0zyfluulhsa4b11z339g14/image_1bp3cpicr1gsikhahi81ucajofm.png" alt="image_1bp3cpicr1gsikhahi81ucajofm.png-16.3kB"></p>
-<p>横轴为 $\alpha_1$，纵轴为 $\alpha_2$， $0\leq\alpha_i\leq C$ 对应了 $\alpha$ 对应在这个方框内<br>其中的 L，H 就是 $\alpha_2$ 的 lowerbond 和 upperbond</p>
-<p>继续我们可以得到： $\alpha_1 = (\zeta-\alpha_2y^{(2)})y^{(1)}$ (这里因为 $y^{(i)}\in{1,-1}$ )是类别标签，所以乘和除是一样的，那么目标问题就表示成：</p>
-<script type="math/tex; mode=display">
-W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...,\alpha_m).</script><p>这就变成了对一个变量 $\alpha_2$ 的优化问题，带入 $W(\alpha)$ 的公式，可以将 $W(\alpha)$ 表示成类似 $a\alpha_2^2+b\alpha_2+c $ 的形式, 其中 $L\leq \alpha_2 \leq H$</p>
-<p>我们用 $\alpha_2^{new,unclipped}$ 来表示上述二次规划得到的最优值对应的 $\alpha_2$, 我们容易得到 $\alpha_2$ 的更新规则：<br><img src="http://static.zybuluo.com/Preke/lqms4kjkf47fo5pzevrodbjy/image_1bp3gbbne3r1gb813nb1f7naf1p.png" alt="image_1bp3gbbne3r1gb813nb1f7naf1p.png-22.5kB"></p>
-<p>得到之后再求出 $\alpha_1^{new}$ 就好了。</p>
+<h2 id="坐标上升法">坐标上升法</h2>
+<p>其实是为了引出SMO的一个过渡方法</p>
+<p>其实原理很简单，假设要求： <span class="math display">\[
+\max_\alpha W(\alpha_1,\alpha_2,...,\alpha_m)
+\]</span> 我们每次控制其他变量，只在一个变量的维度求最大值，得到之后，再在下一个变量的维度来求，循环直到最优解。伪码表示如下： <img src="http://static.zybuluo.com/Preke/ala1chzobgineiquo5m18lr8/image_1bp35g42uskc18271bji14s17eqm.png" alt="image_1bp35g42uskc18271bji14s17eqm.png-20.6kB"></p>
+<h2 id="smo算法">SMO算法</h2>
+<p>被称为最快的二次规划优化算法, 有点6 特别在用于线性SVM和数据稀疏时性能更优 原始paper: 《 Sequential Minimal Optimization A Fast Algorithm for Training Support Vector Machines》</p>
+<p>之前说最后要解决这个对偶问题： <span class="math display">\[
+\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j&lt;x^{(i)},x^{(j)}&gt;\\s.t.\quad 0\leq\alpha_i\leq C,\quad i=1,...,m\\\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 这里 <span class="math inline">\(x^{(i)}, y^{(i)}, C\)</span>都是已知的，所以我们的问题就是在参数 <span class="math inline">\(\{\alpha_1,\alpha_2,...,\alpha_m\}\)</span> 上求 <span class="math inline">\(W\)</span> 的最大值 按照坐标上升的思路，我们是要固定其他维度，先选取一个参数做优化的，但是，由于我们有第二个等式约束，是无法只变动一个参数而其他参数都不改变的，所以我们至少也要选两个参数优化才可以。 算法思路如下： <img src="http://static.zybuluo.com/Preke/qsk30gn1eisq3wppvn89cw3g/image_1bp39pgg3bnf17jv9v81tp1sjo9.png" alt="image_1bp39pgg3bnf17jv9v81tp1sjo9.png-60kB"> 循环内： 1. 用启发式算法去选取一对 <span class="math inline">\(\alpha_i, \alpha_j\)</span>， 控制其他 <span class="math inline">\(\alpha\)</span> 不变 2. 通过 <span class="math inline">\(\alpha_i, \alpha_j\)</span> 优化得到的 <span class="math inline">\(W(\alpha)\)</span> 更新原来的值</p>
+<p>这里我们有这个约束： <span class="math inline">\(\sum_{i=1}^m\alpha_iy^{(i)}=0\)</span>, 假设我们选取 <span class="math inline">\(\alpha_1, \alpha_2\)</span>, 我们就能够得到： <span class="math display">\[
+\alpha_1y^{(1)}+\alpha_2y^{(2)} = -\sum_{i=3}^m\alpha_iy^{(i)} = \zeta
+\]</span> 其中 <span class="math inline">\(\zeta\)</span> 是一个固定值，因为我们固定后面的参数不变 我们可以显式的把这个约束条件表示成一条直线，如下： <img src="http://static.zybuluo.com/Preke/lp0zyfluulhsa4b11z339g14/image_1bp3cpicr1gsikhahi81ucajofm.png" alt="image_1bp3cpicr1gsikhahi81ucajofm.png-16.3kB"></p>
+<p>横轴为 <span class="math inline">\(\alpha_1\)</span>，纵轴为 <span class="math inline">\(\alpha_2\)</span>， <span class="math inline">\(0\leq\alpha_i\leq C\)</span> 对应了 <span class="math inline">\(\alpha\)</span> 对应在这个方框内 其中的 L，H 就是 <span class="math inline">\(\alpha_2\)</span> 的 lowerbond 和 upperbond</p>
+<p>继续我们可以得到： <span class="math inline">\(\alpha_1 = (\zeta-\alpha_2y^{(2)})y^{(1)}\)</span> (这里因为 <span class="math inline">\(y^{(i)}\in\{1,-1\}\)</span> )是类别标签，所以乘和除是一样的，那么目标问题就表示成： <span class="math display">\[
+W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...,\alpha_m).
+\]</span> 这就变成了对一个变量 <span class="math inline">\(\alpha_2\)</span> 的优化问题，带入 <span class="math inline">\(W(\alpha)\)</span> 的公式，可以将 <span class="math inline">\(W(\alpha)\)</span> 表示成类似 $a_2^2+b_2+c $ 的形式, 其中 <span class="math inline">\(L\leq \alpha_2 \leq H\)</span></p>
+<p>我们用 <span class="math inline">\(\alpha_2^{new,unclipped}\)</span> 来表示上述二次规划得到的最优值对应的 <span class="math inline">\(\alpha_2\)</span>, 我们容易得到 <span class="math inline">\(\alpha_2\)</span> 的更新规则： <img src="http://static.zybuluo.com/Preke/lqms4kjkf47fo5pzevrodbjy/image_1bp3gbbne3r1gb813nb1f7naf1p.png" alt="image_1bp3gbbne3r1gb813nb1f7naf1p.png-22.5kB"></p>
+<p>得到之后再求出 <span class="math inline">\(\alpha_1^{new}\)</span> 就好了。</p>
 <hr>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，我们还有几个问题：</p>
+<h2 id="后记">后记</h2>
+<p>至此，我们还有几个问题：</p>
 <ul>
-<li>上面提到说，软间隔中 $b$ 的更新规则变了，如何变？</li>
-<li>SMO中说到的启发式规则寻找 $\alpha_i, \alpha_j$，（感觉应该能简化一些计算量）<br>暂时只能先去参考JerryLead大神的笔记了…</li>
+<li>上面提到说，软间隔中 <span class="math inline">\(b\)</span> 的更新规则变了，如何变？</li>
+<li>SMO中说到的启发式规则寻找 <span class="math inline">\(\alpha_i, \alpha_j\)</span>，（感觉应该能简化一些计算量） 暂时只能先去参考JerryLead大神的笔记了…</li>
 </ul>
-<p>说实话，写到这里很累…<br>一度怀疑为什么网上有这么详尽的笔记，自己还要再写一遍…<br>才感觉到这才只是一个开始，SVM的世界好大，完全弄懂一个算法真的不容易…<br>以 JerryLead 大神的一个深入浅出的总结来暂时结束吧…毕竟以后还有代码实现不是~<br><img src="http://static.zybuluo.com/Preke/lpquhwg7j2nzs8oke0816qfw/image_1bp3h9i15h82ovh1qka17m91dqh16.png" alt="image_1bp3h9i15h82ovh1qka17m91dqh16.png-354.5kB"></p>
+<p>说实话，写到这里很累… 一度怀疑为什么网上有这么详尽的笔记，自己还要再写一遍… 才感觉到这才只是一个开始，SVM的世界好大，完全弄懂一个算法真的不容易… 以 JerryLead 大神的一个深入浅出的总结来暂时结束吧…毕竟以后还有代码实现不是~ <img src="http://static.zybuluo.com/Preke/lpquhwg7j2nzs8oke0816qfw/image_1bp3h9i15h82ovh1qka17m91dqh16.png" alt="image_1bp3h9i15h82ovh1qka17m91dqh16.png-354.5kB"></p>
 
       
     </div>
@@ -744,7 +750,7 @@ W(\alpha_1,\alpha_2,...,\alpha_m)=W((\zeta-\alpha_2y^{(2)})y^{(1)}, \alpha_2,...
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数（Kernels"><span class="nav-number">1.</span> <span class="nav-text">核函数（Kernels)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数有效性"><span class="nav-number">1.1.</span> <span class="nav-text">核函数有效性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化，不可分情况"><span class="nav-number">2.</span> <span class="nav-text">正则化，不可分情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标上升法"><span class="nav-number">3.</span> <span class="nav-text">坐标上升法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO算法"><span class="nav-number">4.</span> <span class="nav-text">SMO算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数kernels"><span class="nav-number">1.</span> <span class="nav-text">核函数（Kernels)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数有效性"><span class="nav-number">1.1.</span> <span class="nav-text">核函数有效性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化不可分情况"><span class="nav-number">2.</span> <span class="nav-text">正则化，不可分情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标上升法"><span class="nav-number">3.</span> <span class="nav-text">坐标上升法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smo算法"><span class="nav-number">4.</span> <span class="nav-text">SMO算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>

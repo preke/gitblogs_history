@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="dialog system,conversation generation,emotion,">
+  <meta name="keywords" content="emotion,dialog system,conversation generation,">
 
 
 
@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="Abstract We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture.  we propose a sequence-to-sequen">
-<meta name="keywords" content="dialog system,conversation generation,emotion">
+<meta name="description" content="Abstract  We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture. we propose a sequence-to-sequen">
+<meta name="keywords" content="emotion,dialog system,conversation generation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach">
 <meta property="og:url" content="http://yoursite.com/2018/11/14/EmoHERD/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Abstract We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture.  we propose a sequence-to-sequen">
+<meta property="og:description" content="Abstract  We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture. we propose a sequence-to-sequen">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/r5an3or08it4vnq8btaamoy7/image_1cs8ufb1t1i1o17ep19m0162r11nqm.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/nvbhd3dqvy32dot5ihytdz20/image_1cs8sg97q1ij3ts92kc1s8a15sv2t.png">
@@ -96,7 +96,7 @@
 <meta property="og:updated_time" content="2018-11-20T11:34:09.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach">
-<meta name="twitter:description" content="Abstract We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture.  we propose a sequence-to-sequen">
+<meta name="twitter:description" content="Abstract  We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture. we propose a sequence-to-sequen">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/r5an3or08it4vnq8btaamoy7/image_1cs8ufb1t1i1o17ep19m0162r11nqm.png">
 
 
@@ -359,43 +359,52 @@
       
 
       
-        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><ul>
-<li><p>We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture.</p>
-</li>
-<li><p>we propose a sequence-to-sequence response generator that <strong>considers the emotional context</strong> of the dialogue.</p>
-</li>
-<li><p>shows that incorporation of emotion into the training process helps reduce the perplexity of the generated responses,</p>
-</li>
+        <h2 id="abstract">Abstract</h2>
+<ul>
+<li><p>We build a fully data driven chat-oriented dialogue system that can dynamically mimic affective human interactions by utilizing a neural network architecture.</p></li>
+<li><p>we propose a sequence-to-sequence response generator that <strong>considers the emotional context</strong> of the dialogue.</p></li>
+<li><p>shows that incorporation of emotion into the training process helps reduce the perplexity of the generated responses,</p></li>
 </ul>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><ul>
+<h2 id="model">Model</h2>
+<ul>
 <li>经典HERD</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/r5an3or08it4vnq8btaamoy7/image_1cs8ufb1t1i1o17ep19m0162r11nqm.png" alt="HERD"></p>
-<p>(这个可以做多轮对话呀）<br><br></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/r5an3or08it4vnq8btaamoy7/image_1cs8ufb1t1i1o17ep19m0162r11nqm.png" alt="HERD"><figcaption>HERD</figcaption>
+</figure>
+<p>(这个可以做多轮对话呀） <br></p>
 <ul>
-<li>Emo-HERD<ul>
+<li>Emo-HERD
+<ul>
 <li>Incorporate an <strong>emotion encoder</strong> into the HRED architecture</li>
 <li>The emotion encoder is placed in the same hierarchy as the dialogue encoder, capturing emotion at dialogue-turn level and maintaining the emotion context history throughout the dialogue</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p><img src="http://static.zybuluo.com/Preke/nvbhd3dqvy32dot5ihytdz20/image_1cs8sg97q1ij3ts92kc1s8a15sv2t.png" alt="Emo-HERD"></p>
-<p>在对单轮对话生成 $h<em>{dlg}$ 之后，把 $h</em>{dlg}$ 输入到一个 emotion encoder中结合历史信息 $h<em>{m-1}^{emo}$ 生成emotion embedding $h</em>{emo}$</p>
-<p><img src="http://static.zybuluo.com/Preke/rr7tkqgcm4oid3taya7446e8/image_1cs8uknnk9h014du17h0825bcl13.png" alt="generate hemo"></p>
-<p>emotion encoder这里有自己的损失函数 $cost_{emo}$<br>总的Emo-HERD的损失函数为:<br><img src="http://static.zybuluo.com/Preke/cazlc4pzfpab4iq08x1qn6dz/image_1cs8uvs1ni5qr501061v9t1q0f1g.png" alt="cost"></p>
-<h2 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics:"></a>Metrics:</h2><ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/nvbhd3dqvy32dot5ihytdz20/image_1cs8sg97q1ij3ts92kc1s8a15sv2t.png" alt="Emo-HERD"><figcaption>Emo-HERD</figcaption>
+</figure>
+<p>在对单轮对话生成 <span class="math inline">\(h_{dlg}\)</span> 之后，把 <span class="math inline">\(h_{dlg}\)</span> 输入到一个 emotion encoder中结合历史信息 <span class="math inline">\(h_{m-1}^{emo}\)</span> 生成emotion embedding <span class="math inline">\(h_{emo}\)</span></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/rr7tkqgcm4oid3taya7446e8/image_1cs8uknnk9h014du17h0825bcl13.png" alt="generate hemo"><figcaption>generate hemo</figcaption>
+</figure>
+<p>emotion encoder这里有自己的损失函数 <span class="math inline">\(cost_{emo}\)</span> 总的Emo-HERD的损失函数为: <img src="http://static.zybuluo.com/Preke/cazlc4pzfpab4iq08x1qn6dz/image_1cs8uvs1ni5qr501061v9t1q0f1g.png" alt="cost"></p>
+<h2 id="metrics">Metrics:</h2>
+<ul>
 <li>perplexity</li>
 <li>subjective evaluation to measure the <strong>naturalnes</strong>s and <strong>emotional impact</strong> of the generated responses</li>
 </ul>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<h2 id="dataset">Dataset</h2>
+<ul>
 <li>SubTle, a large scale conversational corpus</li>
 <li>Spontaneous affective conversational corpus</li>
 <li>Constructing positive-emotion eliciting data</li>
 </ul>
-<h2 id><a href="#" class="headerlink" title=" "></a> </h2><h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><ul>
+<h2 id="section"></h2>
+<h2 id="acquisition">Acquisition：</h2>
+<ul>
 <li>utterance: Dialog中一轮对话中的一个<font color="red">(单方的?）</font> sentences (感觉从原文看是这样的）</li>
 </ul>
-<p>感觉有点蹭热点的嫌疑呀，14年的HERD, 加上了一个emotion encoder就发了…<br>反正帮助我理解HERD了吧…</p>
+<p>感觉有点蹭热点的嫌疑呀，14年的HERD, 加上了一个emotion encoder就发了… 反正帮助我理解HERD了吧…</p>
 
       
     </div>
@@ -413,11 +422,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/emotion/" rel="tag"># emotion</a>
+          
             <a href="/tags/dialog-system/" rel="tag"># dialog system</a>
           
             <a href="/tags/conversation-generation/" rel="tag"># conversation generation</a>
-          
-            <a href="/tags/emotion/" rel="tag"># emotion</a>
           
         </div>
       
@@ -430,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/14/ECM/" rel="next" title="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory">
-                <i class="fa fa-chevron-left"></i> Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory
+              <a href="/2018/11/14/slstm/" rel="next" title="A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation">
+                <i class="fa fa-chevron-left"></i> A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation
               </a>
             
           </div>
@@ -440,8 +449,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/14/slstm/" rel="prev" title="A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation">
-                A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/01/dialog_system/" rel="prev" title="Dialog system记录">
+                Dialog system记录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -632,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrics"><span class="nav-number">3.</span> <span class="nav-text">Metrics:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">4.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Acquisition："><span class="nav-number">6.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metrics"><span class="nav-number">3.</span> <span class="nav-text">Metrics:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">4.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquisition"><span class="nav-number">6.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
             
 
           </div>

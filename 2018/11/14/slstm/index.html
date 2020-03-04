@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="Abstract poor logic and no emotion  a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed   In our model, pre-generated emotion">
+<meta name="description" content="Abstract  poor logic and no emotion a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed In our model, pre-generated emotion ke">
 <meta name="keywords" content="dialog system,conversation generation,sentiment">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation">
 <meta property="og:url" content="http://yoursite.com/2018/11/14/slstm/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Abstract poor logic and no emotion  a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed   In our model, pre-generated emotion">
+<meta property="og:description" content="Abstract  poor logic and no emotion a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed In our model, pre-generated emotion ke">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png">
@@ -96,7 +96,7 @@
 <meta property="og:updated_time" content="2018-11-13T18:07:59.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation">
-<meta name="twitter:description" content="Abstract poor logic and no emotion  a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed   In our model, pre-generated emotion">
+<meta name="twitter:description" content="Abstract  poor logic and no emotion a syntactically con- strained bidirectional-asynchronous approach for emotional conversation generation (E- SCBA) is proposed In our model, pre-generated emotion ke">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png">
 
 
@@ -359,62 +359,67 @@
       
 
       
-        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><ul>
-<li><p>poor logic and no emotion</p>
-</li>
-<li><p>a syntactically con- strained bidirectional-asynchronous approach for <code>emotional conversation generation</code> (E- SCBA) is proposed </p>
-</li>
-<li><p>In our model, pre-generated emotion keywords and topic keywords are asynchronously introduced into the process of decoding. </p>
-</li>
+        <h2 id="abstract">Abstract</h2>
+<ul>
+<li><p>poor logic and no emotion</p></li>
+<li><p>a syntactically con- strained bidirectional-asynchronous approach for <code>emotional conversation generation</code> (E- SCBA) is proposed</p></li>
+<li><p>In our model, pre-generated emotion keywords and topic keywords are asynchronously introduced into the process of decoding.</p></li>
 </ul>
-<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ol>
+<h2 id="contribution">Contribution</h2>
+<ol type="1">
 <li>It conducts a study of compound information, which constitutes the syntactic constraint in the conversation generation.</li>
 <li>A bidirectional-asynchronous decoder with multi-stage strategy is proposed to utilize the syntactic constraint.</li>
 <li>Our experiments show that E-SCBA work better on emotion, logic and diversity than the general seq2seq and other models that consider only a sin- gle factor during the generation.</li>
 </ol>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<h2 id="dataset">Dataset</h2>
+<ul>
 <li>Emotional conversation dataset NLPCC2017</li>
 <li>1,119,201 Chinese post-reply pairs</li>
 <li>randomly sampled 8,000 for validation, 3,000 for testing and the rest for training</li>
 </ul>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><img src="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png" alt="image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB"></p>
-<p>Keywords dictionary:</p>
-<ol>
-<li>Emotion dictionary</li>
-<li>Topic dictionary</li>
-</ol>
+<h2 id="model">Model</h2>
+<figure>
+<img src="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png" alt="image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB"><figcaption>image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB</figcaption>
+</figure>
+<p>Keywords dictionary: 1. Emotion dictionary 2. Topic dictionary</p>
 <ul>
-<li><p>Step1: 输入Post, 得到topic keyword and emotion keyword</p>
+<li>Step1: 输入Post, 得到topic keyword and emotion keyword
 <ul>
 <li>pretrained LDA 主题推断</li>
 <li>emotion transfer network 得到emotion</li>
 <li>(一些网络处理）得到topic keyword and emotion keyword that are expected to appear in the reply.</li>
-</ul>
-</li>
-<li><p>Step2:</p>
+</ul></li>
+<li>Step2:
 <ul>
-<li>Post过LSTM(加入Emotion keyword), 得到一系列hidden vectors ${s_i^{et}}$   </li>
-<li>Post过LSTM(加入Topic keyword, Emotional attention), 得到一系列hidden vectors ${s_j^{tp}}$ </li>
-<li><font color="red">LSTM和Attention的常用结合方式？</font></li>
-<li>用${s_i^{et}}$  去 attention ${s_j^{tp}}$ 得到 <strong>Middle Sequence($y^{md}$)</strong> (这里$y^{md}$ 不代表输出的words, 仅仅是中间变量而已）如图：get middle sequence</li>
-<li>然后通过$y^{md}$ 得到 $y^{ce}$ 和 $y^{ct}$ 如图：get ce and ct<br><img src="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png" alt="get middle sequence"><br><br></li>
-</ul>
+<li>Post过LSTM(加入Emotion keyword), 得到一系列hidden vectors <span class="math inline">\(\{s_i^{et}\}\)</span><br>
 </li>
+<li>Post过LSTM(加入Topic keyword, Emotional attention), 得到一系列hidden vectors <span class="math inline">\(\{s_j^{tp}\}\)</span></li>
+<li><font color="red">LSTM和Attention的常用结合方式？</font></li>
+<li>用<span class="math inline">\(\{s_i^{et}\}\)</span> 去 attention <span class="math inline">\(\{s_j^{tp}\}\)</span> 得到 <strong>Middle Sequence(<span class="math inline">\(y^{md}\)</span>)</strong> (这里<span class="math inline">\(y^{md}\)</span> 不代表输出的words, 仅仅是中间变量而已）如图：get middle sequence</li>
+<li>然后通过<span class="math inline">\(y^{md}\)</span> 得到 <span class="math inline">\(y^{ce}\)</span> 和 <span class="math inline">\(y^{ct}\)</span> 如图：get ce and ct <img src="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png" alt="get middle sequence"> <br></li>
+</ul></li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/qt9plkibwr5fvzt7wzwncnvi/image_1cs72kfu14s0s3b15am52fv88m.png" alt="get ce and ct"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/qt9plkibwr5fvzt7wzwncnvi/image_1cs72kfu14s0s3b15am52fv88m.png" alt="get ce and ct"><figcaption>get ce and ct</figcaption>
+</figure>
 <blockquote>
-<p>提醒自己一点，LSTM每个输出也只是hidden states, 具体应用到decoder是还要加入一个选择当前输出词语的softmax:$P(w<em>i|w</em>{i-1}, h_i, c_i)$</p>
+<p>提醒自己一点，LSTM每个输出也只是hidden states, 具体应用到decoder是还要加入一个选择当前输出词语的softmax:<span class="math inline">\(P(w_i|w_{i-1}, h_i, c_i)\)</span></p>
 </blockquote>
 <ul>
-<li>Step3:<br>concat 所有的东西 together:<br>$y^f=(y^{ct,b}, w<em>{tp}^k, y^{md,f}, w</em>{et}^k, y^{ce,f})$<br>$y^b$ 就是 $y^f$ 的反向;<br>And then 得到最终的hidden states 然后生成words:</li>
+<li>Step3:<br>
+concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{tp}^k, y^{md,f}, w_{et}^k, y^{ce,f})\)</span> <span class="math inline">\(y^b\)</span> 就是 <span class="math inline">\(y^f\)</span> 的反向; And then 得到最终的hidden states 然后生成words:</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/zptciuvc45fjyf2ffwj4ep1d/image_1cs739mit1j9lb0916ii3e7vvm9.png" alt="get hidden states"></p>
-<h2 id="Experiment-and-Metrics"><a href="#Experiment-and-Metrics" class="headerlink" title="Experiment and Metrics"></a>Experiment and Metrics</h2><ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/zptciuvc45fjyf2ffwj4ep1d/image_1cs739mit1j9lb0916ii3e7vvm9.png" alt="get hidden states"><figcaption>get hidden states</figcaption>
+</figure>
+<h2 id="experiment-and-metrics">Experiment and Metrics</h2>
+<ul>
 <li><strong>Embedding-based Metrics</strong>: We measure the similarity computed by <strong>cosine distance</strong> between a candidate reply and the target reply using <strong>sentence-level embedding</strong></li>
 <li><strong>Distinct Metrics</strong>: By computing the number of different unigrams (Distinct-1) and bigrams (Distinct-2), we measure information and diversity in the candidate replies</li>
 <li><strong>Human Annotations</strong></li>
 </ul>
-<h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><p>方向的变换看不太懂，lstm的一些认识加深了一点</p>
+<h2 id="acquisition">Acquisition：</h2>
+<p>方向的变换看不太懂，lstm的一些认识加深了一点</p>
 <hr>
 
       
@@ -450,8 +455,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/14/EmoHERD/" rel="next" title="Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach">
-                <i class="fa fa-chevron-left"></i> Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach
+              <a href="/2018/11/14/ECM/" rel="next" title="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory">
+                <i class="fa fa-chevron-left"></i> Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory
               </a>
             
           </div>
@@ -460,8 +465,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/14/style_transfer/" rel="prev" title="Style Transfer in Text Exploration and Evaluation">
-                Style Transfer in Text Exploration and Evaluation <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/14/EmoHERD/" rel="prev" title="Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach">
+                Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -652,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">3.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">4.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiment-and-Metrics"><span class="nav-number">5.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Acquisition："><span class="nav-number">6.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">3.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">4.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-and-metrics"><span class="nav-number">5.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquisition"><span class="nav-number">6.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
             
 
           </div>

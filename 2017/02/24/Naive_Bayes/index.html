@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情：给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 贝叶斯定理：p(c|w) =  \frac{p(w|c)p(c)}{p(w)}为什么说是朴素贝叶">
+<meta name="description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
 <meta property="og:type" content="article">
 <meta property="og:title" content="朴素贝叶斯">
 <meta property="og:url" content="http://yoursite.com/2017/02/24/Naive_Bayes/index.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情：给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 贝叶斯定理：p(c|w) =  \frac{p(w|c)p(c)}{p(w)}为什么说是朴素贝叶">
+<meta property="og:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2018-10-20T14:40:04.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯">
-<meta name="twitter:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情：给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 贝叶斯定理：p(c|w) =  \frac{p(w|c)p(c)}{p(w)}为什么说是朴素贝叶">
+<meta name="twitter:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
 
 
 
@@ -353,39 +353,39 @@
       
 
       
-        <p>回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记<br>然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了</p>
-<p>贝叶斯决策，基本上，从直观理解就是做了这样的事情：<br>给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。</p>
-<h3 id="贝叶斯定理："><a href="#贝叶斯定理：" class="headerlink" title="贝叶斯定理："></a>贝叶斯定理：</h3><script type="math/tex; mode=display">p(c|w) =  \frac{p(w|c)p(c)}{p(w)}</script><h3 id="为什么说是朴素贝叶斯："><a href="#为什么说是朴素贝叶斯：" class="headerlink" title="为什么说是朴素贝叶斯："></a>为什么说是朴素贝叶斯：</h3><ul>
-<li>n个特征相互独立 （为了简化条件概率的计算）</li>
-<li>n个特征同等重要</li>
-</ul>
-<h3 id="问题场景："><a href="#问题场景：" class="headerlink" title="问题场景："></a>问题场景：</h3><p>就举《机器学习实战》的例子吧，做一个文本分类，如果一段文本里，包含侮辱性词汇，标记为不当言论。</p>
-<h3 id="直观理解："><a href="#直观理解：" class="headerlink" title="直观理解："></a>直观理解：</h3><p>c is category, w is words,可以理解成邮件<br>c = 0 : 不是垃圾邮件<br>c = 1 : 是垃圾邮件</p>
-<h3 id="先看怎样运作："><a href="#先看怎样运作：" class="headerlink" title="先看怎样运作："></a>先看怎样运作：</h3><p>对一个特定的邮件 w,<br>我计算  $p(c = 1|w)$   和  $p(c = 0|w)$<br>判断这两个概率哪个大，就把文档归为哪一类。</p>
-<p>本来我们计算两个概率，是应该根据贝叶斯定理的公式（如上）的，但是对于一篇文档来说， $p(w)$ 是相同的，反正我们的目的只是比大小，定性分析，同除  $p(w)$ 并不影响结果，所以</p>
-<h3 id="目标函数："><a href="#目标函数：" class="headerlink" title="目标函数："></a>目标函数：</h3><script type="math/tex; mode=display">p(c|w) =  p(w|c)p(c)</script><p>以下阐述帮助理解，实际用时要做优化，优化在最后提一下</p>
+        <p>回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了</p>
+<p>贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。</p>
+<p>###贝叶斯定理：</p>
+<p><span class="math display">\[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\]</span></p>
+<p>###为什么说是朴素贝叶斯： * n个特征相互独立 （为了简化条件概率的计算） * n个特征同等重要</p>
+<p>###问题场景： 就举《机器学习实战》的例子吧，做一个文本分类，如果一段文本里，包含侮辱性词汇，标记为不当言论。</p>
+<p>###直观理解： c is category, w is words,可以理解成邮件 c = 0 : 不是垃圾邮件 c = 1 : 是垃圾邮件</p>
+<p>###先看怎样运作： 对一个特定的邮件 w, 我计算 <span class="math inline">\(p(c = 1|w)\)</span> 和 <span class="math inline">\(p(c = 0|w)\)</span> 判断这两个概率哪个大，就把文档归为哪一类。</p>
+<p>本来我们计算两个概率，是应该根据贝叶斯定理的公式（如上）的，但是对于一篇文档来说， <span class="math inline">\(p(w)\)</span> 是相同的，反正我们的目的只是比大小，定性分析，同除 <span class="math inline">\(p(w)\)</span> 并不影响结果，所以</p>
+<p>###目标函数：</p>
+<p><span class="math display">\[p(c|w) =  p(w|c)p(c)\]</span></p>
+<p>以下阐述帮助理解，实际用时要做优化，优化在最后提一下</p>
 <p>该如何建模？</p>
-<h3 id="生成词集模型："><a href="#生成词集模型：" class="headerlink" title="生成词集模型："></a>生成词集模型：</h3><p>把所有邮件（假设我把我目前邮箱里的所有邮件都用做训练），分词，将所有出现过的词语包含到一个set当中。</p>
-<h3 id="生成文本向量："><a href="#生成文本向量：" class="headerlink" title="生成文本向量："></a>生成文本向量：</h3><p>假设刚刚set有1000个词，那么我将每个邮件做成一个1000维的向量，每一维对应这个词是否在该文档出现，用0，1表示。</p>
-<h3 id="训练模型："><a href="#训练模型：" class="headerlink" title="训练模型："></a>训练模型：</h3><p>我们是对这样一个生成模型建模，生成模型求的是联合概率。<br>先说个简单的，$p(c)$ 是什么？是人工标记训练集中垃圾邮件的频率，是一个固定的数值，比如我的邮箱里50封邮件全都作为训练，我人工标记，有10封为垃圾邮件，那么$p(c = 1) = 0.2$； $p(c = 0) = 0.8$</p>
-<p>那么$p(w|c) $ 呢，既然朴素贝叶斯做出了特征相互独立的假设，那么我们就假定，在任意一封邮件中，每个词语出现的概率是不会相互影响的。我们设词集中1000个词分别为：$x<em>1 , x_2, … x</em>{1000}$ , 这样就有</p>
-<script type="math/tex; mode=display">p(w|c)  = \prod_{i=1}^{1000}p(x_{i}|y)</script><p>我们还是分为两部分：</p>
-<h4 id="p-w-c-1-："><a href="#p-w-c-1-：" class="headerlink" title="$p(w|c = 1) $ ："></a>$p(w|c = 1) $ ：</h4><p>在那些标记为垃圾邮件的文本向量中，假设有n个：<br>我们把他们全部加起来，得到一个向量，然后再将这个向量的每一位都除以n。</p>
-<p>好的我们就得到了一个特征向量$p<em>{1}$， 这个特征向量每一位表示对应的词语在垃圾邮件中出现的概率<br>同理可得$p</em>{0}$</p>
+<p>###生成词集模型： 把所有邮件（假设我把我目前邮箱里的所有邮件都用做训练），分词，将所有出现过的词语包含到一个set当中。</p>
+<p>###生成文本向量： 假设刚刚set有1000个词，那么我将每个邮件做成一个1000维的向量，每一维对应这个词是否在该文档出现，用0，1表示。</p>
+<p>###训练模型： 我们是对这样一个生成模型建模，生成模型求的是联合概率。 先说个简单的，<span class="math inline">\(p(c)\)</span> 是什么？是人工标记训练集中垃圾邮件的频率，是一个固定的数值，比如我的邮箱里50封邮件全都作为训练，我人工标记，有10封为垃圾邮件，那么<span class="math inline">\(p(c = 1) = 0.2\)</span>； <span class="math inline">\(p(c = 0) = 0.8\)</span></p>
+<p>那么$p(w|c) $ 呢，既然朴素贝叶斯做出了特征相互独立的假设，那么我们就假定，在任意一封邮件中，每个词语出现的概率是不会相互影响的。我们设词集中1000个词分别为：<span class="math inline">\(x_1 , x_2, ... x_{1000}\)</span> , 这样就有</p>
+<p><span class="math display">\[p(w|c)  = \prod_{i=1}^{1000}p(x_{i}|y)\]</span></p>
+<p>我们还是分为两部分：</p>
+<h4 id="pwc-1">$p(w|c = 1) $ ：</h4>
+<p>在那些标记为垃圾邮件的文本向量中，假设有n个： 我们把他们全部加起来，得到一个向量，然后再将这个向量的每一位都除以n。</p>
+<p>好的我们就得到了一个特征向量<span class="math inline">\(p_{1}\)</span>， 这个特征向量每一位表示对应的词语在垃圾邮件中出现的概率 同理可得<span class="math inline">\(p_{0}\)</span></p>
 <p>这里就可以看出，生成模型是什么，我们之前不知道参数的大小，是通过训练集生成参数，然后再来求条件概率，换句话说，我们是对参数进行了最大似然估计。</p>
-<h3 id="验证方法："><a href="#验证方法：" class="headerlink" title="验证方法："></a>验证方法：</h3><p>用了向量乘积来判别</p>
+<p>###验证方法：</p>
+<p>用了向量乘积来判别</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p1 = sum(vec2Classify * p1Vec) + log(pClass1)    <span class="comment">#element-wise mult</span></span><br><span class="line">p0 = sum(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</span><br><span class="line"><span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>vec2Classify 为待检验的文本向量；<br>这里做了一下数学处理（log）</p>
-<p>我想说的是，为什么验证方法中的前半部分是文本向量与特征向量对位相乘然后求和呢？<br>我们知道，特征向量中是对位该词出现的概率，而文本向量中是是否出现，用0，1表示<br>所以，对位相乘，粗浅理解，就是表现该文档中这些特征词一共出现了多少。</p>
-<p>换句话说吧，我们会不会有这样的疑问？<br>为什么我们不建立一个dirty words的dict，然后去扫新邮件中有没有包含dict中的词语，这样不就可以直接确定分类了么？要概率干嘛？</p>
+<p>vec2Classify 为待检验的文本向量； 这里做了一下数学处理（log）</p>
+<p>我想说的是，为什么验证方法中的前半部分是文本向量与特征向量对位相乘然后求和呢？ 我们知道，特征向量中是对位该词出现的概率，而文本向量中是是否出现，用0，1表示 所以，对位相乘，粗浅理解，就是表现该文档中这些特征词一共出现了多少。</p>
+<p>换句话说吧，我们会不会有这样的疑问？ 为什么我们不建立一个dirty words的dict，然后去扫新邮件中有没有包含dict中的词语，这样不就可以直接确定分类了么？要概率干嘛？</p>
 <p>我个人的理解，特征向量，就是最能够表示该类别特性的一个向量，那些再特征向量中出现的概率高的词，最能代表了该类别文本的特性，也就是说，如果有一个文档，包含了这些词，是有极大可能属于该类别的。</p>
 <p>所以，如果只建立dict的话，有这样的问题，垃圾邮件只是说明包含这些特征词的概率大，但是不能完全确定一封邮件只要有这个词，就是属于垃圾邮件，所以只是概率的问题。</p>
 <p>这样结合考虑，应该能够明白了吧。</p>
-<p>所以，上述只是帮助理解的一个小例子，如果实用，要优化：</p>
-<ol>
-<li>换词集为词袋，考虑文本中单词出现的频次，而不是简单用0，1表示是否出现</li>
-<li>中间步骤$p(w|c)  = \prod<em>{i=1}^{1000}p(x</em>{i}|y)$，有多个概率相乘，如果有一个概率0，则结果为0，不合理，所以用一下Laplace平滑</li>
-</ol>
+<p>所以，上述只是帮助理解的一个小例子，如果实用，要优化： 1. 换词集为词袋，考虑文本中单词出现的频次，而不是简单用0，1表示是否出现 2. 中间步骤<span class="math inline">\(p(w|c) = \prod_{i=1}^{1000}p(x_{i}|y)\)</span>，有多个概率相乘，如果有一个概率0，则结果为0，不合理，所以用一下Laplace平滑</p>
 <p>还有更多优化步骤，我就不多说了…..</p>
 
       
@@ -421,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/17/骊歌/" rel="prev" title="骊歌">
-                骊歌 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/17/随记4.17/" rel="prev" title="随记4.17">
+                随记4.17 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -613,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯定理："><span class="nav-number">1.</span> <span class="nav-text">贝叶斯定理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么说是朴素贝叶斯："><span class="nav-number">2.</span> <span class="nav-text">为什么说是朴素贝叶斯：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题场景："><span class="nav-number">3.</span> <span class="nav-text">问题场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直观理解："><span class="nav-number">4.</span> <span class="nav-text">直观理解：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先看怎样运作："><span class="nav-number">5.</span> <span class="nav-text">先看怎样运作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标函数："><span class="nav-number">6.</span> <span class="nav-text">目标函数：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成词集模型："><span class="nav-number">7.</span> <span class="nav-text">生成词集模型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成文本向量："><span class="nav-number">8.</span> <span class="nav-text">生成文本向量：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练模型："><span class="nav-number">9.</span> <span class="nav-text">训练模型：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#p-w-c-1-："><span class="nav-number">9.1.</span> <span class="nav-text">$p(w|c = 1) $ ：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证方法："><span class="nav-number">10.</span> <span class="nav-text">验证方法：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#pwc-1"><span class="nav-number">1.</span> <span class="nav-text">$p(w|c = 1) $ ：</span></a></li></ol></div>
             
 
           </div>

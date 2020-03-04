@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/ECM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/style_transfer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiyuan">
@@ -283,7 +283,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/14/ECM/" itemprop="url">Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory</a></h1>
+                <a class="post-title-link" href="/2018/11/14/style_transfer/" itemprop="url">Style Transfer in Text Exploration and Evaluation</a></h1>
         
 
         <div class="post-meta">
@@ -357,39 +357,61 @@
       
         
           
-            <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent). </p>
-<p>ECM addresses the factor using three new mechanisms that respectively：</p>
+            <h2 id="abstract">Abstract</h2>
+<p>2 main problems in Style Transfer:</p>
 <ul>
-<li>Models the high-level abstraction of emotion expressions by embedding emotion categories</li>
-<li>Captures the change of implicit internal emotion states</li>
-<li>Uses explicit emotion expressions with an <strong>external emotion vocabulary</strong></li>
-</ul>
-<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ul>
-<li>It proposes to address the <strong>emotion factor</strong> in large-scale conversation generation</li>
-<li>It proposes an end-to-end framework (called ECM) to incorporate the emotion influence in large-scale conversation generation. It has three novel mechanisms: emotion category embedding, an internal emotion memory, and an external memory.</li>
-<li>It shows that ECM can generate responses with higher content and emotion scores than the traditional seq2seq model.</li>
-</ul>
-<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem:"></a>Problem:</h2><p>Given post $ X = [x_1,…x_n] $ and emotion factor $e$,<br>Output response $Y = [y_1,…y_m]$ coherent with the emotion $e$</p>
-<script type="math/tex; mode=display">
-P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><img src="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png" alt="ECM model"><br>整体流程是：<br>先训练一个Emotion Classidier 来 annotate 训练数据的emotion;<br>然后将三元组(Post, response, target emotion)输入到ECM中，在decoder中结合target emotion的信息，依次生成每个word, (生成response)<br>然后再对response用同样的Emotion Classidier 做分类，得到response的情感来衡量效果</p>
-<p><img src="http://static.zybuluo.com/Preke/m8ewuvddl5icqvaw4wey1tqu/image_1csoduq9ah88e04f5m1qcso18m.png" alt="Internal Memory"></p>
-<p><img src="http://static.zybuluo.com/Preke/ded8bdig3g83wz5xe2w5a3di/image_1csodvkvn1af2b9n1r6c1mk51ilo13.png" alt="External Memory"></p>
-<p>(中间的数学推断，看倒是看明白了，有点懒得誊一次…</p>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
-<li>NLPCC emotion classification dataset </li>
-<li>STC conversation dataset<br>*could found in the github: <a href="https://github.com/tuxchow/ecm" target="_blank" rel="noopener">source code</a></li>
-</ul>
-<h2 id="Experiment-and-Metrics"><a href="#Experiment-and-Metrics" class="headerlink" title="Experiment and Metrics"></a>Experiment and Metrics</h2><ul>
-<li>BLEU is not suitable for measuring conversation generation due to its low correlation with human judgment. </li>
-<li>Perplexity(在读过的paper中最常见的）</li>
-<li>Emotion accuracy</li>
-</ul>
-<p><img src="http://static.zybuluo.com/Preke/0okuk2t5cip926nwjr4kokoa/image_1csoe3n91314cc21l9i16s8fom1g.png" alt="result1"></p>
+<li>Lack of parallel data
 <ul>
-<li>Manual Evaluation</li>
+<li>Model learn from <font color="red">non-parallel data</font></li>
+<li>Learn separate <strong>content representations</strong> and <strong>style representations</strong> using <strong>adversarial networks</strong>.</li>
+</ul></li>
+<li>Lack of reliable metrics
+<ul>
+<li>propose two novel evaluation metrics that measure two aspects of style transfer: <strong>transfer strength</strong> and <strong>content preservation</strong></li>
+</ul></li>
 </ul>
-<h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><p>过程感觉有点琐碎，细节上的修改和优化还是挺多的，不能说是一个很眼前一亮的工作吧（不是效果和问题不好，而是没那么直观），但是运行一下代码应该会有更加深的体会</p>
-<hr>
+<h2 id="contribution">Contribution</h2>
+<ul>
+<li>Compose a <a href="https://github.com/fuzhenxin/textstyletransferdata" target="_blank" rel="noopener">dataset</a> of paper-news titles to facilitate the research in language style transfer</li>
+<li>Propose <strong>two general evaluation metrics</strong> for style transfer, which considers both transfer strength and content preservation. The evaluation metric is highly correlated to the human evaluation.</li>
+</ul>
+<h2 id="model">Model</h2>
+<p>(both only contains the content information)</p>
+<h3 id="multi-encoder">multi-encoder</h3>
+<ul>
+<li>The multi-decoder model uses different decoders, one for each style, to generate texts in the corresponding style.</li>
+</ul>
+<p>困难在于encoder如何生成只含有content信息的representation，不包含原来的style信息<font color="red">（有点不理解是为什么…)</font></p>
+<p>设置目标函数用adversarial network 处理post的style分类：目标是 to separate the content representation from the style. 这里有两个loss: <img src="http://static.zybuluo.com/Preke/qhmh4o4giu7h1z3krd3n9qnb/image_1cs8n1gskhhu11r3ket1g1kaqbs.png" alt="Loss1"> to minimizes the negative log probability of the style labels in the training data. (这里<span class="math inline">\(\theta_c\)</span> 是 predict style的分类器的参数） <img src="http://static.zybuluo.com/Preke/y8oee035db5o9qpekcx5mhok/image_1cs8n5qv9v9k11611sqv1tu415sq19.png" alt="Loss2"> by maximize the entropy (minimize the negative entropy) of the predicted style labels, make the classifier unable to identify the style of <span class="math inline">\(x\)</span></p>
+<p>然后，对于多个不同style的decoder: 还有一个传统的loss, 使得输入输出的语义更相似<font color="red">（这里我也有点不太认同）</font> <img src="http://static.zybuluo.com/Preke/9b6a2z85xixmuk43xn11b85b/image_1cs8nfl7k14a91ro31stf5r11l5o1m.png" alt="loss gen"></p>
+<p>所以这个multi-encoder的总体loss为： <img src="http://static.zybuluo.com/Preke/ee85f56nen42jcewrseks92w/image_1cs8ngdnh1m6h127l4nc1jol15823.png" alt="total loss"></p>
+<h3 id="style-embedding">style embedding</h3>
+<p>与上述模型类似，只是在参数中加入了所有style categoris的embeddings的矩阵<span class="math inline">\(E\in R^{N*d_s}\)</span> <span class="math inline">\(N\)</span> for the number of styles <span class="math inline">\(d_s\)</span> for the dim of style embeddings</p>
+<p>这部分的Loss为： <img src="http://static.zybuluo.com/Preke/vo7860x0z6e0jd2643citxrq/image_1cs8nq9t11a4r71e1nh69k2l7q2g.png" alt="Loss2"></p>
+<ul>
+<li>The style-embedding model learns style embeddings addition to the content representations.</li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/e1obhx207tcemqi309feb66d/image_1cs8ea9g6ic51tk367h1ob07gs9.png" alt="2 models"><figcaption>2 models</figcaption>
+</figure>
+<h2 id="metrics">Metrics:</h2>
+<ul>
+<li>Transfer Strength
+<ul>
+<li>evaluates whether the style is transferred to target style(用LSTM-sigmoid构建一个分类器，通过acc衡量）</li>
+</ul></li>
+<li>Content Preservation
+<ul>
+<li>evaluate the similarity between source text and target text</li>
+</ul></li>
+</ul>
+<h2 id="dataset">Dataset</h2>
+<ul>
+<li>paper-news title dataset</li>
+<li>positive-negative review dataset</li>
+</ul>
+<h2 id="acquisition">Acquisition：</h2>
+<p>Model很直观，只是对于adversarial 的思路还是不太理解，有一些不理解的点标红了 （感觉没有体现出Contribution中说的parallel数据的特点）</p>
 
           
         
@@ -531,245 +553,52 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
       
         
           
-            <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><ul>
+            <h2 id="abstract">Abstract</h2>
+<ul>
 <li>We propose simple and flexible training and decoding methods for <strong>influencing output style and topic</strong> in neural encoder-decoder based language generation</li>
 </ul>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><h3 id="encoder-decoder"><a href="#encoder-decoder" class="headerlink" title="encoder-decoder"></a>encoder-decoder</h3><p>Chapter 3 &amp; 4 解释了一对如何利用Bayes更好的设定目标函数从而s2s的decoder效果更好（更好的选择words)的数学解释，有点晕晕的。<br>（总之是在实验时对encoder-decoder进行了微调改进吧）</p>
-<h3 id="Chapter-5-Style"><a href="#Chapter-5-Style" class="headerlink" title="Chapter 5: Style"></a>Chapter 5: Style</h3><p>如果我们有一个数据集（database of target sentences)<br>在 neural encoder-decoder framework 的框架下，如何去影响style</p>
+<h2 id="model">Model</h2>
+<h3 id="encoder-decoder">encoder-decoder</h3>
+<p>Chapter 3 &amp; 4 解释了一对如何利用Bayes更好的设定目标函数从而s2s的decoder效果更好（更好的选择words)的数学解释，有点晕晕的。 （总之是在实验时对encoder-decoder进行了微调改进吧）</p>
+<h3 id="chapter-5-style">Chapter 5: Style</h3>
+<p>如果我们有一个数据集（database of target sentences) 在 neural encoder-decoder framework 的框架下，如何去影响style</p>
 <ul>
-<li><p>5.1 Ranking</p>
+<li>5.1 Ranking</li>
+<li>Target is fixed</li>
+<li><p>As a retrieval problem</p></li>
+<li>5.2 Multiply
 <ul>
-<li>Target is fixed </li>
-<li>As a retrieval problem</li>
-</ul>
-</li>
-<li><p>5.2 Multiply</p>
+<li>2 models
 <ul>
-<li>2 models<ul>
 <li>encoder-decoder model trained on a open-domain dataset</li>
 <li>language model trained on target dataset</li>
-</ul>
-</li>
-<li>在RNN step-by-step 生成each word 的概率为：<br>  $P(t|S)^{\lambda_1}P(t)^{\lambda_2}$<ul>
-<li>其中 $t$ 是中间要生成的词，$\lambda_1$ 表示第一个model，$\lambda_2$ 表示第二个model；$S$ 是source, 个人理解这里为latent state vector(decoder的参数）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>5.3 Finetune</p>
+</ul></li>
+<li>在RNN step-by-step 生成each word 的概率为： <span class="math inline">\(P(t|S)^{\lambda_1}P(t)^{\lambda_2}\)</span>
+<ul>
+<li>其中 <span class="math inline">\(t\)</span> 是中间要生成的词，<span class="math inline">\(\lambda_1\)</span> 表示第一个model，<span class="math inline">\(\lambda_2\)</span> 表示第二个model；<span class="math inline">\(S\)</span> 是source, 个人理解这里为latent state vector(decoder的参数）</li>
+</ul></li>
+</ul></li>
+<li>5.3 Finetune
 <ul>
 <li>For each sentences in the target dataset, we assume there is a pseudo context; （也就是说，都有一个隐藏的上下文（概率模型），这里有点像VAE)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Chapter-6-Topic"><a href="#Chapter-6-Topic" class="headerlink" title="Chapter 6: Topic"></a>Chapter 6: Topic</h3><p>Counting Grid(完全不懂…）</p>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<h3 id="chapter-6-topic">Chapter 6: Topic</h3>
+<p>Counting Grid(完全不懂…）</p>
+<h2 id="dataset">Dataset</h2>
+<ul>
 <li><a href="http://webscope.sandbox.yahoo.com/%20catalog.php?datatype=l" target="_blank" rel="noopener">Yahoo! Comprehensive Questions and Answers dataset</a> 来做ranking</li>
 <li>Twitter Conversation Dataset（Sordoni et al., 2015）（HERD用的）</li>
 </ul>
-<h2 id="Experiment-and-Metrics"><a href="#Experiment-and-Metrics" class="headerlink" title="Experiment and Metrics"></a>Experiment and Metrics</h2><p>Ranking problem: MRR P@1</p>
+<h2 id="experiment-and-metrics">Experiment and Metrics</h2>
+<p>Ranking problem: MRR P@1</p>
 <p>Style: Human Evaluations</p>
-<p><img src="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png" alt="Ranking result"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/zd7zsvglmpulvy4k9276jjic/image_1cs6k3u35i70163t1hu12qf1b779.png" alt="Ranking result"><figcaption>Ranking result</figcaption>
+</figure>
 <hr>
-<h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><p>整体来说，对目前研究的问题帮助不明显，对于模型（encoder-decoder)改进方面有一些数学经验值得借鉴</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiyuan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/Gold.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiyuan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/" itemprop="url">Sentiment Adaptive End-to-End Dialog Systems</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-12T17:17:30+08:00">
-                2018-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Paper notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>Include user sentiment from <strong>multimodal information(acoustic, dialogic and textual)</strong> in the end-to-end learning framework to make systems <strong>more user-adaptive and effective</strong>.</p>
-<p>First attempt to <strong>incorporate multimodal user information</strong> in the adaptive end-to- end dialog system training framework</p>
-<ul>
-<li>Multimodal Sentiment Classification</li>
-</ul>
-<h3 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h3><ul>
-<li><a href="https://www.dropbox.com/s/nl5j4ts7kewx47v/sample_50.zip?dl=0" target="_blank" rel="noopener">an audio dataset</a> with sentiment annotation (dialog history) </li>
-<li>an automatic sentiment detector that considers conversation history by using dialogic features, textual features and traditional acoustic features</li>
-<li>end-to-end trainable dialog policies adaptive to user sentiment in both supervised and rein- forcement learning settings</li>
-</ul>
-<h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><ul>
-<li><a href="https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/" target="_blank" rel="noopener">DSTC1</a></li>
-<li>人工标注DSTC1的Audio dataset: 50 dialogs consisting of 517 conversation turns for user sentiment (<code>negative</code>, <code>neutral</code> and <code>positive</code>)</li>
-</ul>
-<h3 id="Model-and-Experiments"><a href="#Model-and-Experiments" class="headerlink" title="Model and Experiments"></a>Model and Experiments</h3><ul>
-<li>Multimodal Sentiment Classification<ul>
-<li>openSMILE: 提取audio feature</li>
-<li>four categories of dialogic features(人工统计feature)<ul>
-<li>Interruption</li>
-<li>Button usage</li>
-<li>Repetitions</li>
-<li>Start over</li>
-</ul>
-</li>
-<li>Textual features: A <code>tf-idf vector</code> for each utterance as textual features</li>
-</ul>
-</li>
-<li>Classification results<ul>
-<li>Trained on 50 dialogs annotated with sentiment labels    </li>
-<li>Separated to be 60% for training, 20% for validation and 20% for testing</li>
-<li>run 20 times and get avg</li>
-</ul>
-</li>
-</ul>
-<p><img src="http://static.zybuluo.com/Preke/r5p3nprhvwb1bzochta2x3y7/image_1cs35h0hp19stdhm10tu1p7rs469.png" alt="image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB"></p>
-<ul>
-<li>Supervised Learning (SL)<ul>
-<li><strong>Detected user sentiment from the previous section</strong> into a supervised learning framework for training end-to-end dialog systems (<strong>classification problem</strong>)</li>
-<li><strong>LSTM with 128 hidden-units and AdaDelta optimizer</strong>(HCN)前人提出的方法，用作baseline，这里的贡献就是加特征<br><img src="http://static.zybuluo.com/Preke/18mdpf2tfcf254ulyjb43cla/image_1cs361o15v4u9ob1qo31m061vd8m.png" alt="image_1cs361o15v4u9ob1qo31m061vd8m.png-27.5kB"></li>
-</ul>
-</li>
-</ul>
-<p>Metric 解释：Turn-level F-1 score and dialog accuracy which indicates if all turns in a dialog are correct.</p>
-<ul>
-<li>Reinforcement Learning (RL)<br>(实时从response的sentiment中获取reward, 目的是让response满意）<ul>
-<li>Each turn receives a measurement of goodness called reward</li>
-<li>Include user sentiment as immediate rewards to expedite the reinforcement     learning training process</li>
-<li>两个Metric: <ul>
-<li>dialog length: 越小说明完成任务越快</li>
-<li>task success rate: 任务具体如何定义，这里还暂时不太清楚…</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="http://static.zybuluo.com/Preke/trqn1tlt87jxdztvg3tody61/image_1cs374srqplq71nhf51bh87mo13.png" alt="image_1cs374srqplq71nhf51bh87mo13.png-121.5kB"></p>
-<p><img src="http://static.zybuluo.com/Preke/3hqtlct3wx9ritgzoa9fqggh/image_1cs375eqg1r27ovkci7802mlh1g.png" alt="image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB">    </p>
+<h2 id="acquisition">Acquisition：</h2>
+<p>整体来说，对目前研究的问题帮助不明显，对于模型（encoder-decoder)改进方面有一些数学经验值得借鉴</p>
 
           
         
@@ -911,7 +740,8 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
       
         
           
-            <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>First learn a latent representation of input sentences by NMT model,<br>then use adversarial generation to make the output with desired style.</p>
+            <h2 id="abstract">Abstract</h2>
+<p>First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style.</p>
 <p>Evaluate on three different style transformations:</p>
 <ul>
 <li>sentiment</li>
@@ -923,12 +753,14 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
 <li>automatic evaluation of style transfer</li>
 <li>manual evaluation of meaning preservation and fluency</li>
 </ul>
-<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ul>
-<li>A new approach to style transfer </li>
+<h2 id="contribution">Contribution</h2>
+<ul>
+<li>A new approach to style transfer</li>
 <li>A new task that we propose to evaluate style transfer: transferring politi- cal slant</li>
 </ul>
-<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><p>Given two datasets:<br>$X_1={x_1^{(1)},…,x_1^{(n)}}$<br>$X_2={x_2^{(1)},…,x_2^{(n)}}$<br>represent two different styles $s_1$ and $s_2$<br>(也就是说，所有的$x_1^{(n)}$的style 都是$s_1$, 所有的$x_2^{(n)}$的style 都是$s_2$)</p>
-<p>Then, generate samples of dataset $X_1$ such that they belong to style $s_2$ and samples of $X_2$ such that they belong to style $s_1$</p>
+<h2 id="methodology">Methodology</h2>
+<p>Given two datasets: <span class="math inline">\(X_1=\{x_1^{(1)},...,x_1^{(n)}\}\)</span> <span class="math inline">\(X_2=\{x_2^{(1)},...,x_2^{(n)}\}\)</span> represent two different styles <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> (也就是说，所有的<span class="math inline">\(x_1^{(n)}\)</span>的style 都是<span class="math inline">\(s_1\)</span>, 所有的<span class="math inline">\(x_2^{(n)}\)</span>的style 都是<span class="math inline">\(s_2\)</span>)</p>
+<p>Then, generate samples of dataset <span class="math inline">\(X_1\)</span> such that they belong to style <span class="math inline">\(s_2\)</span> and samples of <span class="math inline">\(X_2\)</span> such that they belong to style <span class="math inline">\(s_1\)</span></p>
 <blockquote>
 <p>state-of-the-art</p>
 <ul>
@@ -936,26 +768,243 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
 <li>cross-aligned autoencoders</li>
 </ul>
 </blockquote>
-<p>aim is to design a latent code $z$:</p>
-<ol>
-<li>represents the meaning of the input sentence grounded in back-translation</li>
-<li>weakens the style attributes of author’s traits</li>
-</ol>
-<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<p>aim is to design a latent code <span class="math inline">\(z\)</span>: 1. represents the meaning of the input sentence grounded in back-translation 2. weakens the style attributes of author’s traits</p>
+<h2 id="dataset">Dataset</h2>
+<ul>
 <li>Reddy and Knight’s (2016) dataset of reviews from Yelp annotated for two genders cor- responding to markers of sex.</li>
 <li>comprised of top-level comments on Facebook posts from all 412 current members of the United States Sen- ate and House who have public Facebook pages (Voigt et al., 2018)</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"></p>
-<h2 id="Model-and-Experiments"><a href="#Model-and-Experiments" class="headerlink" title="Model and Experiments"></a>Model and Experiments</h2><p><img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"></p>
-<p><img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"><figcaption>Dataset</figcaption>
+</figure>
+<h2 id="model-and-experiments">Model and Experiments</h2>
+<figure>
+<img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"><figcaption>Style transfer pipeline</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"><figcaption>style classifier feedback</figcaption>
+</figure>
 <ul>
 <li>CNN去做二分类问题，人工label</li>
 <li>A convolutional neural network (CNN) classifier to accurately predict the given style</li>
 <li>concatenate binary style indicators to each input word embedding in the classifier</li>
 </ul>
-<p><img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"></p>
-<p><img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"></p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"><figcaption>result of classification</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"><figcaption>result of human preferance</figcaption>
+</figure>
 <hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/Gold.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiyuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/" itemprop="url">Sentiment Adaptive End-to-End Dialog Systems</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-12T17:17:30+08:00">
+                2018-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="abstract">Abstract</h3>
+<p>Include user sentiment from <strong>multimodal information(acoustic, dialogic and textual)</strong> in the end-to-end learning framework to make systems <strong>more user-adaptive and effective</strong>.</p>
+<p>First attempt to <strong>incorporate multimodal user information</strong> in the adaptive end-to- end dialog system training framework</p>
+<ul>
+<li>Multimodal Sentiment Classification</li>
+</ul>
+<h3 id="contribution">Contribution</h3>
+<ul>
+<li><a href="https://www.dropbox.com/s/nl5j4ts7kewx47v/sample_50.zip?dl=0" target="_blank" rel="noopener">an audio dataset</a> with sentiment annotation (dialog history)</li>
+<li>an automatic sentiment detector that considers conversation history by using dialogic features, textual features and traditional acoustic features</li>
+<li>end-to-end trainable dialog policies adaptive to user sentiment in both supervised and rein- forcement learning settings</li>
+</ul>
+<h3 id="dataset">Dataset</h3>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/" target="_blank" rel="noopener">DSTC1</a></li>
+<li>人工标注DSTC1的Audio dataset: 50 dialogs consisting of 517 conversation turns for user sentiment (<code>negative</code>, <code>neutral</code> and <code>positive</code>)</li>
+</ul>
+<h3 id="model-and-experiments">Model and Experiments</h3>
+<ul>
+<li>Multimodal Sentiment Classification
+<ul>
+<li>openSMILE: 提取audio feature</li>
+<li>four categories of dialogic features(人工统计feature)
+<ul>
+<li>Interruption</li>
+<li>Button usage</li>
+<li>Repetitions</li>
+<li>Start over</li>
+</ul></li>
+<li>Textual features: A <code>tf-idf vector</code> for each utterance as textual features</li>
+</ul></li>
+<li>Classification results
+<ul>
+<li>Trained on 50 dialogs annotated with sentiment labels<br>
+</li>
+<li>Separated to be 60% for training, 20% for validation and 20% for testing</li>
+<li>run 20 times and get avg</li>
+</ul></li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/r5p3nprhvwb1bzochta2x3y7/image_1cs35h0hp19stdhm10tu1p7rs469.png" alt="image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB"><figcaption>image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB</figcaption>
+</figure>
+<ul>
+<li>Supervised Learning (SL)
+<ul>
+<li><strong>Detected user sentiment from the previous section</strong> into a supervised learning framework for training end-to-end dialog systems (<strong>classification problem</strong>)</li>
+<li><strong>LSTM with 128 hidden-units and AdaDelta optimizer</strong>(HCN)前人提出的方法，用作baseline，这里的贡献就是加特征 <img src="http://static.zybuluo.com/Preke/18mdpf2tfcf254ulyjb43cla/image_1cs361o15v4u9ob1qo31m061vd8m.png" alt="image_1cs361o15v4u9ob1qo31m061vd8m.png-27.5kB"></li>
+</ul></li>
+</ul>
+<p>Metric 解释：Turn-level F-1 score and dialog accuracy which indicates if all turns in a dialog are correct.</p>
+<ul>
+<li>Reinforcement Learning (RL) (实时从response的sentiment中获取reward, 目的是让response满意）
+<ul>
+<li>Each turn receives a measurement of goodness called reward</li>
+<li>Include user sentiment as immediate rewards to expedite the reinforcement learning training process</li>
+<li>两个Metric:
+<ul>
+<li>dialog length: 越小说明完成任务越快</li>
+<li>task success rate: 任务具体如何定义，这里还暂时不太清楚…</li>
+</ul></li>
+</ul></li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/trqn1tlt87jxdztvg3tody61/image_1cs374srqplq71nhf51bh87mo13.png" alt="image_1cs374srqplq71nhf51bh87mo13.png-121.5kB"><figcaption>image_1cs374srqplq71nhf51bh87mo13.png-121.5kB</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/3hqtlct3wx9ritgzoa9fqggh/image_1cs375eqg1r27ovkci7802mlh1g.png" alt="image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB"><figcaption>image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB</figcaption>
+</figure>
 
           
         
@@ -1097,36 +1146,46 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
       
         
           
-            <h2 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h2><p><img src="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png" alt="AutoEncoder"></p>
+            <h2 id="autoencoder">AutoEncoder</h2>
+<figure>
+<img src="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png" alt="AutoEncoder"><figcaption>AutoEncoder</figcaption>
+</figure>
 <p>AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error)</p>
-<h3 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links:"></a>Useful links:</h3><p><a href="https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f" target="_blank" rel="noopener">https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f</a></p>
-<h2 id="Variational-Autoencoder"><a href="#Variational-Autoencoder" class="headerlink" title="Variational Autoencoder"></a>Variational Autoencoder</h2><p>Why VAE:<br>以下两短话是网上一些博客的解释：</p>
-<blockquote>
-<p>但是，我们想建一个产生式模型，而不是一个只是储存图片的网络。现在我们还不能产生任何未知的东西，因为我们不能随意产生合理的潜在变量。因为合理的潜在变量都是编码器从原始图片中产生的。<br><br>这里有个简单的解决办法。我们可以对编码器添加约束，就是强迫它产生服从单位高斯分布的潜在变量。正式这种约束，把VAE和标准自编码器给区分开来了。<br><br>现在，产生新的图片也变得容易：我们只要从单位高斯分布中进行采样，然后把它传给解码器就可以了。</p>
-</blockquote>
+<h3 id="useful-links">Useful links:</h3>
+<p>https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f</p>
+<h2 id="variational-autoencoder">Variational Autoencoder</h2>
+<p>Why VAE: 以下两短话是网上一些博客的解释： &gt; 但是，我们想建一个产生式模型，而不是一个只是储存图片的网络。现在我们还不能产生任何未知的东西，因为我们不能随意产生合理的潜在变量。因为合理的潜在变量都是编码器从原始图片中产生的。<br> 这里有个简单的解决办法。我们可以对编码器添加约束，就是强迫它产生服从单位高斯分布的潜在变量。正式这种约束，把VAE和标准自编码器给区分开来了。<br> 现在，产生新的图片也变得容易：我们只要从单位高斯分布中进行采样，然后把它传给解码器就可以了。</p>
 <hr>
 <blockquote>
-<p>但是这样我们其实并不能任意生成图片，因为我们没有办法自己去构造隐藏向量，我们需要通过一张图片输入编码我们才知道得到的隐含向量是什么，这时我们就可以通过变分自动编码器来解决这个问题。<br><br>其实原理特别简单，只需要在编码过程给它增加一些限制，迫使其生成的隐含向量能够粗略的遵循一个标准正态分布，这就是其与一般的自动编码器最大的不同。<br><br>这样我们生成一张新图片就很简单了，我们只需要给它一个标准正态分布的随机隐含向量，这样通过解码器就能够生成我们想要的图片，而不需要给它一张原始图片先编码。</p>
+<p>但是这样我们其实并不能任意生成图片，因为我们没有办法自己去构造隐藏向量，我们需要通过一张图片输入编码我们才知道得到的隐含向量是什么，这时我们就可以通过变分自动编码器来解决这个问题。<br> 其实原理特别简单，只需要在编码过程给它增加一些限制，迫使其生成的隐含向量能够粗略的遵循一个标准正态分布，这就是其与一般的自动编码器最大的不同。<br> 这样我们生成一张新图片就很简单了，我们只需要给它一个标准正态分布的随机隐含向量，这样通过解码器就能够生成我们想要的图片，而不需要给它一张原始图片先编码。</p>
 </blockquote>
-<p>如何理解中间的潜在向量服从高斯分布呢？又如何理解采样的过程呢？<br>看到一个博客里的一张图可以比较简单的理解：<br><img src="http://static.zybuluo.com/Preke/i4633iw9mjxb27geln7cxg1u/image_1cr5aotjkb1didtqas1i1uoge9.png" alt></p>
+<p>如何理解中间的潜在向量服从高斯分布呢？又如何理解采样的过程呢？ 看到一个博客里的一张图可以比较简单的理解： <img src="http://static.zybuluo.com/Preke/i4633iw9mjxb27geln7cxg1u/image_1cr5aotjkb1didtqas1i1uoge9.png"></p>
 <p>也就是每个输入样本输入后，会产生:</p>
 <ul>
 <li>一个均值的representation</li>
 <li>一个方差的representation</li>
 </ul>
-<p>那么这里的均值是谁的均值，方差又是谁的方差呢？<br>联想到和VAE有点像的GAN, 如果输入样本本身就是一个分布的话，<br>那么这个均值和方差就是输入样本的均值和方差<br>如果是这样的话，如何约束他们服从一个正态分布呢？<br>我想这里就是encoder部分所做的约束</p>
-<p><img src="http://static.zybuluo.com/Preke/nyzp95bo8lljrwhqnpgeujl5/image_1cr5e33e3188nsclsassl100r9.png" alt></p>
-<h3 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h3><p>对于AE来说，误差其实就是原始信息（图片)和生成信息(图片）之间的MSE （重构误差）<br>那么VAE在训练的时候，除了重构误差之外，其实还有每个样本的分布和标准正态分布之间的KL散度；</p>
-<h3 id="理解："><a href="#理解：" class="headerlink" title="理解："></a>理解：</h3><p>经过看完这些材料，理解完上述的东西，用自己的话说： </p>
-<p>我有一些样本，我假设每个样本都是服从一个正态分布的，可是我们不知道这个分布。<br>VAE试图去估计每个样本背后分布的均值和方差，并且进行采样，对每个样本得到一个隐层表示向量，然后通过这个向量去生成新的样本；<br>通过生成样本和原有样本的对比误差，以及中间估计的分布与标准正态分布的KL散度，去修正参数，使得：</p>
-<p>VAE生成的样本是具有原有样本的“灵魂”而又不完全相同的样本<br>（好吧，这是一句没有灵魂的话）</p>
-<h3 id="Why-VAE-again："><a href="#Why-VAE-again：" class="headerlink" title="Why VAE again："></a>Why VAE again：</h3><p>还是引用大佬们的话吧, 我觉得是我能读懂并且可以接受的：<br><img src="http://static.zybuluo.com/Preke/shxs61d5xpwo4iw4i3sebxdz/image_1cr5eqlh01kgu1qpbjll1ln715n8m.png" alt="image_1cr5eqlh01kgu1qpbjll1ln715n8m.png-177.8kB"></p>
-<h3 id="Useful-links-1"><a href="#Useful-links-1" class="headerlink" title="Useful links:"></a>Useful links:</h3><p>墙裂推荐以下链接的文章，真的写的很好，（大部分我都是引用于此的）….</p>
-<p><a href="https://www.cnblogs.com/huangshiyu13/p/6209016.html" target="_blank" rel="noopener">https://www.cnblogs.com/huangshiyu13/p/6209016.html</a><br><br><a href="https://zhuanlan.zhihu.com/p/27549418" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27549418</a><br><br><a href="https://zhuanlan.zhihu.com/p/34998569" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34998569</a></p>
-<h2 id="CVAE"><a href="#CVAE" class="headerlink" title="CVAE"></a>CVAE</h2><p>这个部分称为Conditional VAE</p>
-<p>无论是AE, 还是VAE，任务都是去拟合，去生成，<br>都是没有用到一些label信息去做分类的</p>
-<h3 id="Useful-links-2"><a href="#Useful-links-2" class="headerlink" title="Useful links:"></a>Useful links:</h3><p><a href="https://zhuanlan.zhihu.com/p/34998569" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34998569</a></p>
-<h2 id="AE-amp-S2S"><a href="#AE-amp-S2S" class="headerlink" title="AE &amp; S2S"></a>AE &amp; S2S</h2><h2 id="VAE-for-NLP"><a href="#VAE-for-NLP" class="headerlink" title="VAE for NLP"></a>VAE for NLP</h2>
+<p>那么这里的均值是谁的均值，方差又是谁的方差呢？ 联想到和VAE有点像的GAN, 如果输入样本本身就是一个分布的话， 那么这个均值和方差就是输入样本的均值和方差 如果是这样的话，如何约束他们服从一个正态分布呢？ 我想这里就是encoder部分所做的约束</p>
+<p><img src="http://static.zybuluo.com/Preke/nyzp95bo8lljrwhqnpgeujl5/image_1cr5e33e3188nsclsassl100r9.png"></p>
+<h3 id="误差">误差</h3>
+<p>对于AE来说，误差其实就是原始信息（图片)和生成信息(图片）之间的MSE （重构误差） 那么VAE在训练的时候，除了重构误差之外，其实还有每个样本的分布和标准正态分布之间的KL散度；</p>
+<h3 id="理解">理解：</h3>
+<p>经过看完这些材料，理解完上述的东西，用自己的话说：</p>
+<p>我有一些样本，我假设每个样本都是服从一个正态分布的，可是我们不知道这个分布。 VAE试图去估计每个样本背后分布的均值和方差，并且进行采样，对每个样本得到一个隐层表示向量，然后通过这个向量去生成新的样本； 通过生成样本和原有样本的对比误差，以及中间估计的分布与标准正态分布的KL散度，去修正参数，使得：</p>
+<p>VAE生成的样本是具有原有样本的“灵魂”而又不完全相同的样本 （好吧，这是一句没有灵魂的话）</p>
+<h3 id="why-vae-again">Why VAE again：</h3>
+<p>还是引用大佬们的话吧, 我觉得是我能读懂并且可以接受的： <img src="http://static.zybuluo.com/Preke/shxs61d5xpwo4iw4i3sebxdz/image_1cr5eqlh01kgu1qpbjll1ln715n8m.png" alt="image_1cr5eqlh01kgu1qpbjll1ln715n8m.png-177.8kB"></p>
+<h3 id="useful-links-1">Useful links:</h3>
+<p>墙裂推荐以下链接的文章，真的写的很好，（大部分我都是引用于此的）….</p>
+<p>https://www.cnblogs.com/huangshiyu13/p/6209016.html<br> https://zhuanlan.zhihu.com/p/27549418<br> https://zhuanlan.zhihu.com/p/34998569</p>
+<h2 id="cvae">CVAE</h2>
+<p>这个部分称为Conditional VAE</p>
+<p>无论是AE, 还是VAE，任务都是去拟合，去生成， 都是没有用到一些label信息去做分类的</p>
+<h3 id="useful-links-2">Useful links:</h3>
+<p>https://zhuanlan.zhihu.com/p/34998569</p>
+<h2 id="ae-s2s">AE &amp; S2S</h2>
+<h2 id="vae-for-nlp">VAE for NLP</h2>
+
           
         
       
@@ -1268,6 +1327,7 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
         
           
             
+
           
         
       
@@ -1409,13 +1469,13 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
         
           
             <blockquote>
-<p>独立寒秋，湘江北去，橘子洲头。<br>看万山红遍，层林尽染；漫江碧透，百舸争流。<br>鹰击长空，鱼翔浅底，万类霜天竞自由。<br>怅寥廓，问苍茫大地，谁主沉浮？<br>携来百侣曾游。忆往昔峥嵘岁月稠。<br>恰同学少年，风华正茂；书生意气，挥斥方遒。<br>指点江山，激扬文字，粪土当年万户侯。<br>曾记否，到中流击水，浪遏飞舟？</p>
+<p>独立寒秋，湘江北去，橘子洲头。 看万山红遍，层林尽染；漫江碧透，百舸争流。 鹰击长空，鱼翔浅底，万类霜天竞自由。 怅寥廓，问苍茫大地，谁主沉浮？ 携来百侣曾游。忆往昔峥嵘岁月稠。 恰同学少年，风华正茂；书生意气，挥斥方遒。 指点江山，激扬文字，粪土当年万户侯。 曾记否，到中流击水，浪遏飞舟？</p>
 </blockquote>
 <p>就突然想到小时候看的电视剧《恰同学少年》，当时爷爷还给我讲过那些蔡和森的故事；爷爷去世很多年了，这也是为数不多的我关于他的记忆了。</p>
-<p>谁年轻的时候不是粪土当年万户侯？<br>遇到社会矛盾，谁又不是针砭时弊，痛斥当权者？</p>
-<p>以前我相信，这些肉食者思想固化，跟不上时代；等我们这一代人当权，必能改变世界，必能大有作为。<br>可是几千年来，哪个时代的热血青年不是如此想的呢？<br>江山易主，旧历史总会重复<br>朝代更迭，新矛盾总会出现<br>各国各时代又有何区别？<br>权力集中的地方必然有腐败，矛盾出现时一定要有人负责；<br>如何去和人性做抗争呢？<br>毛泽东尚有 驱张行动，愤青们的不理智谁又能买单呢？</p>
-<p>然而，愤青好就好在有一群人坚持自己的信念，<br>信念可能很不现实，但是一群人依然坚信<br>再困难，再失落，总有人鼓励<br>一起奋斗，是只有青春才能迸发的激情</p>
-<p>恰同学少年，风华正茂；书生意气，挥斥方遒。<br>指点江山，激扬文字，粪土当年万户侯</p>
+<p>谁年轻的时候不是粪土当年万户侯？ 遇到社会矛盾，谁又不是针砭时弊，痛斥当权者？</p>
+<p>以前我相信，这些肉食者思想固化，跟不上时代；等我们这一代人当权，必能改变世界，必能大有作为。 可是几千年来，哪个时代的热血青年不是如此想的呢？ 江山易主，旧历史总会重复 朝代更迭，新矛盾总会出现 各国各时代又有何区别？ 权力集中的地方必然有腐败，矛盾出现时一定要有人负责； 如何去和人性做抗争呢？ 毛泽东尚有 驱张行动，愤青们的不理智谁又能买单呢？</p>
+<p>然而，愤青好就好在有一群人坚持自己的信念， 信念可能很不现实，但是一群人依然坚信 再困难，再失落，总有人鼓励 一起奋斗，是只有青春才能迸发的激情</p>
+<p>恰同学少年，风华正茂；书生意气，挥斥方遒。 指点江山，激扬文字，粪土当年万户侯</p>
 <p>青春而又豪迈</p>
 
           
@@ -1567,7 +1627,9 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
 <p>然而其中意境，十不能明一二</p>
 <p>但是读到这句话，真的分量很重，很能切身感受到郁郁不得志的心情</p>
 <blockquote>
-<p>勃，三尺微命，一介书生 \<br>无路请缨，等终军之弱冠 \<br>有怀投笔，慕宗悫之长风</p>
+<p>勃，三尺微命，一介书生<br>
+无路请缨，等终军之弱冠<br>
+有怀投笔，慕宗悫之长风</p>
 </blockquote>
 <p>对照注释中的愿乘长风破万里浪，哪个意气风发的少年不识如此呢？</p>
 <p>何况初唐四杰之首，天妒英才的王勃呢</p>
@@ -1580,7 +1642,7 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
 <p>我也不知道我为什么会喜欢上这句话，</p>
 <p>或许是很能对照我们比较大众的现状：能力和才华，配不上自己的野心</p>
 <p>亦或许是对自己的安慰，我不想给自己承担太多，仅仅是三尺微命，一介书生</p>
-<p>三尺微命啊三尺微命 </p>
+<p>三尺微命啊三尺微命</p>
 <p>十人有九堪白眼的三尺微命</p>
 <p>一介书生啊一介书生</p>
 <p>饮冰十年难凉热血的一介书生</p>
@@ -1730,7 +1792,7 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model
           
             <p>这几天花了好久时间去看射雕，也算是Kindle没白费。</p>
 <p>《射雕》给我的几个印象是：</p>
-<ol>
+<ol type="1">
 <li>为了造成冲突，上来就打，混不解释；如桃花岛上江南五怪被杀，黄蓉看到种种线索，心中推测的疑点也不说出，任郭靖独自乘船离开；郭靖也是，啥都不清楚，就认准了黄老邪，对蓉儿也是瞬间色变；如黄老邪愣是心高气傲，不解释不开脱自己没杀江南五怪；又如轩辕台上，郭靖脱身的第一反应是先打个痛快，打了好久才让黄蓉道出真相；种种情结真是让人读的时候，皇上不急太监急。</li>
 <li>人物不立体（不过这个金老先生也在后记中说到了，脸谱化，春秋笔法）。</li>
 <li>郭靖开挂太明显：傻头傻脑，蒙古大汗儿子结拜，女儿许配，拜江南七怪，8岁杀陈玄风，得马钰传内功，得唯一的汗血宝马和双雕，喝蛇血百毒不侵，洪七公教降龙十八掌，周伯通教九阴真经和一心二用，还有黄蓉倾心（死心塌地，不离不弃的倾心，我觉得这个是最大的开挂！）；因为之前看过《天龙八部》，混觉得郭靖简直就是虚竹和萧峰的合体。</li>
