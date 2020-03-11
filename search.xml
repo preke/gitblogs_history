@@ -20,11 +20,11 @@
       
         <tags>
             
-            <tag> emotion </tag>
-            
             <tag> dialog system </tag>
             
             <tag> conversation generation </tag>
+            
+            <tag> emotion </tag>
             
             <tag> text style transfer </tag>
             
@@ -212,6 +212,35 @@
     
     
     <entry>
+      <title>A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation</title>
+      <link href="/2018/11/14/slstm/"/>
+      <url>/2018/11/14/slstm/</url>
+      
+        <content type="html"><![CDATA[<h2 id="abstract">Abstract</h2><ul><li><p>poor logic and no emotion</p></li><li><p>a syntactically con- strained bidirectional-asynchronous approach for <code>emotional conversation generation</code> (E- SCBA) is proposed</p></li><li><p>In our model, pre-generated emotion keywords and topic keywords are asynchronously introduced into the process of decoding.</p></li></ul><h2 id="contribution">Contribution</h2><ol type="1"><li>It conducts a study of compound information, which constitutes the syntactic constraint in the conversation generation.</li><li>A bidirectional-asynchronous decoder with multi-stage strategy is proposed to utilize the syntactic constraint.</li><li>Our experiments show that E-SCBA work better on emotion, logic and diversity than the general seq2seq and other models that consider only a sin- gle factor during the generation.</li></ol><h2 id="dataset">Dataset</h2><ul><li>Emotional conversation dataset NLPCC2017</li><li>1,119,201 Chinese post-reply pairs</li><li>randomly sampled 8,000 for validation, 3,000 for testing and the rest for training</li></ul><h2 id="model">Model</h2><figure><img src="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png" alt="image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB"><figcaption>image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB</figcaption></figure><p>Keywords dictionary: 1. Emotion dictionary 2. Topic dictionary</p><ul><li>Step1: 输入Post, 得到topic keyword and emotion keyword<ul><li>pretrained LDA 主题推断</li><li>emotion transfer network 得到emotion</li><li>(一些网络处理）得到topic keyword and emotion keyword that are expected to appear in the reply.</li></ul></li><li>Step2:<ul><li>Post过LSTM(加入Emotion keyword), 得到一系列hidden vectors <span class="math inline">\(\{s_i^{et}\}\)</span><br></li><li>Post过LSTM(加入Topic keyword, Emotional attention), 得到一系列hidden vectors <span class="math inline">\(\{s_j^{tp}\}\)</span></li><li><font color="red">LSTM和Attention的常用结合方式？</font></li><li>用<span class="math inline">\(\{s_i^{et}\}\)</span> 去 attention <span class="math inline">\(\{s_j^{tp}\}\)</span> 得到 <strong>Middle Sequence(<span class="math inline">\(y^{md}\)</span>)</strong> (这里<span class="math inline">\(y^{md}\)</span> 不代表输出的words, 仅仅是中间变量而已）如图：get middle sequence</li><li>然后通过<span class="math inline">\(y^{md}\)</span> 得到 <span class="math inline">\(y^{ce}\)</span> 和 <span class="math inline">\(y^{ct}\)</span> 如图：get ce and ct <img src="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png" alt="get middle sequence"> <br></li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/qt9plkibwr5fvzt7wzwncnvi/image_1cs72kfu14s0s3b15am52fv88m.png" alt="get ce and ct"><figcaption>get ce and ct</figcaption></figure><blockquote><p>提醒自己一点，LSTM每个输出也只是hidden states, 具体应用到decoder是还要加入一个选择当前输出词语的softmax:<span class="math inline">\(P(w_i|w_{i-1}, h_i, c_i)\)</span></p></blockquote><ul><li>Step3:<br>concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{tp}^k, y^{md,f}, w_{et}^k, y^{ce,f})\)</span> <span class="math inline">\(y^b\)</span> 就是 <span class="math inline">\(y^f\)</span> 的反向; And then 得到最终的hidden states 然后生成words:</li></ul><figure><img src="http://static.zybuluo.com/Preke/zptciuvc45fjyf2ffwj4ep1d/image_1cs739mit1j9lb0916ii3e7vvm9.png" alt="get hidden states"><figcaption>get hidden states</figcaption></figure><h2 id="experiment-and-metrics">Experiment and Metrics</h2><ul><li><strong>Embedding-based Metrics</strong>: We measure the similarity computed by <strong>cosine distance</strong> between a candidate reply and the target reply using <strong>sentence-level embedding</strong></li><li><strong>Distinct Metrics</strong>: By computing the number of different unigrams (Distinct-1) and bigrams (Distinct-2), we measure information and diversity in the candidate replies</li><li><strong>Human Annotations</strong></li></ul><h2 id="acquisition">Acquisition：</h2><p>方向的变换看不太懂，lstm的一些认识加深了一点</p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Paper notes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dialog system </tag>
+            
+            <tag> conversation generation </tag>
+            
+            <tag> sentiment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Eliciting Positive Emotion through Affect-Sensitive Dialogue Response Generation A Neural Network Approach</title>
       <link href="/2018/11/14/EmoHERD/"/>
       <url>/2018/11/14/EmoHERD/</url>
@@ -228,11 +257,11 @@
       
         <tags>
             
-            <tag> emotion </tag>
-            
             <tag> dialog system </tag>
             
             <tag> conversation generation </tag>
+            
+            <tag> emotion </tag>
             
         </tags>
       
@@ -257,40 +286,11 @@
       
         <tags>
             
+            <tag> dialog system </tag>
+            
+            <tag> conversation generation </tag>
+            
             <tag> emotion </tag>
-            
-            <tag> dialog system </tag>
-            
-            <tag> conversation generation </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation</title>
-      <link href="/2018/11/14/slstm/"/>
-      <url>/2018/11/14/slstm/</url>
-      
-        <content type="html"><![CDATA[<h2 id="abstract">Abstract</h2><ul><li><p>poor logic and no emotion</p></li><li><p>a syntactically con- strained bidirectional-asynchronous approach for <code>emotional conversation generation</code> (E- SCBA) is proposed</p></li><li><p>In our model, pre-generated emotion keywords and topic keywords are asynchronously introduced into the process of decoding.</p></li></ul><h2 id="contribution">Contribution</h2><ol type="1"><li>It conducts a study of compound information, which constitutes the syntactic constraint in the conversation generation.</li><li>A bidirectional-asynchronous decoder with multi-stage strategy is proposed to utilize the syntactic constraint.</li><li>Our experiments show that E-SCBA work better on emotion, logic and diversity than the general seq2seq and other models that consider only a sin- gle factor during the generation.</li></ol><h2 id="dataset">Dataset</h2><ul><li>Emotional conversation dataset NLPCC2017</li><li>1,119,201 Chinese post-reply pairs</li><li>randomly sampled 8,000 for validation, 3,000 for testing and the rest for training</li></ul><h2 id="model">Model</h2><figure><img src="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png" alt="image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB"><figcaption>image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB</figcaption></figure><p>Keywords dictionary: 1. Emotion dictionary 2. Topic dictionary</p><ul><li>Step1: 输入Post, 得到topic keyword and emotion keyword<ul><li>pretrained LDA 主题推断</li><li>emotion transfer network 得到emotion</li><li>(一些网络处理）得到topic keyword and emotion keyword that are expected to appear in the reply.</li></ul></li><li>Step2:<ul><li>Post过LSTM(加入Emotion keyword), 得到一系列hidden vectors <span class="math inline">\(\{s_i^{et}\}\)</span><br></li><li>Post过LSTM(加入Topic keyword, Emotional attention), 得到一系列hidden vectors <span class="math inline">\(\{s_j^{tp}\}\)</span></li><li><font color="red">LSTM和Attention的常用结合方式？</font></li><li>用<span class="math inline">\(\{s_i^{et}\}\)</span> 去 attention <span class="math inline">\(\{s_j^{tp}\}\)</span> 得到 <strong>Middle Sequence(<span class="math inline">\(y^{md}\)</span>)</strong> (这里<span class="math inline">\(y^{md}\)</span> 不代表输出的words, 仅仅是中间变量而已）如图：get middle sequence</li><li>然后通过<span class="math inline">\(y^{md}\)</span> 得到 <span class="math inline">\(y^{ce}\)</span> 和 <span class="math inline">\(y^{ct}\)</span> 如图：get ce and ct <img src="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png" alt="get middle sequence"> <br></li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/qt9plkibwr5fvzt7wzwncnvi/image_1cs72kfu14s0s3b15am52fv88m.png" alt="get ce and ct"><figcaption>get ce and ct</figcaption></figure><blockquote><p>提醒自己一点，LSTM每个输出也只是hidden states, 具体应用到decoder是还要加入一个选择当前输出词语的softmax:<span class="math inline">\(P(w_i|w_{i-1}, h_i, c_i)\)</span></p></blockquote><ul><li>Step3:<br>concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{tp}^k, y^{md,f}, w_{et}^k, y^{ce,f})\)</span> <span class="math inline">\(y^b\)</span> 就是 <span class="math inline">\(y^f\)</span> 的反向; And then 得到最终的hidden states 然后生成words:</li></ul><figure><img src="http://static.zybuluo.com/Preke/zptciuvc45fjyf2ffwj4ep1d/image_1cs739mit1j9lb0916ii3e7vvm9.png" alt="get hidden states"><figcaption>get hidden states</figcaption></figure><h2 id="experiment-and-metrics">Experiment and Metrics</h2><ul><li><strong>Embedding-based Metrics</strong>: We measure the similarity computed by <strong>cosine distance</strong> between a candidate reply and the target reply using <strong>sentence-level embedding</strong></li><li><strong>Distinct Metrics</strong>: By computing the number of different unigrams (Distinct-1) and bigrams (Distinct-2), we measure information and diversity in the candidate replies</li><li><strong>Human Annotations</strong></li></ul><h2 id="acquisition">Acquisition：</h2><p>方向的变换看不太懂，lstm的一些认识加深了一点</p><hr>]]></content>
-      
-      
-      <categories>
-          
-          <category> Paper notes </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> dialog system </tag>
-            
-            <tag> conversation generation </tag>
-            
-            <tag> sentiment </tag>
             
         </tags>
       
@@ -328,6 +328,33 @@
     
     
     <entry>
+      <title>Sentiment Adaptive End-to-End Dialog Systems</title>
+      <link href="/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/"/>
+      <url>/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/</url>
+      
+        <content type="html"><![CDATA[<h3 id="abstract">Abstract</h3><p>Include user sentiment from <strong>multimodal information(acoustic, dialogic and textual)</strong> in the end-to-end learning framework to make systems <strong>more user-adaptive and effective</strong>.</p><p>First attempt to <strong>incorporate multimodal user information</strong> in the adaptive end-to- end dialog system training framework</p><ul><li>Multimodal Sentiment Classification</li></ul><h3 id="contribution">Contribution</h3><ul><li><a href="https://www.dropbox.com/s/nl5j4ts7kewx47v/sample_50.zip?dl=0" target="_blank" rel="noopener">an audio dataset</a> with sentiment annotation (dialog history)</li><li>an automatic sentiment detector that considers conversation history by using dialogic features, textual features and traditional acoustic features</li><li>end-to-end trainable dialog policies adaptive to user sentiment in both supervised and rein- forcement learning settings</li></ul><h3 id="dataset">Dataset</h3><ul><li><a href="https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/" target="_blank" rel="noopener">DSTC1</a></li><li>人工标注DSTC1的Audio dataset: 50 dialogs consisting of 517 conversation turns for user sentiment (<code>negative</code>, <code>neutral</code> and <code>positive</code>)</li></ul><h3 id="model-and-experiments">Model and Experiments</h3><ul><li>Multimodal Sentiment Classification<ul><li>openSMILE: 提取audio feature</li><li>four categories of dialogic features(人工统计feature)<ul><li>Interruption</li><li>Button usage</li><li>Repetitions</li><li>Start over</li></ul></li><li>Textual features: A <code>tf-idf vector</code> for each utterance as textual features</li></ul></li><li>Classification results<ul><li>Trained on 50 dialogs annotated with sentiment labels<br></li><li>Separated to be 60% for training, 20% for validation and 20% for testing</li><li>run 20 times and get avg</li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/r5p3nprhvwb1bzochta2x3y7/image_1cs35h0hp19stdhm10tu1p7rs469.png" alt="image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB"><figcaption>image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB</figcaption></figure><ul><li>Supervised Learning (SL)<ul><li><strong>Detected user sentiment from the previous section</strong> into a supervised learning framework for training end-to-end dialog systems (<strong>classification problem</strong>)</li><li><strong>LSTM with 128 hidden-units and AdaDelta optimizer</strong>(HCN)前人提出的方法，用作baseline，这里的贡献就是加特征 <img src="http://static.zybuluo.com/Preke/18mdpf2tfcf254ulyjb43cla/image_1cs361o15v4u9ob1qo31m061vd8m.png" alt="image_1cs361o15v4u9ob1qo31m061vd8m.png-27.5kB"></li></ul></li></ul><p>Metric 解释：Turn-level F-1 score and dialog accuracy which indicates if all turns in a dialog are correct.</p><ul><li>Reinforcement Learning (RL) (实时从response的sentiment中获取reward, 目的是让response满意）<ul><li>Each turn receives a measurement of goodness called reward</li><li>Include user sentiment as immediate rewards to expedite the reinforcement learning training process</li><li>两个Metric:<ul><li>dialog length: 越小说明完成任务越快</li><li>task success rate: 任务具体如何定义，这里还暂时不太清楚…</li></ul></li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/trqn1tlt87jxdztvg3tody61/image_1cs374srqplq71nhf51bh87mo13.png" alt="image_1cs374srqplq71nhf51bh87mo13.png-121.5kB"><figcaption>image_1cs374srqplq71nhf51bh87mo13.png-121.5kB</figcaption></figure><figure><img src="http://static.zybuluo.com/Preke/3hqtlct3wx9ritgzoa9fqggh/image_1cs375eqg1r27ovkci7802mlh1g.png" alt="image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB"><figcaption>image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB</figcaption></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Paper notes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dialog system </tag>
+            
+            <tag> Multimodal </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Style Transfer Through Back-Translation</title>
       <link href="/2018/11/12/bst/"/>
       <url>/2018/11/12/bst/</url>
@@ -349,33 +376,6 @@
             <tag> sentiment </tag>
             
             <tag> Style transfer </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Sentiment Adaptive End-to-End Dialog Systems</title>
-      <link href="/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/"/>
-      <url>/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/</url>
-      
-        <content type="html"><![CDATA[<h3 id="abstract">Abstract</h3><p>Include user sentiment from <strong>multimodal information(acoustic, dialogic and textual)</strong> in the end-to-end learning framework to make systems <strong>more user-adaptive and effective</strong>.</p><p>First attempt to <strong>incorporate multimodal user information</strong> in the adaptive end-to- end dialog system training framework</p><ul><li>Multimodal Sentiment Classification</li></ul><h3 id="contribution">Contribution</h3><ul><li><a href="https://www.dropbox.com/s/nl5j4ts7kewx47v/sample_50.zip?dl=0" target="_blank" rel="noopener">an audio dataset</a> with sentiment annotation (dialog history)</li><li>an automatic sentiment detector that considers conversation history by using dialogic features, textual features and traditional acoustic features</li><li>end-to-end trainable dialog policies adaptive to user sentiment in both supervised and rein- forcement learning settings</li></ul><h3 id="dataset">Dataset</h3><ul><li><a href="https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/" target="_blank" rel="noopener">DSTC1</a></li><li>人工标注DSTC1的Audio dataset: 50 dialogs consisting of 517 conversation turns for user sentiment (<code>negative</code>, <code>neutral</code> and <code>positive</code>)</li></ul><h3 id="model-and-experiments">Model and Experiments</h3><ul><li>Multimodal Sentiment Classification<ul><li>openSMILE: 提取audio feature</li><li>four categories of dialogic features(人工统计feature)<ul><li>Interruption</li><li>Button usage</li><li>Repetitions</li><li>Start over</li></ul></li><li>Textual features: A <code>tf-idf vector</code> for each utterance as textual features</li></ul></li><li>Classification results<ul><li>Trained on 50 dialogs annotated with sentiment labels<br></li><li>Separated to be 60% for training, 20% for validation and 20% for testing</li><li>run 20 times and get avg</li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/r5p3nprhvwb1bzochta2x3y7/image_1cs35h0hp19stdhm10tu1p7rs469.png" alt="image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB"><figcaption>image_1cs35h0hp19stdhm10tu1p7rs469.png-50kB</figcaption></figure><ul><li>Supervised Learning (SL)<ul><li><strong>Detected user sentiment from the previous section</strong> into a supervised learning framework for training end-to-end dialog systems (<strong>classification problem</strong>)</li><li><strong>LSTM with 128 hidden-units and AdaDelta optimizer</strong>(HCN)前人提出的方法，用作baseline，这里的贡献就是加特征 <img src="http://static.zybuluo.com/Preke/18mdpf2tfcf254ulyjb43cla/image_1cs361o15v4u9ob1qo31m061vd8m.png" alt="image_1cs361o15v4u9ob1qo31m061vd8m.png-27.5kB"></li></ul></li></ul><p>Metric 解释：Turn-level F-1 score and dialog accuracy which indicates if all turns in a dialog are correct.</p><ul><li>Reinforcement Learning (RL) (实时从response的sentiment中获取reward, 目的是让response满意）<ul><li>Each turn receives a measurement of goodness called reward</li><li>Include user sentiment as immediate rewards to expedite the reinforcement learning training process</li><li>两个Metric:<ul><li>dialog length: 越小说明完成任务越快</li><li>task success rate: 任务具体如何定义，这里还暂时不太清楚…</li></ul></li></ul></li></ul><figure><img src="http://static.zybuluo.com/Preke/trqn1tlt87jxdztvg3tody61/image_1cs374srqplq71nhf51bh87mo13.png" alt="image_1cs374srqplq71nhf51bh87mo13.png-121.5kB"><figcaption>image_1cs374srqplq71nhf51bh87mo13.png-121.5kB</figcaption></figure><figure><img src="http://static.zybuluo.com/Preke/3hqtlct3wx9ritgzoa9fqggh/image_1cs375eqg1r27ovkci7802mlh1g.png" alt="image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB"><figcaption>image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB</figcaption></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Paper notes </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> dialog system </tag>
-            
-            <tag> Multimodal </tag>
             
         </tags>
       
@@ -431,9 +431,9 @@
       
         <tags>
             
-            <tag> emotion </tag>
-            
             <tag> dialog system </tag>
+            
+            <tag> emotion </tag>
             
         </tags>
       
@@ -594,25 +594,6 @@
     
     
     <entry>
-      <title>Word2vec 入门（skip-gram部分)</title>
-      <link href="/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/"/>
-      <url>/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/</url>
-      
-        <content type="html"><![CDATA[<h1 id="skip-gram">Skip-gram</h1><p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p><h2 id="输入输出">输入，输出</h2><p>取窗口大小为2（前后两个词）：得到一些词对： <img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p><p>如之中的（quick, brown) 训练神经网络时： <img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"> 输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p><hr><h2 id="隐层">隐层：</h2><p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p><p>假设corpus里有10000个词语， 目标词向量为 300维： 简单做一个图来表示过程： 依然用（quick, brown)训练神经网络 <img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p><hr><p>如果两个不同的词有相同的上下文，那么我们的模型会需要预测类似的输出。那么网络为了输出类似的预测，他就会使这两个不同词的word vector尽可能相似。所以，如果两个词有相同的上下文，我们就可以得到比较接近的word vector。</p><p>那么什么词有相同的上下文？ 比如一些近义词 smart 和intelligent 再比如 一些相关的词 engine 和 transmission。</p><hr><h1 id="训练过程">训练过程：</h1><p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p><p><strong><em>(这里word2vec)就直接做了一个类似 去掉一些大众词汇，类似tf_idf的工作</em></strong></p><hr><p>训练神经网络 意味着输入一个训练样本调整weight，让它预测这个训练样本更准。换句话说，每个训练样本将会影响网络中所有的weight。像我们之前讨论的一样，我们词典的大小意味着我们有好多weight，所有都要轻微的调整。</p><p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。 （这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p><p>Ref:</p><p>http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</p><p>http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</p><p>http://blog.csdn.net/Layumi1993/article/details/72866235</p><p>http://blog.csdn.net/Layumi1993/article/details/72868399</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Machine Learning </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Softmax</title>
       <link href="/2017/08/15/Softmax/"/>
       <url>/2017/08/15/Softmax/</url>
@@ -632,16 +613,16 @@
     
     
     <entry>
-      <title>随记4.17</title>
-      <link href="/2017/04/17/%E9%9A%8F%E8%AE%B04.17/"/>
-      <url>/2017/04/17/%E9%9A%8F%E8%AE%B04.17/</url>
+      <title>Word2vec 入门（skip-gram部分)</title>
+      <link href="/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/"/>
+      <url>/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>学士服是租的，毕业照是学校安排的，论文是抄的，答辩是水的，实习报告是假的，三方合同是骗就业率的……一切都是假的，只有时间是真的。他每天都在告诉我们，青春，终究是要散场。</p></blockquote><p>看到上面一句话，感触还挺深的。</p><p>好久没来写些东西了，我都怕我手生了，我都怕我不敢直面自己的想法了。 依然希望这里是一片净土</p><p>最近看了15年，16年的中大的毕业快闪，感慨中大的人文情怀真是名不虚传，也庆幸自己能来，今年的毕业季马上就要来了~红领带，白衬衫，还是gfs特有的黑西装，蛤蟆镜，真是期待。</p><p>唉，真的手生了，写不下去了，想法还没有经过沉淀还是怎样，刻意去写又不知道该写些什么好。</p><p>压力是紧迫感，压力也能转化成动力 然而压力让你每天不能心安，不能静静的享受生活 突然感觉，好长好长一段时间，我都不能放空脑子，抛开一切去做一些事情了 也许这样的场景本身就不应该存在的</p><p>总有担忧和顾虑，总觉得要想尽办法提升自己，美其名曰充实，又何尝不是忙碌得像条狗呢 劳逸结合可真是一个大课题，我初中开始，甚至小学开始就没有学会</p><p>如果有一天我累的完全倒下，当然我知道这是不存在的 没有预想中的轰轰烈烈 生活就像温水煮青蛙一般，一点一点残蚀着你的耐心 就像5千米一样，我也无奈，不能拼尽全力去终点之后倒下再也站不起来 只能沉重的呼吸，拖着酸痛的两条腿，亦步亦趋</p><p>这场修行，可真难 沿途的风景固然美丽，但是总觉得与我无关</p><p>既然选择了远方，便只顾风雨兼程 这句话很早就看过，很早就不屑过 然而前两天重新看到，发现是会有一股温暖的力量涌上心头</p><p>不是所有的结尾都是欲扬先抑，温暖的力量给自己的动力也只是支撑自己走下去这段路。 《云图》里说，自杀是最勇敢的行为 我果然，还没那么勇敢，也没那么懦弱 我也不能给自己贴一个标签</p><p>好吧，不写了。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="skip-gram">Skip-gram</h1><p>给定句子中一个特定的词（input word），随机选它附近的一个词。网络的目标是预测 我们选到这个附近词的概率。</p><h2 id="输入输出">输入，输出</h2><p>取窗口大小为2（前后两个词）：得到一些词对： <img src="http://static.zybuluo.com/Preke/d6lc00zoy5k5qxkqvjwz7ad3/image_1bnistvll1f771ivtjos1nh6d459.png" alt="image_1bnistvll1f771ivtjos1nh6d459.png-71.8kB"></p><p>如之中的（quick, brown) 训练神经网络时： <img src="http://static.zybuluo.com/Preke/8z7fokjbulvp8ppecxr077fv/image_1bnit17pvb711tn81mjlpl1mq7m.png" alt="image_1bnit17pvb711tn81mjlpl1mq7m.png-90.7kB"> 输入quick的one-hot编码, 输出层softmax分层的brown的概率应该是最大的</p><hr><h2 id="隐层">隐层：</h2><p>我们训练一个简单的网络来执行一个任务，但是我们实际上并没有用这个网络来预测test中的任务。而是，利用这个任务（目标）去学习网络中的权重W。我们将看到这些学出来的权重W就是我们所要的词向量（wordvectors）。</p><p>假设corpus里有10000个词语， 目标词向量为 300维： 简单做一个图来表示过程： 依然用（quick, brown)训练神经网络 <img src="http://static.zybuluo.com/Preke/l1j7twk5xqthyat1j8cm4b6m/image_1bnivd1134qnd0a7cu1v1k1p7a1g.png" alt="image_1bnivd1134qnd0a7cu1v1k1p7a1g.png-63kB"></p><hr><p>如果两个不同的词有相同的上下文，那么我们的模型会需要预测类似的输出。那么网络为了输出类似的预测，他就会使这两个不同词的word vector尽可能相似。所以，如果两个词有相同的上下文，我们就可以得到比较接近的word vector。</p><p>那么什么词有相同的上下文？ 比如一些近义词 smart 和intelligent 再比如 一些相关的词 engine 和 transmission。</p><hr><h1 id="训练过程">训练过程：</h1><p>所以word2vec采用了降采样（subsampling)的策略。对于每个我们在训练样本中遇到的词，我们有一个概率去删除它。这个概率与单词出现的频率相关。</p><p><strong><em>(这里word2vec)就直接做了一个类似 去掉一些大众词汇，类似tf_idf的工作</em></strong></p><hr><p>训练神经网络 意味着输入一个训练样本调整weight，让它预测这个训练样本更准。换句话说，每个训练样本将会影响网络中所有的weight。像我们之前讨论的一样，我们词典的大小意味着我们有好多weight，所有都要轻微的调整。</p><p>Negative sampling 解决了这个问题，每次我们就修改了其中一小部分weight，而不是全部。 （这里其实我还有一点疑问，因为没有细读paper, 既然输入的是one-hot向量，相当于look-up的话，和别的权重（隐层神经元）有什么关系呢？有必要Negative sampling吗？）</p><p>Ref:</p><p>http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</p><p>http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/</p><p>http://blog.csdn.net/Layumi1993/article/details/72866235</p><p>http://blog.csdn.net/Layumi1993/article/details/72868399</p>]]></content>
       
       
       <categories>
           
-          <category> 随感 </category>
+          <category> Machine Learning </category>
           
       </categories>
       
@@ -656,6 +637,25 @@
       <url>/2017/04/17/%E9%AA%8A%E6%AD%8C/</url>
       
         <content type="html"><![CDATA[<p>By Gala</p><p>虽然虽然很爱你 却要阉了你</p><p>不然别人抢了去 不留下点滴</p><p>虽然虽然很怨你 却仍然痴迷</p><p>怀了别人的孩子 我也没脾气</p><p>虽然虽然很怕你 却要追随你</p><p>求你别轻言离去 因知音难觅</p><p>虽然虽然很爱你 却不懂珍惜</p><p>任由时光荏苒你 追悔已莫及</p><p>虽然虽然很想你 想联络却迟疑</p><p>命中注定的相遇 都失之交臂</p><p>虽然虽然失去你 梦里仍有你</p><p>求你别轻言离去 因知音难觅</p><p>求你别轻言离去 因知音难觅</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 随感 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>随记4.17</title>
+      <link href="/2017/04/17/%E9%9A%8F%E8%AE%B04.17/"/>
+      <url>/2017/04/17/%E9%9A%8F%E8%AE%B04.17/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>学士服是租的，毕业照是学校安排的，论文是抄的，答辩是水的，实习报告是假的，三方合同是骗就业率的……一切都是假的，只有时间是真的。他每天都在告诉我们，青春，终究是要散场。</p></blockquote><p>看到上面一句话，感触还挺深的。</p><p>好久没来写些东西了，我都怕我手生了，我都怕我不敢直面自己的想法了。 依然希望这里是一片净土</p><p>最近看了15年，16年的中大的毕业快闪，感慨中大的人文情怀真是名不虚传，也庆幸自己能来，今年的毕业季马上就要来了~红领带，白衬衫，还是gfs特有的黑西装，蛤蟆镜，真是期待。</p><p>唉，真的手生了，写不下去了，想法还没有经过沉淀还是怎样，刻意去写又不知道该写些什么好。</p><p>压力是紧迫感，压力也能转化成动力 然而压力让你每天不能心安，不能静静的享受生活 突然感觉，好长好长一段时间，我都不能放空脑子，抛开一切去做一些事情了 也许这样的场景本身就不应该存在的</p><p>总有担忧和顾虑，总觉得要想尽办法提升自己，美其名曰充实，又何尝不是忙碌得像条狗呢 劳逸结合可真是一个大课题，我初中开始，甚至小学开始就没有学会</p><p>如果有一天我累的完全倒下，当然我知道这是不存在的 没有预想中的轰轰烈烈 生活就像温水煮青蛙一般，一点一点残蚀着你的耐心 就像5千米一样，我也无奈，不能拼尽全力去终点之后倒下再也站不起来 只能沉重的呼吸，拖着酸痛的两条腿，亦步亦趋</p><p>这场修行，可真难 沿途的风景固然美丽，但是总觉得与我无关</p><p>既然选择了远方，便只顾风雨兼程 这句话很早就看过，很早就不屑过 然而前两天重新看到，发现是会有一股温暖的力量涌上心头</p><p>不是所有的结尾都是欲扬先抑，温暖的力量给自己的动力也只是支撑自己走下去这段路。 《云图》里说，自杀是最勇敢的行为 我果然，还没那么勇敢，也没那么懦弱 我也不能给自己贴一个标签</p><p>好吧，不写了。</p>]]></content>
       
       
       <categories>

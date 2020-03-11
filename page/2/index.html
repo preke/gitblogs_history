@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/slstm/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/ECM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiyuan">
@@ -283,7 +283,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/14/slstm/" itemprop="url">A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation</a></h1>
+                <a class="post-title-link" href="/2018/11/14/ECM/" itemprop="url">Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory</a></h1>
         
 
         <div class="post-meta">
@@ -358,66 +358,47 @@
         
           
             <h2 id="abstract">Abstract</h2>
-<ul>
-<li><p>poor logic and no emotion</p></li>
-<li><p>a syntactically con- strained bidirectional-asynchronous approach for <code>emotional conversation generation</code> (E- SCBA) is proposed</p></li>
-<li><p>In our model, pre-generated emotion keywords and topic keywords are asynchronously introduced into the process of decoding.</p></li>
-</ul>
+<p>In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).</p>
+<p>ECM addresses the factor using three new mechanisms that respectively： - Models the high-level abstraction of emotion expressions by embedding emotion categories - Captures the change of implicit internal emotion states - Uses explicit emotion expressions with an <strong>external emotion vocabulary</strong></p>
 <h2 id="contribution">Contribution</h2>
-<ol type="1">
-<li>It conducts a study of compound information, which constitutes the syntactic constraint in the conversation generation.</li>
-<li>A bidirectional-asynchronous decoder with multi-stage strategy is proposed to utilize the syntactic constraint.</li>
-<li>Our experiments show that E-SCBA work better on emotion, logic and diversity than the general seq2seq and other models that consider only a sin- gle factor during the generation.</li>
-</ol>
+<ul>
+<li>It proposes to address the <strong>emotion factor</strong> in large-scale conversation generation</li>
+<li>It proposes an end-to-end framework (called ECM) to incorporate the emotion influence in large-scale conversation generation. It has three novel mechanisms: emotion category embedding, an internal emotion memory, and an external memory.</li>
+<li>It shows that ECM can generate responses with higher content and emotion scores than the traditional seq2seq model.</li>
+</ul>
+<h2 id="problem">Problem:</h2>
+<p>Given post $ X = [x_1,…x_n] $ and emotion factor <span class="math inline">\(e\)</span>, Output response <span class="math inline">\(Y = [y_1,...y_m]\)</span> coherent with the emotion <span class="math inline">\(e\)</span></p>
+<p><span class="math display">\[
+P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{&lt;i},X,e)
+\]</span></p>
+<h2 id="model">Model</h2>
+<p><img src="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png" alt="ECM model"> 整体流程是： 先训练一个Emotion Classidier 来 annotate 训练数据的emotion; 然后将三元组(Post, response, target emotion)输入到ECM中，在decoder中结合target emotion的信息，依次生成每个word, (生成response) 然后再对response用同样的Emotion Classidier 做分类，得到response的情感来衡量效果</p>
+<figure>
+<img src="http://static.zybuluo.com/Preke/m8ewuvddl5icqvaw4wey1tqu/image_1csoduq9ah88e04f5m1qcso18m.png" alt="Internal Memory"><figcaption>Internal Memory</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/ded8bdig3g83wz5xe2w5a3di/image_1csodvkvn1af2b9n1r6c1mk51ilo13.png" alt="External Memory"><figcaption>External Memory</figcaption>
+</figure>
+<p>(中间的数学推断，看倒是看明白了，有点懒得誊一次…</p>
 <h2 id="dataset">Dataset</h2>
 <ul>
-<li>Emotional conversation dataset NLPCC2017</li>
-<li>1,119,201 Chinese post-reply pairs</li>
-<li>randomly sampled 8,000 for validation, 3,000 for testing and the rest for training</li>
+<li>NLPCC emotion classification dataset</li>
+<li>STC conversation dataset *could found in the github: <a href="https://github.com/tuxchow/ecm" target="_blank" rel="noopener">source code</a></li>
 </ul>
-<h2 id="model">Model</h2>
-<figure>
-<img src="http://static.zybuluo.com/Preke/57nvin5t51ekhs4b8mtfki27/image_1cs61nfsh165dh4c1ph8bjpjagp.png" alt="image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB"><figcaption>image_1cs61nfsh165dh4c1ph8bjpjagp.png-328.8kB</figcaption>
-</figure>
-<p>Keywords dictionary: 1. Emotion dictionary 2. Topic dictionary</p>
-<ul>
-<li>Step1: 输入Post, 得到topic keyword and emotion keyword
-<ul>
-<li>pretrained LDA 主题推断</li>
-<li>emotion transfer network 得到emotion</li>
-<li>(一些网络处理）得到topic keyword and emotion keyword that are expected to appear in the reply.</li>
-</ul></li>
-<li>Step2:
-<ul>
-<li>Post过LSTM(加入Emotion keyword), 得到一系列hidden vectors <span class="math inline">\(\{s_i^{et}\}\)</span><br>
-</li>
-<li>Post过LSTM(加入Topic keyword, Emotional attention), 得到一系列hidden vectors <span class="math inline">\(\{s_j^{tp}\}\)</span></li>
-<li><font color="red">LSTM和Attention的常用结合方式？</font></li>
-<li>用<span class="math inline">\(\{s_i^{et}\}\)</span> 去 attention <span class="math inline">\(\{s_j^{tp}\}\)</span> 得到 <strong>Middle Sequence(<span class="math inline">\(y^{md}\)</span>)</strong> (这里<span class="math inline">\(y^{md}\)</span> 不代表输出的words, 仅仅是中间变量而已）如图：get middle sequence</li>
-<li>然后通过<span class="math inline">\(y^{md}\)</span> 得到 <span class="math inline">\(y^{ce}\)</span> 和 <span class="math inline">\(y^{ct}\)</span> 如图：get ce and ct <img src="http://static.zybuluo.com/Preke/4edy641z8lopisgm15bogwu5/image_1cs728vnp1bsp1743gko17mcn379.png" alt="get middle sequence"> <br></li>
-</ul></li>
-</ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/qt9plkibwr5fvzt7wzwncnvi/image_1cs72kfu14s0s3b15am52fv88m.png" alt="get ce and ct"><figcaption>get ce and ct</figcaption>
-</figure>
-<blockquote>
-<p>提醒自己一点，LSTM每个输出也只是hidden states, 具体应用到decoder是还要加入一个选择当前输出词语的softmax:<span class="math inline">\(P(w_i|w_{i-1}, h_i, c_i)\)</span></p>
-</blockquote>
-<ul>
-<li>Step3:<br>
-concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{tp}^k, y^{md,f}, w_{et}^k, y^{ce,f})\)</span> <span class="math inline">\(y^b\)</span> 就是 <span class="math inline">\(y^f\)</span> 的反向; And then 得到最终的hidden states 然后生成words:</li>
-</ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/zptciuvc45fjyf2ffwj4ep1d/image_1cs739mit1j9lb0916ii3e7vvm9.png" alt="get hidden states"><figcaption>get hidden states</figcaption>
-</figure>
 <h2 id="experiment-and-metrics">Experiment and Metrics</h2>
 <ul>
-<li><strong>Embedding-based Metrics</strong>: We measure the similarity computed by <strong>cosine distance</strong> between a candidate reply and the target reply using <strong>sentence-level embedding</strong></li>
-<li><strong>Distinct Metrics</strong>: By computing the number of different unigrams (Distinct-1) and bigrams (Distinct-2), we measure information and diversity in the candidate replies</li>
-<li><strong>Human Annotations</strong></li>
+<li>BLEU is not suitable for measuring conversation generation due to its low correlation with human judgment.</li>
+<li>Perplexity(在读过的paper中最常见的）</li>
+<li>Emotion accuracy</li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/0okuk2t5cip926nwjr4kokoa/image_1csoe3n91314cc21l9i16s8fom1g.png" alt="result1"><figcaption>result1</figcaption>
+</figure>
+<ul>
+<li>Manual Evaluation</li>
 </ul>
 <h2 id="acquisition">Acquisition：</h2>
-<p>方向的变换看不太懂，lstm的一些认识加深了一点</p>
+<p>过程感觉有点琐碎，细节上的修改和优化还是挺多的，不能说是一个很眼前一亮的工作吧（不是效果和问题不好，而是没那么直观），但是运行一下代码应该会有更加深的体会</p>
 <hr>
 
           
@@ -654,203 +635,6 @@ concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{t
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/bst/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiyuan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/Gold.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiyuan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/12/bst/" itemprop="url">Style Transfer Through Back-Translation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-12T17:17:30+08:00">
-                2018-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Paper notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="abstract">Abstract</h2>
-<p>First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style.</p>
-<p>Evaluate on three different style transformations:</p>
-<ul>
-<li>sentiment</li>
-<li>gender</li>
-<li>political slant</li>
-</ul>
-<p>Results in:</p>
-<ul>
-<li>automatic evaluation of style transfer</li>
-<li>manual evaluation of meaning preservation and fluency</li>
-</ul>
-<h2 id="contribution">Contribution</h2>
-<ul>
-<li>A new approach to style transfer</li>
-<li>A new task that we propose to evaluate style transfer: transferring politi- cal slant</li>
-</ul>
-<h2 id="methodology">Methodology</h2>
-<p>Given two datasets: <span class="math inline">\(X_1=\{x_1^{(1)},...,x_1^{(n)}\}\)</span> <span class="math inline">\(X_2=\{x_2^{(1)},...,x_2^{(n)}\}\)</span> represent two different styles <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> (也就是说，所有的<span class="math inline">\(x_1^{(n)}\)</span>的style 都是<span class="math inline">\(s_1\)</span>, 所有的<span class="math inline">\(x_2^{(n)}\)</span>的style 都是<span class="math inline">\(s_2\)</span>)</p>
-<p>Then, generate samples of dataset <span class="math inline">\(X_1\)</span> such that they belong to style <span class="math inline">\(s_2\)</span> and samples of <span class="math inline">\(X_2\)</span> such that they belong to style <span class="math inline">\(s_1\)</span></p>
-<blockquote>
-<p>state-of-the-art</p>
-<ul>
-<li>variational auto-encoders</li>
-<li>cross-aligned autoencoders</li>
-</ul>
-</blockquote>
-<p>aim is to design a latent code <span class="math inline">\(z\)</span>: 1. represents the meaning of the input sentence grounded in back-translation 2. weakens the style attributes of author’s traits</p>
-<h2 id="dataset">Dataset</h2>
-<ul>
-<li>Reddy and Knight’s (2016) dataset of reviews from Yelp annotated for two genders cor- responding to markers of sex.</li>
-<li>comprised of top-level comments on Facebook posts from all 412 current members of the United States Sen- ate and House who have public Facebook pages (Voigt et al., 2018)</li>
-</ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"><figcaption>Dataset</figcaption>
-</figure>
-<h2 id="model-and-experiments">Model and Experiments</h2>
-<figure>
-<img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"><figcaption>Style transfer pipeline</figcaption>
-</figure>
-<figure>
-<img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"><figcaption>style classifier feedback</figcaption>
-</figure>
-<ul>
-<li>CNN去做二分类问题，人工label</li>
-<li>A convolutional neural network (CNN) classifier to accurately predict the given style</li>
-<li>concatenate binary style indicators to each input word embedding in the classifier</li>
-</ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"><figcaption>result of classification</figcaption>
-</figure>
-<figure>
-<img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"><figcaption>result of human preferance</figcaption>
-</figure>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/Sentiment_Adaptive_End-to-End_Dialog_Systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,6 +796,203 @@ concat 所有的东西 together: <span class="math inline">\(y^f=(y^{ct,b}, w_{t
 <figure>
 <img src="http://static.zybuluo.com/Preke/3hqtlct3wx9ritgzoa9fqggh/image_1cs375eqg1r27ovkci7802mlh1g.png" alt="image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB"><figcaption>image_1cs375eqg1r27ovkci7802mlh1g.png-30.7kB</figcaption>
 </figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/bst/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/Gold.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiyuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/12/bst/" itemprop="url">Style Transfer Through Back-Translation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-12T17:17:30+08:00">
+                2018-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="abstract">Abstract</h2>
+<p>First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style.</p>
+<p>Evaluate on three different style transformations:</p>
+<ul>
+<li>sentiment</li>
+<li>gender</li>
+<li>political slant</li>
+</ul>
+<p>Results in:</p>
+<ul>
+<li>automatic evaluation of style transfer</li>
+<li>manual evaluation of meaning preservation and fluency</li>
+</ul>
+<h2 id="contribution">Contribution</h2>
+<ul>
+<li>A new approach to style transfer</li>
+<li>A new task that we propose to evaluate style transfer: transferring politi- cal slant</li>
+</ul>
+<h2 id="methodology">Methodology</h2>
+<p>Given two datasets: <span class="math inline">\(X_1=\{x_1^{(1)},...,x_1^{(n)}\}\)</span> <span class="math inline">\(X_2=\{x_2^{(1)},...,x_2^{(n)}\}\)</span> represent two different styles <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> (也就是说，所有的<span class="math inline">\(x_1^{(n)}\)</span>的style 都是<span class="math inline">\(s_1\)</span>, 所有的<span class="math inline">\(x_2^{(n)}\)</span>的style 都是<span class="math inline">\(s_2\)</span>)</p>
+<p>Then, generate samples of dataset <span class="math inline">\(X_1\)</span> such that they belong to style <span class="math inline">\(s_2\)</span> and samples of <span class="math inline">\(X_2\)</span> such that they belong to style <span class="math inline">\(s_1\)</span></p>
+<blockquote>
+<p>state-of-the-art</p>
+<ul>
+<li>variational auto-encoders</li>
+<li>cross-aligned autoencoders</li>
+</ul>
+</blockquote>
+<p>aim is to design a latent code <span class="math inline">\(z\)</span>: 1. represents the meaning of the input sentence grounded in back-translation 2. weakens the style attributes of author’s traits</p>
+<h2 id="dataset">Dataset</h2>
+<ul>
+<li>Reddy and Knight’s (2016) dataset of reviews from Yelp annotated for two genders cor- responding to markers of sex.</li>
+<li>comprised of top-level comments on Facebook posts from all 412 current members of the United States Sen- ate and House who have public Facebook pages (Voigt et al., 2018)</li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"><figcaption>Dataset</figcaption>
+</figure>
+<h2 id="model-and-experiments">Model and Experiments</h2>
+<figure>
+<img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"><figcaption>Style transfer pipeline</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"><figcaption>style classifier feedback</figcaption>
+</figure>
+<ul>
+<li>CNN去做二分类问题，人工label</li>
+<li>A convolutional neural network (CNN) classifier to accurately predict the given style</li>
+<li>concatenate binary style indicators to each input word embedding in the classifier</li>
+</ul>
+<figure>
+<img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"><figcaption>result of classification</figcaption>
+</figure>
+<figure>
+<img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"><figcaption>result of human preferance</figcaption>
+</figure>
+<hr>
 
           
         
