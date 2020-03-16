@@ -20,11 +20,11 @@
       
         <tags>
             
+            <tag> emotion </tag>
+            
             <tag> dialog system </tag>
             
             <tag> conversation generation </tag>
-            
-            <tag> emotion </tag>
             
             <tag> text style transfer </tag>
             
@@ -187,31 +187,6 @@
     
     
     <entry>
-      <title>Style Transfer in Text Exploration and Evaluation</title>
-      <link href="/2018/11/14/style_transfer/"/>
-      <url>/2018/11/14/style_transfer/</url>
-      
-        <content type="html"><![CDATA[<h2 id="abstract">Abstract</h2><p>2 main problems in Style Transfer:</p><ul><li>Lack of parallel data<ul><li>Model learn from <font color="red">non-parallel data</font></li><li>Learn separate <strong>content representations</strong> and <strong>style representations</strong> using <strong>adversarial networks</strong>.</li></ul></li><li>Lack of reliable metrics<ul><li>propose two novel evaluation metrics that measure two aspects of style transfer: <strong>transfer strength</strong> and <strong>content preservation</strong></li></ul></li></ul><h2 id="contribution">Contribution</h2><ul><li>Compose a <a href="https://github.com/fuzhenxin/textstyletransferdata" target="_blank" rel="noopener">dataset</a> of paper-news titles to facilitate the research in language style transfer</li><li>Propose <strong>two general evaluation metrics</strong> for style transfer, which considers both transfer strength and content preservation. The evaluation metric is highly correlated to the human evaluation.</li></ul><h2 id="model">Model</h2><p>(both only contains the content information)</p><h3 id="multi-encoder">multi-encoder</h3><ul><li>The multi-decoder model uses different decoders, one for each style, to generate texts in the corresponding style.</li></ul><p>困难在于encoder如何生成只含有content信息的representation，不包含原来的style信息<font color="red">（有点不理解是为什么…)</font></p><p>设置目标函数用adversarial network 处理post的style分类：目标是 to separate the content representation from the style. 这里有两个loss: <img src="http://static.zybuluo.com/Preke/qhmh4o4giu7h1z3krd3n9qnb/image_1cs8n1gskhhu11r3ket1g1kaqbs.png" alt="Loss1"> to minimizes the negative log probability of the style labels in the training data. (这里<span class="math inline">\(\theta_c\)</span> 是 predict style的分类器的参数） <img src="http://static.zybuluo.com/Preke/y8oee035db5o9qpekcx5mhok/image_1cs8n5qv9v9k11611sqv1tu415sq19.png" alt="Loss2"> by maximize the entropy (minimize the negative entropy) of the predicted style labels, make the classifier unable to identify the style of <span class="math inline">\(x\)</span></p><p>然后，对于多个不同style的decoder: 还有一个传统的loss, 使得输入输出的语义更相似<font color="red">（这里我也有点不太认同）</font> <img src="http://static.zybuluo.com/Preke/9b6a2z85xixmuk43xn11b85b/image_1cs8nfl7k14a91ro31stf5r11l5o1m.png" alt="loss gen"></p><p>所以这个multi-encoder的总体loss为： <img src="http://static.zybuluo.com/Preke/ee85f56nen42jcewrseks92w/image_1cs8ngdnh1m6h127l4nc1jol15823.png" alt="total loss"></p><h3 id="style-embedding">style embedding</h3><p>与上述模型类似，只是在参数中加入了所有style categoris的embeddings的矩阵<span class="math inline">\(E\in R^{N*d_s}\)</span> <span class="math inline">\(N\)</span> for the number of styles <span class="math inline">\(d_s\)</span> for the dim of style embeddings</p><p>这部分的Loss为： <img src="http://static.zybuluo.com/Preke/vo7860x0z6e0jd2643citxrq/image_1cs8nq9t11a4r71e1nh69k2l7q2g.png" alt="Loss2"></p><ul><li>The style-embedding model learns style embeddings addition to the content representations.</li></ul><figure><img src="http://static.zybuluo.com/Preke/e1obhx207tcemqi309feb66d/image_1cs8ea9g6ic51tk367h1ob07gs9.png" alt="2 models"><figcaption>2 models</figcaption></figure><h2 id="metrics">Metrics:</h2><ul><li>Transfer Strength<ul><li>evaluates whether the style is transferred to target style(用LSTM-sigmoid构建一个分类器，通过acc衡量）</li></ul></li><li>Content Preservation<ul><li>evaluate the similarity between source text and target text</li></ul></li></ul><h2 id="dataset">Dataset</h2><ul><li>paper-news title dataset</li><li>positive-negative review dataset</li></ul><h2 id="acquisition">Acquisition：</h2><p>Model很直观，只是对于adversarial 的思路还是不太理解，有一些不理解的点标红了 （感觉没有体现出Contribution中说的parallel数据的特点）</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Paper notes </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> style transfer </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>A Syntactically Constrained Bidirectional-Asynchronous Approach for Emotional Conversation Generation</title>
       <link href="/2018/11/14/slstm/"/>
       <url>/2018/11/14/slstm/</url>
@@ -257,11 +232,11 @@
       
         <tags>
             
+            <tag> emotion </tag>
+            
             <tag> dialog system </tag>
             
             <tag> conversation generation </tag>
-            
-            <tag> emotion </tag>
             
         </tags>
       
@@ -286,11 +261,36 @@
       
         <tags>
             
+            <tag> emotion </tag>
+            
             <tag> dialog system </tag>
             
             <tag> conversation generation </tag>
             
-            <tag> emotion </tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Style Transfer in Text Exploration and Evaluation</title>
+      <link href="/2018/11/14/style_transfer/"/>
+      <url>/2018/11/14/style_transfer/</url>
+      
+        <content type="html"><![CDATA[<h2 id="abstract">Abstract</h2><p>2 main problems in Style Transfer:</p><ul><li>Lack of parallel data<ul><li>Model learn from <font color="red">non-parallel data</font></li><li>Learn separate <strong>content representations</strong> and <strong>style representations</strong> using <strong>adversarial networks</strong>.</li></ul></li><li>Lack of reliable metrics<ul><li>propose two novel evaluation metrics that measure two aspects of style transfer: <strong>transfer strength</strong> and <strong>content preservation</strong></li></ul></li></ul><h2 id="contribution">Contribution</h2><ul><li>Compose a <a href="https://github.com/fuzhenxin/textstyletransferdata" target="_blank" rel="noopener">dataset</a> of paper-news titles to facilitate the research in language style transfer</li><li>Propose <strong>two general evaluation metrics</strong> for style transfer, which considers both transfer strength and content preservation. The evaluation metric is highly correlated to the human evaluation.</li></ul><h2 id="model">Model</h2><p>(both only contains the content information)</p><h3 id="multi-encoder">multi-encoder</h3><ul><li>The multi-decoder model uses different decoders, one for each style, to generate texts in the corresponding style.</li></ul><p>困难在于encoder如何生成只含有content信息的representation，不包含原来的style信息<font color="red">（有点不理解是为什么…)</font></p><p>设置目标函数用adversarial network 处理post的style分类：目标是 to separate the content representation from the style. 这里有两个loss: <img src="http://static.zybuluo.com/Preke/qhmh4o4giu7h1z3krd3n9qnb/image_1cs8n1gskhhu11r3ket1g1kaqbs.png" alt="Loss1"> to minimizes the negative log probability of the style labels in the training data. (这里<span class="math inline">\(\theta_c\)</span> 是 predict style的分类器的参数） <img src="http://static.zybuluo.com/Preke/y8oee035db5o9qpekcx5mhok/image_1cs8n5qv9v9k11611sqv1tu415sq19.png" alt="Loss2"> by maximize the entropy (minimize the negative entropy) of the predicted style labels, make the classifier unable to identify the style of <span class="math inline">\(x\)</span></p><p>然后，对于多个不同style的decoder: 还有一个传统的loss, 使得输入输出的语义更相似<font color="red">（这里我也有点不太认同）</font> <img src="http://static.zybuluo.com/Preke/9b6a2z85xixmuk43xn11b85b/image_1cs8nfl7k14a91ro31stf5r11l5o1m.png" alt="loss gen"></p><p>所以这个multi-encoder的总体loss为： <img src="http://static.zybuluo.com/Preke/ee85f56nen42jcewrseks92w/image_1cs8ngdnh1m6h127l4nc1jol15823.png" alt="total loss"></p><h3 id="style-embedding">style embedding</h3><p>与上述模型类似，只是在参数中加入了所有style categoris的embeddings的矩阵<span class="math inline">\(E\in R^{N*d_s}\)</span> <span class="math inline">\(N\)</span> for the number of styles <span class="math inline">\(d_s\)</span> for the dim of style embeddings</p><p>这部分的Loss为： <img src="http://static.zybuluo.com/Preke/vo7860x0z6e0jd2643citxrq/image_1cs8nq9t11a4r71e1nh69k2l7q2g.png" alt="Loss2"></p><ul><li>The style-embedding model learns style embeddings addition to the content representations.</li></ul><figure><img src="http://static.zybuluo.com/Preke/e1obhx207tcemqi309feb66d/image_1cs8ea9g6ic51tk367h1ob07gs9.png" alt="2 models"><figcaption>2 models</figcaption></figure><h2 id="metrics">Metrics:</h2><ul><li>Transfer Strength<ul><li>evaluates whether the style is transferred to target style(用LSTM-sigmoid构建一个分类器，通过acc衡量）</li></ul></li><li>Content Preservation<ul><li>evaluate the similarity between source text and target text</li></ul></li></ul><h2 id="dataset">Dataset</h2><ul><li>paper-news title dataset</li><li>positive-negative review dataset</li></ul><h2 id="acquisition">Acquisition：</h2><p>Model很直观，只是对于adversarial 的思路还是不太理解，有一些不理解的点标红了 （感觉没有体现出Contribution中说的parallel数据的特点）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Paper notes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> style transfer </tag>
             
         </tags>
       
@@ -431,9 +431,9 @@
       
         <tags>
             
-            <tag> dialog system </tag>
-            
             <tag> emotion </tag>
+            
+            <tag> dialog system </tag>
             
         </tags>
       
@@ -499,11 +499,11 @@
     
     
     <entry>
-      <title>The Pilgrims</title>
-      <link href="/2017/09/12/The%20Pilgrims/"/>
-      <url>/2017/09/12/The%20Pilgrims/</url>
+      <title>马云的年会演讲</title>
+      <link href="/2017/09/12/%E9%A9%AC%E4%BA%91%E7%9A%84%E5%B9%B4%E4%BC%9A%E6%BC%94%E8%AE%B2/"/>
+      <url>/2017/09/12/%E9%A9%AC%E4%BA%91%E7%9A%84%E5%B9%B4%E4%BC%9A%E6%BC%94%E8%AE%B2/</url>
       
-        <content type="html"><![CDATA[<p>We are the Pilgrims, Master</p><p>We shall go always a little further,</p><p>It may be beyond the last blue mountain barred with snow,</p><p>Across that angry or glimmering sea …</p><p>Go as a pilgrim and seek out danger</p><p>Far from comfort and the well lit-avenues of life.</p><p>Pit your very soul against the unknown</p><p>And seek stimulation in the company of the brave.</p><p>Experience cold and hunger, heat and thirst</p><p>And survive to see another challenge and another dawn.</p><p>Only then will you be at peace with yourself</p><p>And able to know and to say:</p><p>“I looked down on the farthest side of the mountain</p><p>And, fulfilled and understanding all, I am cold and hunger, heat and thirst</p><p>And survive to see another challenge and another dawn.</p><p>Only then will you be at peace with yourself</p><p>And able to know and to say:</p><p>“I looked down on the farthest side of the mountain</p><p>And, fulfilled and understanding all, I am truly content</p><p>That I lived a full life</p><p>And one that was of my own choice”.</p>]]></content>
+        <content type="html"><![CDATA[<p>今儿看了马云的年会演讲</p><p>感触很深就是，阿里是一个最强调社会责任感的公司了。也许跟他的愿景有关</p><p><strong>让天下没有难做的生意</strong></p><p>马云不是一个做技术的，所以决定了阿里不是一个纯技术公司</p><p>去各个大学演讲，与特朗普谈话承诺就业岗位，出席达沃斯，马云俨然是一个经济体的领头人。</p><p>演讲中提到了不作恶，当然这是Google的信条，我猛一想，去年Google 也18岁了，好像没见拉里佩奇演讲啊…</p><p>腾讯去年总办发红包…小马哥也没有强调什么，要做中国人沟通的桥梁类似的话…</p><p>所以我觉得，明年的百度？似乎能看到robin 吹一波人工智能对未来，对现在的影响，百度其实也承担了挺多的社会责任的</p><p>回归正题呢，我觉得马云提出的，服务农村，消除贫困，全球化等等未来的方向，这不是政府的工作吗？阿里可能是不那么独立的公司(没说不是好事)，为政府服务，为社会服务，反过来，政府也提供充分的资源，社会资源。是一个良好的合作关系。这个公司的发展和社会的进步相得益彰，也是一种独特的模式</p>]]></content>
       
       
       <categories>
@@ -518,11 +518,11 @@
     
     
     <entry>
-      <title>马云的年会演讲</title>
-      <link href="/2017/09/12/%E9%A9%AC%E4%BA%91%E7%9A%84%E5%B9%B4%E4%BC%9A%E6%BC%94%E8%AE%B2/"/>
-      <url>/2017/09/12/%E9%A9%AC%E4%BA%91%E7%9A%84%E5%B9%B4%E4%BC%9A%E6%BC%94%E8%AE%B2/</url>
+      <title>The Pilgrims</title>
+      <link href="/2017/09/12/The%20Pilgrims/"/>
+      <url>/2017/09/12/The%20Pilgrims/</url>
       
-        <content type="html"><![CDATA[<p>今儿看了马云的年会演讲</p><p>感触很深就是，阿里是一个最强调社会责任感的公司了。也许跟他的愿景有关</p><p><strong>让天下没有难做的生意</strong></p><p>马云不是一个做技术的，所以决定了阿里不是一个纯技术公司</p><p>去各个大学演讲，与特朗普谈话承诺就业岗位，出席达沃斯，马云俨然是一个经济体的领头人。</p><p>演讲中提到了不作恶，当然这是Google的信条，我猛一想，去年Google 也18岁了，好像没见拉里佩奇演讲啊…</p><p>腾讯去年总办发红包…小马哥也没有强调什么，要做中国人沟通的桥梁类似的话…</p><p>所以我觉得，明年的百度？似乎能看到robin 吹一波人工智能对未来，对现在的影响，百度其实也承担了挺多的社会责任的</p><p>回归正题呢，我觉得马云提出的，服务农村，消除贫困，全球化等等未来的方向，这不是政府的工作吗？阿里可能是不那么独立的公司(没说不是好事)，为政府服务，为社会服务，反过来，政府也提供充分的资源，社会资源。是一个良好的合作关系。这个公司的发展和社会的进步相得益彰，也是一种独特的模式</p>]]></content>
+        <content type="html"><![CDATA[<p>We are the Pilgrims, Master</p><p>We shall go always a little further,</p><p>It may be beyond the last blue mountain barred with snow,</p><p>Across that angry or glimmering sea …</p><p>Go as a pilgrim and seek out danger</p><p>Far from comfort and the well lit-avenues of life.</p><p>Pit your very soul against the unknown</p><p>And seek stimulation in the company of the brave.</p><p>Experience cold and hunger, heat and thirst</p><p>And survive to see another challenge and another dawn.</p><p>Only then will you be at peace with yourself</p><p>And able to know and to say:</p><p>“I looked down on the farthest side of the mountain</p><p>And, fulfilled and understanding all, I am cold and hunger, heat and thirst</p><p>And survive to see another challenge and another dawn.</p><p>Only then will you be at peace with yourself</p><p>And able to know and to say:</p><p>“I looked down on the farthest side of the mountain</p><p>And, fulfilled and understanding all, I am truly content</p><p>That I lived a full life</p><p>And one that was of my own choice”.</p>]]></content>
       
       
       <categories>
@@ -594,25 +594,6 @@
     
     
     <entry>
-      <title>Softmax</title>
-      <link href="/2017/08/15/Softmax/"/>
-      <url>/2017/08/15/Softmax/</url>
-      
-        <content type="html"><![CDATA[<p>自己的一点理解，感觉还是要记下来…</p><p>Softmax 是将LR用于多分类, 就按照类比的思路写下来。</p><p>先简单说一下LR</p><p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em> <img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p><p>假设自变量 x 是多维向量，也可以理解为多维特征吧： <span class="math display">\[x = [x_1, x_2, ..., x_n] \]</span> 我们就可以把假设函数设为： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> 为了简化，<span class="math inline">\(x_0 = 1\)</span>, 即 $x = [1, x_1, x_2, …, x_n] $， 就有： <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"> ### 此时 <span class="math inline">\(\theta\)</span> 是一个1 * n+1的向量 然后我们在将这个假设函数代入Sigmoid函数： <img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p><p>然后定义loss function, 做梯度下降。</p><p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。 但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了 现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max 所以这里引入Softmax函数： 假设 <span class="math inline">\(V = [v_1, v_2, ... v_m]\)</span> 那么第i个元素的Softmax值： <span class="math display">\[S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}} \]</span></p><p>那如果现在将softmax应用到多分类： 依然用同样的自变量x, 同样的假设函数，如上： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p><h3 id="但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵">但是这里的 <span class="math inline">\(\theta\)</span> 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 <span class="math inline">\(\theta\)</span> 是一个k * n+1的矩阵。</h3><p>和上面一样，<span class="math inline">\(\theta\)</span>就是我们要训练的参数； 这里可以列出LR 和 softmax的loss function 做对比： LR： <img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"> Softmax: <img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p><p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <span class="math inline">\(\textstyle k\)</span> 个可能值进行了累加。注意在Softmax回归中将 $x <span class="math inline">\(分类为类别\)</span> j$ 的概率为： <img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p><h2 id="总结">总结：</h2><p>softmax对于LR来说</p><ul><li>目标函数不同（sigmoid 和 softmax）</li><li>优化参数 <span class="math inline">\(\textstyle \theta\)</span> 的形式不同</li></ul><p>至于loss function的推导，暂时还没有深究；</p><h2 id="ref">ref:</h2><p>http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 http://blog.csdn.net/supercally/article/details/54234115</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Machine Learning </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Word2vec 入门（skip-gram部分)</title>
       <link href="/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/"/>
       <url>/2017/08/15/Word2vec%20%E5%85%A5%E9%97%A8%EF%BC%88skip-gram%E9%83%A8%E5%88%86)/</url>
@@ -632,16 +613,16 @@
     
     
     <entry>
-      <title>骊歌</title>
-      <link href="/2017/04/17/%E9%AA%8A%E6%AD%8C/"/>
-      <url>/2017/04/17/%E9%AA%8A%E6%AD%8C/</url>
+      <title>Softmax</title>
+      <link href="/2017/08/15/Softmax/"/>
+      <url>/2017/08/15/Softmax/</url>
       
-        <content type="html"><![CDATA[<p>By Gala</p><p>虽然虽然很爱你 却要阉了你</p><p>不然别人抢了去 不留下点滴</p><p>虽然虽然很怨你 却仍然痴迷</p><p>怀了别人的孩子 我也没脾气</p><p>虽然虽然很怕你 却要追随你</p><p>求你别轻言离去 因知音难觅</p><p>虽然虽然很爱你 却不懂珍惜</p><p>任由时光荏苒你 追悔已莫及</p><p>虽然虽然很想你 想联络却迟疑</p><p>命中注定的相遇 都失之交臂</p><p>虽然虽然失去你 梦里仍有你</p><p>求你别轻言离去 因知音难觅</p><p>求你别轻言离去 因知音难觅</p>]]></content>
+        <content type="html"><![CDATA[<p>自己的一点理解，感觉还是要记下来…</p><p>Softmax 是将LR用于多分类, 就按照类比的思路写下来。</p><p>先简单说一下LR</p><p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em> <img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p><p>假设自变量 x 是多维向量，也可以理解为多维特征吧： <span class="math display">\[x = [x_1, x_2, ..., x_n] \]</span> 我们就可以把假设函数设为： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> 为了简化，<span class="math inline">\(x_0 = 1\)</span>, 即 $x = [1, x_1, x_2, …, x_n] $， 就有： <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"> ### 此时 <span class="math inline">\(\theta\)</span> 是一个1 * n+1的向量 然后我们在将这个假设函数代入Sigmoid函数： <img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p><p>然后定义loss function, 做梯度下降。</p><p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。 但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了 现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max 所以这里引入Softmax函数： 假设 <span class="math inline">\(V = [v_1, v_2, ... v_m]\)</span> 那么第i个元素的Softmax值： <span class="math display">\[S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}} \]</span></p><p>那如果现在将softmax应用到多分类： 依然用同样的自变量x, 同样的假设函数，如上： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p><h3 id="但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵">但是这里的 <span class="math inline">\(\theta\)</span> 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 <span class="math inline">\(\theta\)</span> 是一个k * n+1的矩阵。</h3><p>和上面一样，<span class="math inline">\(\theta\)</span>就是我们要训练的参数； 这里可以列出LR 和 softmax的loss function 做对比： LR： <img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"> Softmax: <img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p><p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <span class="math inline">\(\textstyle k\)</span> 个可能值进行了累加。注意在Softmax回归中将 $x <span class="math inline">\(分类为类别\)</span> j$ 的概率为： <img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p><h2 id="总结">总结：</h2><p>softmax对于LR来说</p><ul><li>目标函数不同（sigmoid 和 softmax）</li><li>优化参数 <span class="math inline">\(\textstyle \theta\)</span> 的形式不同</li></ul><p>至于loss function的推导，暂时还没有深究；</p><h2 id="ref">ref:</h2><p>http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 http://blog.csdn.net/supercally/article/details/54234115</p>]]></content>
       
       
       <categories>
           
-          <category> 随感 </category>
+          <category> Machine Learning </category>
           
       </categories>
       
@@ -656,6 +637,25 @@
       <url>/2017/04/17/%E9%9A%8F%E8%AE%B04.17/</url>
       
         <content type="html"><![CDATA[<blockquote><p>学士服是租的，毕业照是学校安排的，论文是抄的，答辩是水的，实习报告是假的，三方合同是骗就业率的……一切都是假的，只有时间是真的。他每天都在告诉我们，青春，终究是要散场。</p></blockquote><p>看到上面一句话，感触还挺深的。</p><p>好久没来写些东西了，我都怕我手生了，我都怕我不敢直面自己的想法了。 依然希望这里是一片净土</p><p>最近看了15年，16年的中大的毕业快闪，感慨中大的人文情怀真是名不虚传，也庆幸自己能来，今年的毕业季马上就要来了~红领带，白衬衫，还是gfs特有的黑西装，蛤蟆镜，真是期待。</p><p>唉，真的手生了，写不下去了，想法还没有经过沉淀还是怎样，刻意去写又不知道该写些什么好。</p><p>压力是紧迫感，压力也能转化成动力 然而压力让你每天不能心安，不能静静的享受生活 突然感觉，好长好长一段时间，我都不能放空脑子，抛开一切去做一些事情了 也许这样的场景本身就不应该存在的</p><p>总有担忧和顾虑，总觉得要想尽办法提升自己，美其名曰充实，又何尝不是忙碌得像条狗呢 劳逸结合可真是一个大课题，我初中开始，甚至小学开始就没有学会</p><p>如果有一天我累的完全倒下，当然我知道这是不存在的 没有预想中的轰轰烈烈 生活就像温水煮青蛙一般，一点一点残蚀着你的耐心 就像5千米一样，我也无奈，不能拼尽全力去终点之后倒下再也站不起来 只能沉重的呼吸，拖着酸痛的两条腿，亦步亦趋</p><p>这场修行，可真难 沿途的风景固然美丽，但是总觉得与我无关</p><p>既然选择了远方，便只顾风雨兼程 这句话很早就看过，很早就不屑过 然而前两天重新看到，发现是会有一股温暖的力量涌上心头</p><p>不是所有的结尾都是欲扬先抑，温暖的力量给自己的动力也只是支撑自己走下去这段路。 《云图》里说，自杀是最勇敢的行为 我果然，还没那么勇敢，也没那么懦弱 我也不能给自己贴一个标签</p><p>好吧，不写了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 随感 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>骊歌</title>
+      <link href="/2017/04/17/%E9%AA%8A%E6%AD%8C/"/>
+      <url>/2017/04/17/%E9%AA%8A%E6%AD%8C/</url>
+      
+        <content type="html"><![CDATA[<p>By Gala</p><p>虽然虽然很爱你 却要阉了你</p><p>不然别人抢了去 不留下点滴</p><p>虽然虽然很怨你 却仍然痴迷</p><p>怀了别人的孩子 我也没脾气</p><p>虽然虽然很怕你 却要追随你</p><p>求你别轻言离去 因知音难觅</p><p>虽然虽然很爱你 却不懂珍惜</p><p>任由时光荏苒你 追悔已莫及</p><p>虽然虽然很想你 想联络却迟疑</p><p>命中注定的相遇 都失之交臂</p><p>虽然虽然失去你 梦里仍有你</p><p>求你别轻言离去 因知音难觅</p><p>求你别轻言离去 因知音难觅</p>]]></content>
       
       
       <categories>
