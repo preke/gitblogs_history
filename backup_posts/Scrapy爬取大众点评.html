@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="内容：美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点： 大众点评有反爬机制，直接运行爬虫，会返回403">
+<meta name="description" content="内容： 美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点：  大众点评有反爬机制，直接运行爬虫，会返回40">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Scrapy爬取大众点评">
 <meta property="og:url" content="http://yoursite.com/backup_posts/Scrapy爬取大众点评.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="内容：美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点： 大众点评有反爬机制，直接运行爬虫，会返回403">
+<meta property="og:description" content="内容： 美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点：  大众点评有反爬机制，直接运行爬虫，会返回40">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2018-10-20T14:40:04.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scrapy爬取大众点评">
-<meta name="twitter:description" content="内容：美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点： 大众点评有反爬机制，直接运行爬虫，会返回403">
+<meta name="twitter:description" content="内容： 美食品类750个商家：   商家的页面url 商家的主要信息 商家所有的促销信息（1200+条） 商家所有的评论信息（没爬完，14w+条） 发表这些评论的所有用户的信息（没爬完，5w+条）   代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing 总结和学习的一些点：  大众点评有反爬机制，直接运行爬虫，会返回40">
 
 
 
@@ -270,7 +270,8 @@
         
         
           <hr>
-<h2 id="内容："><a href="#内容：" class="headerlink" title="内容："></a>内容：</h2><p>美食品类750个商家：</p>
+<h2 id="内容">内容：</h2>
+<p>美食品类750个商家：</p>
 <blockquote>
 <ul>
 <li>商家的页面url</li>
@@ -280,25 +281,22 @@
 <li>发表这些评论的所有用户的信息（没爬完，5w+条）</li>
 </ul>
 </blockquote>
-<p>代码：<a href="https://github.com/preke/Spiders/tree/master/DaZhongDianPing" target="_blank" rel="noopener">https://github.com/preke/Spiders/tree/master/DaZhongDianPing</a></p>
-<h2 id="总结和学习的一些点："><a href="#总结和学习的一些点：" class="headerlink" title="总结和学习的一些点："></a>总结和学习的一些点：</h2><ol>
-<li><p>大众点评有反爬机制，直接运行爬虫，会返回403 forbidden, 所以要换UA, 这里我参考了这篇文章<br><a href="http://blog.csdn.net/haipengdai/article/details/48545231" target="_blank" rel="noopener">http://blog.csdn.net/haipengdai/article/details/48545231</a><br>（亲测这个中间件太厉害了，同学遇到的输入验证码的问题我都没遇到）</p>
-</li>
-<li><p>scrapy高度集成，设置完 <code>start_urls</code> 之后, <code>start_request()</code> 根据 <code>start_urls</code> 的url生成 <code>Request</code> 对象,然后访问网页返回一个<strong>可迭代</strong>的 <code>Response</code>对象，直接默认回调<code>parse()</code>；<code>parse()</code>返回的<strong>可迭代</strong>的<code>Request</code>对象，直接默认回调<code>start_request()</code>。</p>
-</li>
+<p>代码：https://github.com/preke/Spiders/tree/master/DaZhongDianPing</p>
+<h2 id="总结和学习的一些点">总结和学习的一些点：</h2>
+<ol type="1">
+<li><p>大众点评有反爬机制，直接运行爬虫，会返回403 forbidden, 所以要换UA, 这里我参考了这篇文章 http://blog.csdn.net/haipengdai/article/details/48545231 （亲测这个中间件太厉害了，同学遇到的输入验证码的问题我都没遇到）</p></li>
+<li><p>scrapy高度集成，设置完 <code>start_urls</code> 之后, <code>start_request()</code> 根据 <code>start_urls</code> 的url生成 <code>Request</code> 对象,然后访问网页返回一个<strong>可迭代</strong>的 <code>Response</code>对象，直接默认回调<code>parse()</code>；<code>parse()</code>返回的<strong>可迭代</strong>的<code>Request</code>对象，直接默认回调<code>start_request()</code>。</p></li>
 </ol>
 <p><strong>注: 这里的Request对象和Response对象是scarpy里定义的：</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</span><br><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Response</span><br></pre></td></tr></table></figure>
-<p>具体说明：<a href="http://scrapy-chs.readthedocs.io/zh_CN/stable/topics/request-response.html#module-scrapy.http" target="_blank" rel="noopener">http://scrapy-chs.readthedocs.io/zh_CN/stable/topics/request-response.html#module-scrapy.http</a><br>而具体这个可迭代，因为内部实现时用迭代器，所以返回的时候，可以在返回对象上加一个’[]’</p>
-<ol>
+<p>具体说明：http://scrapy-chs.readthedocs.io/zh_CN/stable/topics/request-response.html#module-scrapy.http 而具体这个可迭代，因为内部实现时用迭代器，所以返回的时候，可以在返回对象上加一个’[]’</p>
+<ol start="3" type="1">
 <li>多个爬虫pipline的问题，这样解决：</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> spider.name == <span class="string">'url'</span>:</span><br><span class="line">        do url things...</span><br><span class="line">    <span class="keyword">elif</span> spider.name == <span class="string">'shop'</span>:</span><br><span class="line">        sdo url things...</span><br><span class="line">    <span class="keyword">elif</span> spider.name == <span class="string">'promotion'</span>:</span><br><span class="line">        do url things...</span><br><span class="line">    <span class="keyword">elif</span> spider.name == <span class="string">'comment'</span>:</span><br><span class="line">        str1 = type(item)</span><br><span class="line">        <span class="keyword">if</span> str(str1) == <span class="string">"&lt;class 'Xiuxian.items.CommentItem'&gt;"</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'ok'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.saveOrUpdate(self.user_collection, item)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>遇到ajax要自己定义请求发送，然后遇到302，原因还是ua的问题，我通过<code>requests</code>库的<code>request</code>直接发get请求，发现返回的时重定向的页面，然后把请求委托给scrapy封装的<code>Request</code>,就可以获取信息（因为会通过中间件来换UA）。<br>推荐使用<code>postman</code>先试一下，如果请求需要参数中有时间戳，可以自己随便设（仅限于本例，其他的还不清楚）</p>
-</li>
-<li><p>后来遇到最大的问题是应对大众点评的反爬机制，中间折腾了各种各样的方法，不再累述，只说问题的结论：</p>
-</li>
+<ol start="4" type="1">
+<li><p>遇到ajax要自己定义请求发送，然后遇到302，原因还是ua的问题，我通过<code>requests</code>库的<code>request</code>直接发get请求，发现返回的时重定向的页面，然后把请求委托给scrapy封装的<code>Request</code>,就可以获取信息（因为会通过中间件来换UA）。 推荐使用<code>postman</code>先试一下，如果请求需要参数中有时间戳，可以自己随便设（仅限于本例，其他的还不清楚）</p></li>
+<li><p>后来遇到最大的问题是应对大众点评的反爬机制，中间折腾了各种各样的方法，不再累述，只说问题的结论：</p></li>
 </ol>
 <blockquote>
 <ul>
@@ -310,7 +308,8 @@
 <li>最后用几个可用的ip代理做轮转，一个连续发3个请求，然后换另一个，<code>DOWNLOAD_DELAY</code> 设为0.25</li>
 </ul>
 </blockquote>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ul>
+<h2 id="总结">总结：</h2>
+<ul>
 <li>自己写的程序质量不高，发送请求的地方应该可以继续优化；</li>
 <li>有高质量的代理肯定是好事，会省很多工作，或许说是偷懒的一种方式</li>
 <li>师兄说了一个点，弄清楚程序发送请求和浏览器发送请求的区别，这是努力的一个点</li>
@@ -487,7 +486,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容："><span class="nav-number">1.</span> <span class="nav-text">内容：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结和学习的一些点："><span class="nav-number">2.</span> <span class="nav-text">总结和学习的一些点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容"><span class="nav-number">1.</span> <span class="nav-text">内容：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结和学习的一些点"><span class="nav-number">2.</span> <span class="nav-text">总结和学习的一些点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
             
 
           </div>

@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="AutoEncoder AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links:https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999">
+<meta name="description" content="AutoEncoder  AutoEncoder  AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links: https://towardsdatascience.com/deep-inside-autoencod">
 <meta name="keywords" content="AE,VAE,CVAE,S2S">
 <meta property="og:type" content="website">
 <meta property="og:title" content="奇怪的AEs">
 <meta property="og:url" content="http://yoursite.com/backup_posts/AEs.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="AutoEncoder AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links:https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999">
+<meta property="og:description" content="AutoEncoder  AutoEncoder  AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links: https://towardsdatascience.com/deep-inside-autoencod">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/i4633iw9mjxb27geln7cxg1u/image_1cr5aotjkb1didtqas1i1uoge9.png">
@@ -96,7 +96,7 @@
 <meta property="og:updated_time" content="2018-10-31T16:37:30.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="奇怪的AEs">
-<meta name="twitter:description" content="AutoEncoder AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links:https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999">
+<meta name="twitter:description" content="AutoEncoder  AutoEncoder  AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error) Useful links: https://towardsdatascience.com/deep-inside-autoencod">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png">
 
 
@@ -275,36 +275,46 @@
       <div class="post-body">
         
         
-          <h2 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h2><p><img src="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png" alt="AutoEncoder"></p>
+          <h2 id="autoencoder">AutoEncoder</h2>
+<figure>
+<img src="http://static.zybuluo.com/Preke/f9r48wnmez3um3ci2sxb3tmh/image_1cqnhm30i9d218c3128h1vha7he9.png" alt="AutoEncoder"><figcaption>AutoEncoder</figcaption>
+</figure>
 <p>AutoEncoder直观理解是一个压缩(降维)技术，中间的representation保留了输入的信息，便于decoder去还原信息，训练的loss 则是输入和输出的 MSE(mean-square error)</p>
-<h3 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links:"></a>Useful links:</h3><p><a href="https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f" target="_blank" rel="noopener">https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f</a></p>
-<h2 id="Variational-Autoencoder"><a href="#Variational-Autoencoder" class="headerlink" title="Variational Autoencoder"></a>Variational Autoencoder</h2><p>Why VAE:<br>以下两短话是网上一些博客的解释：</p>
-<blockquote>
-<p>但是，我们想建一个产生式模型，而不是一个只是储存图片的网络。现在我们还不能产生任何未知的东西，因为我们不能随意产生合理的潜在变量。因为合理的潜在变量都是编码器从原始图片中产生的。<br><br>这里有个简单的解决办法。我们可以对编码器添加约束，就是强迫它产生服从单位高斯分布的潜在变量。正式这种约束，把VAE和标准自编码器给区分开来了。<br><br>现在，产生新的图片也变得容易：我们只要从单位高斯分布中进行采样，然后把它传给解码器就可以了。</p>
-</blockquote>
+<h3 id="useful-links">Useful links:</h3>
+<p>https://towardsdatascience.com/deep-inside-autoencoders-7e41f319999f</p>
+<h2 id="variational-autoencoder">Variational Autoencoder</h2>
+<p>Why VAE: 以下两短话是网上一些博客的解释： &gt; 但是，我们想建一个产生式模型，而不是一个只是储存图片的网络。现在我们还不能产生任何未知的东西，因为我们不能随意产生合理的潜在变量。因为合理的潜在变量都是编码器从原始图片中产生的。<br> 这里有个简单的解决办法。我们可以对编码器添加约束，就是强迫它产生服从单位高斯分布的潜在变量。正式这种约束，把VAE和标准自编码器给区分开来了。<br> 现在，产生新的图片也变得容易：我们只要从单位高斯分布中进行采样，然后把它传给解码器就可以了。</p>
 <hr>
 <blockquote>
-<p>但是这样我们其实并不能任意生成图片，因为我们没有办法自己去构造隐藏向量，我们需要通过一张图片输入编码我们才知道得到的隐含向量是什么，这时我们就可以通过变分自动编码器来解决这个问题。<br><br>其实原理特别简单，只需要在编码过程给它增加一些限制，迫使其生成的隐含向量能够粗略的遵循一个标准正态分布，这就是其与一般的自动编码器最大的不同。<br><br>这样我们生成一张新图片就很简单了，我们只需要给它一个标准正态分布的随机隐含向量，这样通过解码器就能够生成我们想要的图片，而不需要给它一张原始图片先编码。</p>
+<p>但是这样我们其实并不能任意生成图片，因为我们没有办法自己去构造隐藏向量，我们需要通过一张图片输入编码我们才知道得到的隐含向量是什么，这时我们就可以通过变分自动编码器来解决这个问题。<br> 其实原理特别简单，只需要在编码过程给它增加一些限制，迫使其生成的隐含向量能够粗略的遵循一个标准正态分布，这就是其与一般的自动编码器最大的不同。<br> 这样我们生成一张新图片就很简单了，我们只需要给它一个标准正态分布的随机隐含向量，这样通过解码器就能够生成我们想要的图片，而不需要给它一张原始图片先编码。</p>
 </blockquote>
-<p>如何理解中间的潜在向量服从高斯分布呢？又如何理解采样的过程呢？<br>看到一个博客里的一张图可以比较简单的理解：<br><img src="http://static.zybuluo.com/Preke/i4633iw9mjxb27geln7cxg1u/image_1cr5aotjkb1didtqas1i1uoge9.png" alt></p>
+<p>如何理解中间的潜在向量服从高斯分布呢？又如何理解采样的过程呢？ 看到一个博客里的一张图可以比较简单的理解： <img src="http://static.zybuluo.com/Preke/i4633iw9mjxb27geln7cxg1u/image_1cr5aotjkb1didtqas1i1uoge9.png"></p>
 <p>也就是每个输入样本输入后，会产生:</p>
 <ul>
 <li>一个均值的representation</li>
 <li>一个方差的representation</li>
 </ul>
-<p>那么这里的均值是谁的均值，方差又是谁的方差呢？<br>联想到和VAE有点像的GAN, 如果输入样本本身就是一个分布的话，<br>那么这个均值和方差就是输入样本的均值和方差<br>如果是这样的话，如何约束他们服从一个正态分布呢？<br>我想这里就是encoder部分所做的约束</p>
-<p><img src="http://static.zybuluo.com/Preke/nyzp95bo8lljrwhqnpgeujl5/image_1cr5e33e3188nsclsassl100r9.png" alt></p>
-<h3 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h3><p>对于AE来说，误差其实就是原始信息（图片)和生成信息(图片）之间的MSE （重构误差）<br>那么VAE在训练的时候，除了重构误差之外，其实还有每个样本的分布和标准正态分布之间的KL散度；</p>
-<h3 id="理解："><a href="#理解：" class="headerlink" title="理解："></a>理解：</h3><p>经过看完这些材料，理解完上述的东西，用自己的话说： </p>
-<p>我有一些样本，我假设每个样本都是服从一个正态分布的，可是我们不知道这个分布。<br>VAE试图去估计每个样本背后分布的均值和方差，并且进行采样，对每个样本得到一个隐层表示向量，然后通过这个向量去生成新的样本；<br>通过生成样本和原有样本的对比误差，以及中间估计的分布与标准正态分布的KL散度，去修正参数，使得：</p>
-<p>VAE生成的样本是具有原有样本的“灵魂”而又不完全相同的样本<br>（好吧，这是一句没有灵魂的话）</p>
-<h3 id="Why-VAE-again："><a href="#Why-VAE-again：" class="headerlink" title="Why VAE again："></a>Why VAE again：</h3><p>还是引用大佬们的话吧, 我觉得是我能读懂并且可以接受的：<br><img src="http://static.zybuluo.com/Preke/shxs61d5xpwo4iw4i3sebxdz/image_1cr5eqlh01kgu1qpbjll1ln715n8m.png" alt="image_1cr5eqlh01kgu1qpbjll1ln715n8m.png-177.8kB"></p>
-<h3 id="Useful-links-1"><a href="#Useful-links-1" class="headerlink" title="Useful links:"></a>Useful links:</h3><p>墙裂推荐以下链接的文章，真的写的很好，（大部分我都是引用于此的）….</p>
-<p><a href="https://www.cnblogs.com/huangshiyu13/p/6209016.html" target="_blank" rel="noopener">https://www.cnblogs.com/huangshiyu13/p/6209016.html</a><br><br><a href="https://zhuanlan.zhihu.com/p/27549418" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27549418</a><br><br><a href="https://zhuanlan.zhihu.com/p/34998569" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34998569</a></p>
-<h2 id="CVAE"><a href="#CVAE" class="headerlink" title="CVAE"></a>CVAE</h2><p>这个部分称为Conditional VAE</p>
-<p>无论是AE, 还是VAE，任务都是去拟合，去生成，<br>都是没有用到一些label信息去做分类的</p>
-<h3 id="Useful-links-2"><a href="#Useful-links-2" class="headerlink" title="Useful links:"></a>Useful links:</h3><p><a href="https://zhuanlan.zhihu.com/p/34998569" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34998569</a></p>
-<h2 id="AE-amp-S2S"><a href="#AE-amp-S2S" class="headerlink" title="AE &amp; S2S"></a>AE &amp; S2S</h2><h2 id="VAE-for-NLP"><a href="#VAE-for-NLP" class="headerlink" title="VAE for NLP"></a>VAE for NLP</h2>
+<p>那么这里的均值是谁的均值，方差又是谁的方差呢？ 联想到和VAE有点像的GAN, 如果输入样本本身就是一个分布的话， 那么这个均值和方差就是输入样本的均值和方差 如果是这样的话，如何约束他们服从一个正态分布呢？ 我想这里就是encoder部分所做的约束</p>
+<p><img src="http://static.zybuluo.com/Preke/nyzp95bo8lljrwhqnpgeujl5/image_1cr5e33e3188nsclsassl100r9.png"></p>
+<h3 id="误差">误差</h3>
+<p>对于AE来说，误差其实就是原始信息（图片)和生成信息(图片）之间的MSE （重构误差） 那么VAE在训练的时候，除了重构误差之外，其实还有每个样本的分布和标准正态分布之间的KL散度；</p>
+<h3 id="理解">理解：</h3>
+<p>经过看完这些材料，理解完上述的东西，用自己的话说：</p>
+<p>我有一些样本，我假设每个样本都是服从一个正态分布的，可是我们不知道这个分布。 VAE试图去估计每个样本背后分布的均值和方差，并且进行采样，对每个样本得到一个隐层表示向量，然后通过这个向量去生成新的样本； 通过生成样本和原有样本的对比误差，以及中间估计的分布与标准正态分布的KL散度，去修正参数，使得：</p>
+<p>VAE生成的样本是具有原有样本的“灵魂”而又不完全相同的样本 （好吧，这是一句没有灵魂的话）</p>
+<h3 id="why-vae-again">Why VAE again：</h3>
+<p>还是引用大佬们的话吧, 我觉得是我能读懂并且可以接受的： <img src="http://static.zybuluo.com/Preke/shxs61d5xpwo4iw4i3sebxdz/image_1cr5eqlh01kgu1qpbjll1ln715n8m.png" alt="image_1cr5eqlh01kgu1qpbjll1ln715n8m.png-177.8kB"></p>
+<h3 id="useful-links-1">Useful links:</h3>
+<p>墙裂推荐以下链接的文章，真的写的很好，（大部分我都是引用于此的）….</p>
+<p>https://www.cnblogs.com/huangshiyu13/p/6209016.html<br> https://zhuanlan.zhihu.com/p/27549418<br> https://zhuanlan.zhihu.com/p/34998569</p>
+<h2 id="cvae">CVAE</h2>
+<p>这个部分称为Conditional VAE</p>
+<p>无论是AE, 还是VAE，任务都是去拟合，去生成， 都是没有用到一些label信息去做分类的</p>
+<h3 id="useful-links-2">Useful links:</h3>
+<p>https://zhuanlan.zhihu.com/p/34998569</p>
+<h2 id="ae-s2s">AE &amp; S2S</h2>
+<h2 id="vae-for-nlp">VAE for NLP</h2>
+
         
       </div>
       
@@ -475,7 +485,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AutoEncoder"><span class="nav-number">1.</span> <span class="nav-text">AutoEncoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Useful-links"><span class="nav-number">1.1.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variational-Autoencoder"><span class="nav-number">2.</span> <span class="nav-text">Variational Autoencoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#误差"><span class="nav-number">2.1.</span> <span class="nav-text">误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解："><span class="nav-number">2.2.</span> <span class="nav-text">理解：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-VAE-again："><span class="nav-number">2.3.</span> <span class="nav-text">Why VAE again：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Useful-links-1"><span class="nav-number">2.4.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVAE"><span class="nav-number">3.</span> <span class="nav-text">CVAE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Useful-links-2"><span class="nav-number">3.1.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AE-amp-S2S"><span class="nav-number">4.</span> <span class="nav-text">AE &amp; S2S</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VAE-for-NLP"><span class="nav-number">5.</span> <span class="nav-text">VAE for NLP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#autoencoder"><span class="nav-number">1.</span> <span class="nav-text">AutoEncoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useful-links"><span class="nav-number">1.1.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variational-autoencoder"><span class="nav-number">2.</span> <span class="nav-text">Variational Autoencoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#误差"><span class="nav-number">2.1.</span> <span class="nav-text">误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解"><span class="nav-number">2.2.</span> <span class="nav-text">理解：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#why-vae-again"><span class="nav-number">2.3.</span> <span class="nav-text">Why VAE again：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useful-links-1"><span class="nav-number">2.4.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cvae"><span class="nav-number">3.</span> <span class="nav-text">CVAE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useful-links-2"><span class="nav-number">3.1.</span> <span class="nav-text">Useful links:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ae-s2s"><span class="nav-number">4.</span> <span class="nav-text">AE &amp; S2S</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vae-for-nlp"><span class="nav-number">5.</span> <span class="nav-text">VAE for NLP</span></a></li></ol></div>
             
 
           </div>
