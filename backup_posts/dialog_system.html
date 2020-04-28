@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="2019.1.1 找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果 发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接">
+<meta name="description" content="2019.1.1找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接应用">
 <meta name="keywords" content="dialog system">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dialog system记录">
 <meta property="og:url" content="http://yoursite.com/backup_posts/dialog_system.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="2019.1.1 找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果 发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接">
+<meta property="og:description" content="2019.1.1找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接应用">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-01-03T02:56:19.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dialog system记录">
-<meta name="twitter:description" content="2019.1.1 找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果 发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接">
+<meta name="twitter:description" content="2019.1.1找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去 生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接应用">
 
 
 
@@ -270,20 +270,17 @@
       <div class="post-body">
         
         
-          <h2 id="section">2019.1.1</h2>
-<p>找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果 发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去</p>
+          <h2 id="2019-1-1"><a href="#2019-1-1" class="headerlink" title="2019.1.1"></a>2019.1.1</h2><p>找了一个代码实现了一下seq2seq(GRU+attention)在一个小的task based的数据集（44M）上的结果<br>发现BLEU最高也只能到6，而用英法翻译数据（1.5g）一个epoch之后，BLEU就达到了13+（时间太长没有继续跑下去</p>
 <p>生成的很多有包含thanks for your feedback类似的，就是有可能生成一些general的response，并不能直接应用到生产环境中。</p>
 <p>分析来看(推测）：</p>
-<ol type="1">
+<ol>
 <li>数据量很小，不足以去训练seq2seq的model</li>
 <li>task based可能还是更适合retrieval 的方法，generation的方法可能更适合free-talk</li>
 </ol>
-<p>code source: https://github.com/preke/FSE2019</p>
-<h2 id="section-1">1.3</h2>
-<p>昨晚和师兄讨论了一个domain adaption style transfer的idea; 师兄给了我一些已经写好的domain adaption的代码，然后结合这边原来写的seq2seq再完善一下，应该可以跑出来看看效果； 不过目前是要找到可以用的style transfer的数据集。</p>
-<p>code source: https://github.com/preke/domain_adaption_style_transfer</p>
-<h3 id="ref">ref:</h3>
-<p>https://arxiv.org/abs/1804.06437 https://arxiv.org/pdf/1409.7495.pdf （目前参考这两个，但是应该会能够找到更多的一些paper在做这件事吧…）</p>
+<p>code source: <a href="https://github.com/preke/FSE2019" target="_blank" rel="noopener">https://github.com/preke/FSE2019</a></p>
+<h2 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h2><p>昨晚和师兄讨论了一个domain adaption style transfer的idea;<br>师兄给了我一些已经写好的domain adaption的代码，然后结合这边原来写的seq2seq再完善一下，应该可以跑出来看看效果；<br>不过目前是要找到可以用的style transfer的数据集。</p>
+<p>code source: <a href="https://github.com/preke/domain_adaption_style_transfer" target="_blank" rel="noopener">https://github.com/preke/domain_adaption_style_transfer</a></p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref:"></a>ref:</h3><p><a href="https://arxiv.org/abs/1804.06437" target="_blank" rel="noopener">https://arxiv.org/abs/1804.06437</a><br><a href="https://arxiv.org/pdf/1409.7495.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1409.7495.pdf</a><br>（目前参考这两个，但是应该会能够找到更多的一些paper在做这件事吧…）</p>
 
         
       </div>
@@ -455,7 +452,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.1.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">1.3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">2.1.</span> <span class="nav-text">ref:</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-1-1"><span class="nav-number">1.</span> <span class="nav-text">2019.1.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3"><span class="nav-number">2.</span> <span class="nav-text">1.3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">2.1.</span> <span class="nav-text">ref:</span></a></li></ol></li></ol></div>
             
 
           </div>

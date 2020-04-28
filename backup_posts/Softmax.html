@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta name="description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function) 假设自变量 x 是多维向量，也可以理解为多维特征吧： x = [x_1, x_2, ..., x_n]我们就可以把假设函数设为：为了简化，$x_0 = 1$, 即 $x = [1, x_1,">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Softmax">
 <meta property="og:url" content="http://yoursite.com/backup_posts/Softmax.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta property="og:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function) 假设自变量 x 是多维向量，也可以理解为多维特征吧： x = [x_1, x_2, ..., x_n]我们就可以把假设函数设为：为了简化，$x_0 = 1$, 即 $x = [1, x_1,">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png">
@@ -100,7 +100,7 @@
 <meta property="og:updated_time" content="2018-10-20T14:40:04.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Softmax">
-<meta name="twitter:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta name="twitter:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function) 假设自变量 x 是多维向量，也可以理解为多维特征吧： x = [x_1, x_2, ..., x_n]我们就可以把假设函数设为：为了简化，$x_0 = 1$, 即 $x = [1, x_1,">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png">
 
 
@@ -282,23 +282,22 @@
           <p>自己的一点理解，感觉还是要记下来…</p>
 <p>Softmax 是将LR用于多分类, 就按照类比的思路写下来。</p>
 <p>先简单说一下LR</p>
-<p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em> <img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p>
-<p>假设自变量 x 是多维向量，也可以理解为多维特征吧： <span class="math display">\[x = [x_1, x_2, ..., x_n] \]</span> 我们就可以把假设函数设为： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> 为了简化，<span class="math inline">\(x_0 = 1\)</span>, 即 $x = [1, x_1, x_2, …, x_n] $， 就有： <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"> ### 此时 <span class="math inline">\(\theta\)</span> 是一个1 * n+1的向量 然后我们在将这个假设函数代入Sigmoid函数： <img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p>
+<p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em><br><img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p>
+<p>假设自变量 x 是多维向量，也可以理解为多维特征吧：</p>
+<script type="math/tex; mode=display">x = [x_1, x_2, ..., x_n]</script><p>我们就可以把假设函数设为：<br><img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"><br>为了简化，$x_0 = 1$, 即 $x = [1, x_1, x_2, …, x_n] $， 就有：<br><img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
+<h3 id="此时-theta-是一个1-n-1的向量"><a href="#此时-theta-是一个1-n-1的向量" class="headerlink" title="此时 $\theta$ 是一个1 * n+1的向量"></a>此时 $\theta$ 是一个1 * n+1的向量</h3><p>然后我们在将这个假设函数代入Sigmoid函数：<br><img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p>
 <p>然后定义loss function, 做梯度下降。</p>
-<p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。 但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了 现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max 所以这里引入Softmax函数： 假设 <span class="math inline">\(V = [v_1, v_2, ... v_m]\)</span> 那么第i个元素的Softmax值： <span class="math display">\[S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}} \]</span></p>
-<p>那如果现在将softmax应用到多分类： 依然用同样的自变量x, 同样的假设函数，如上： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
-<h3 id="但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵">但是这里的 <span class="math inline">\(\theta\)</span> 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 <span class="math inline">\(\theta\)</span> 是一个k * n+1的矩阵。</h3>
-<p>和上面一样，<span class="math inline">\(\theta\)</span>就是我们要训练的参数； 这里可以列出LR 和 softmax的loss function 做对比： LR： <img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"> Softmax: <img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p>
-<p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <span class="math inline">\(\textstyle k\)</span> 个可能值进行了累加。注意在Softmax回归中将 $x <span class="math inline">\(分类为类别\)</span> j$ 的概率为： <img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p>
-<h2 id="总结">总结：</h2>
-<p>softmax对于LR来说</p>
+<p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。<br>但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了<br>现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max<br>所以这里引入Softmax函数：<br>假设 $V = [v_1, v_2, … v_m]$<br>那么第i个元素的Softmax值：</p>
+<script type="math/tex; mode=display">S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}}</script><p>那如果现在将softmax应用到多分类：<br>依然用同样的自变量x, 同样的假设函数，如上：<br><img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"><br><img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
+<h3 id="但是这里的-theta-不再是一个1-n-1的向量，我们假设目标类别-y-有-k-个类别，-这里的-theta-是一个k-n-1的矩阵。"><a href="#但是这里的-theta-不再是一个1-n-1的向量，我们假设目标类别-y-有-k-个类别，-这里的-theta-是一个k-n-1的矩阵。" class="headerlink" title="但是这里的 $\theta$ 不再是一个1  n+1的向量，我们假设目标类别 y  有 k 个类别， 这里的 $\theta$ 是一个k  n+1的矩阵。"></a>但是这里的 $\theta$ 不再是一个1 <em> n+1的向量，我们假设目标类别 y  有 k 个类别， 这里的 $\theta$ 是一个k </em> n+1的矩阵。</h3><p>和上面一样，$\theta$就是我们要训练的参数；<br>这里可以列出LR 和 softmax的loss function 做对比：<br>LR：<br><img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"><br>Softmax:<br><img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p>
+<p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 $\textstyle k$ 个可能值进行了累加。注意在Softmax回归中将 $\textstyle x $分类为类别$ \textstyle j$ 的概率为：<br><img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>softmax对于LR来说</p>
 <ul>
 <li>目标函数不同（sigmoid 和 softmax）</li>
-<li>优化参数 <span class="math inline">\(\textstyle \theta\)</span> 的形式不同</li>
+<li>优化参数 $\textstyle \theta$ 的形式不同</li>
 </ul>
 <p>至于loss function的推导，暂时还没有深究；</p>
-<h2 id="ref">ref:</h2>
-<p>http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 http://blog.csdn.net/supercally/article/details/54234115</p>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref:"></a>ref:</h2><p><a href="http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92" target="_blank" rel="noopener">http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92</a><br><a href="http://blog.csdn.net/supercally/article/details/54234115" target="_blank" rel="noopener">http://blog.csdn.net/supercally/article/details/54234115</a></p>
 
         
       </div>
@@ -470,7 +469,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵"><span class="nav-number">1.</span> <span class="nav-text">但是这里的 \(\theta\) 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 \(\theta\) 是一个k * n+1的矩阵。</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number"></span> <span class="nav-text">ref:</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#此时-theta-是一个1-n-1的向量"><span class="nav-number">1.</span> <span class="nav-text">此时 $\theta$ 是一个1 * n+1的向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#但是这里的-theta-不再是一个1-n-1的向量，我们假设目标类别-y-有-k-个类别，-这里的-theta-是一个k-n-1的矩阵。"><span class="nav-number">2.</span> <span class="nav-text">但是这里的 $\theta$ 不再是一个1  n+1的向量，我们假设目标类别 y  有 k 个类别， 这里的 $\theta$ 是一个k  n+1的矩阵。</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number"></span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number"></span> <span class="nav-text">ref:</span></a></li></div>
             
 
           </div>

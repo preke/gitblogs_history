@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="Paper链接: https://arxiv.org/abs/1811.05696 腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。 但是本质上，seq2seq是一个“一对">
+<meta name="description" content="Paper链接: https://arxiv.org/abs/1811.05696  腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。但是本质上，seq2seq是一个“一对">
 <meta name="keywords" content="dialog system,conversation generation">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Generating Multiple Diverse Responses for Short-Text Conversation">
 <meta property="og:url" content="http://yoursite.com/backup_posts/Mul_response.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Paper链接: https://arxiv.org/abs/1811.05696 腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。 但是本质上，seq2seq是一个“一对">
+<meta property="og:description" content="Paper链接: https://arxiv.org/abs/1811.05696  腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。但是本质上，seq2seq是一个“一对">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-9f6ba40e800dfdab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:updated_time" content="2019-07-08T14:09:28.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generating Multiple Diverse Responses for Short-Text Conversation">
-<meta name="twitter:description" content="Paper链接: https://arxiv.org/abs/1811.05696 腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。 但是本质上，seq2seq是一个“一对">
+<meta name="twitter:description" content="Paper链接: https://arxiv.org/abs/1811.05696  腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题 目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。但是本质上，seq2seq是一个“一对">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2675254-9f6ba40e800dfdab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -272,63 +272,49 @@
       <div class="post-body">
         
         
-          <p>Paper链接: https://arxiv.org/abs/1811.05696</p>
+          <p>Paper链接: <a href="https://arxiv.org/abs/1811.05696" target="_blank" rel="noopener">https://arxiv.org/abs/1811.05696</a> </p>
 <p>腾讯AI Lib的一篇paper, 发在 AAAI2019, 主要是解决对话中“一对多”的问题</p>
-<p>目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。 但是本质上，seq2seq是一个“一对一”的问题，然而对话，可能存在一个post，多种回复（语义不相同，没有词overlap)都是合适的。退一步讲，我们经常用的对话数据如微博, twitter，这些数据本身也是一对多（多条评论）的。</p>
-<h3 id="problem-formulation">Problem formulation</h3>
-<p>训练数据为 <span class="math inline">\(\{ (x, \{ y \} )\}\)</span>, 即给定一个query <span class="math inline">\(x\)</span>, 目标是去生成一个responses的集合 <span class="math inline">\(\{ y \}\)</span>, 通过引入一个中间变量 <span class="math inline">\(z\)</span> 建立 <span class="math inline">\(x\)</span> 和 $ { y } $ 的联系; 具提来说是去最小化loss:</p>
-<p><span class="math display">\[
- J(\theta) = \mathcal L( \{ y \}| x) = \mathbf E_{p(z|x) }[\mathcal L(\{y\}|x,z)]
-\]</span></p>
-<p>而中间这个 <span class="math inline">\(z\)</span> , 作者是用一些采样出来的words来表示的。相应的，<span class="math inline">\(p(z|x)\)</span> 就是words 的 distribution. 作者用了一个一个双向 GRU 来 encode <span class="math inline">\(x\)</span> to <span class="math inline">\(h_x\)</span>, 再过一个softmax去算<span class="math inline">\(z\)</span> 的概率分布，就像一个简单的分类器：</p>
-<p><span class="math display">\[
-p(z|x) = softmax(W_2 \cdot tanh(W_1h_x + b_1) + b_2)
-\]</span></p>
-<p>这个中间变量 <span class="math inline">\(z\)</span> 应该遵循</p>
+<p>目前我们做对话生成的模型大多都是基于seq2seq, 因为在 machine translation or text summarization 的任务中，文本生成的效果确实不错。<br>但是本质上，seq2seq是一个“一对一”的问题，然而对话，可能存在一个post，多种回复（语义不相同，没有词overlap)都是合适的。退一步讲，我们经常用的对话数据如微博, twitter，这些数据本身也是一对多（多条评论）的。</p>
+<h3 id="Problem-formulation"><a href="#Problem-formulation" class="headerlink" title="Problem formulation"></a>Problem formulation</h3><p>训练数据为 ${ (x, { y } )}$, 即给定一个query $x$, 目标是去生成一个responses的集合 ${ y }$, 通过引入一个中间变量 $z$ 建立 $x$ 和 $ { y } $ 的联系; 具提来说是去最小化loss:</p>
+<script type="math/tex; mode=display">
+ J(\theta) = \mathcal L( \{ y \}| x) = \mathbf E_{p(z|x) }[\mathcal L(\{y\}|x,z)]</script><p>而中间这个 $z$ , 作者是用一些采样出来的words来表示的。相应的，$p(z|x)$ 就是words 的 distribution. 作者用了一个一个双向 GRU 来 encode $x$ to $h_x$, 再过一个softmax去算$z$ 的概率分布，就像一个简单的分类器：</p>
+<script type="math/tex; mode=display">
+p(z|x) = softmax(W_2 \cdot tanh(W_1h_x + b_1) + b_2)</script><p>这个中间变量 $z$ 应该遵循</p>
 <ul>
-<li>可解释性：能解释与 <span class="math inline">\(x\)</span> 和 $ { y } $ 的联系</li>
-<li>有区分度， 不同的 <span class="math inline">\(x\)</span> 应该产生不同的 <span class="math inline">\(z\)</span></li>
+<li>可解释性：能解释与 $x$ 和 $ { y } $ 的联系</li>
+<li>有区分度， 不同的 $x$ 应该产生不同的 $z$</li>
 </ul>
 <blockquote>
 <p>虽然用采样出来的 words 能够满足这两点，但还是不很理解为什么用 words 作为中间变量，离散的words相当于割裂了两部分，直接用分布不好吗？去掉中间的采样过程？</p>
 </blockquote>
-<p>而对于 <span class="math inline">\(\mathcal L(\{y\}|x,z)\)</span>, 由于是估计多个 <span class="math inline">\(\mathbf y\)</span>, 那么作者做了一个简单的架设，用一个可微的函数 <span class="math inline">\(f\)</span> 把预测单个 <span class="math inline">\(\mathbf y\)</span> 的估计联合在了一起： <span class="math display">\[
-\mathcal L(\{y\}|x,z) = f_{\mathbf y\in\{y\}}(\mathcal l(\mathbf y|x, z))
-\]</span></p>
-<h3 id="model">Model</h3>
-<p>模型架构如下：</p>
-<figure>
-<img src="https://upload-images.jianshu.io/upload_images/2675254-9f6ba40e800dfdab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figcaption>image.png</figcaption>
-</figure>
-<p>每次估计单个 <span class="math inline">\(\mathbf y\)</span> 的时候， 作者每一步将</p>
+<p>而对于 $\mathcal L({y}|x,z)$, 由于是估计多个 $\mathbf y$, 那么作者做了一个简单的架设，用一个可微的函数 $f$ 把预测单个 $\mathbf y$ 的估计联合在了一起：</p>
+<script type="math/tex; mode=display">
+\mathcal L(\{y\}|x,z) = f_{\mathbf y\in\{y\}}(\mathcal l(\mathbf y|x, z))</script><h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>模型架构如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2675254-9f6ba40e800dfdab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>每次估计单个 $\mathbf y$ 的时候， 作者每一步将</p>
 <ul>
-<li>当前步骤的 hidden states <span class="math inline">\(h_y(t)\)</span></li>
-<li><span class="math inline">\(x\)</span> 和 <span class="math inline">\(z\)</span> 的attention</li>
-<li>解码过程 <span class="math inline">\(h_{\mathbf y}(t)\)</span> 和 <span class="math inline">\(x\)</span> 的 attention</li>
+<li>当前步骤的 hidden states $h_y(t)$</li>
+<li>$x$ 和 $z$ 的attention</li>
+<li>解码过程 $h_{\mathbf y}(t)$ 和 $x$ 的 attention</li>
 </ul>
 <p>结合在一起去解码每一个词。</p>
-<p>至于可微函数 <span class="math inline">\(f\)</span>, 考虑到多个 <span class="math inline">\(\mathbf y\)</span> 中，与 之前的 $ z $ 最相关的<span class="math inline">\(\mathcal L(\{y\}|x,z)\)</span> 应该最小，所以，这个 <span class="math inline">\(f\)</span> 就简单采用了 min函数：</p>
-<p><span class="math display">\[
-f(\{y\}|x,z) = \min_{\mathbf y \in \{ y\}} \mathcal l(\mathbf y |x, z)
-\]</span></p>
-<h3 id="training-with-rl">Training with RL</h3>
-<p>前半部分 Modeling <span class="math inline">\(p(z|x)\)</span>, 是一个典型的生成词 (采样词) 的过程，作者这里用了RL里面的Policy Gradient去优化这个过程;</p>
+<p>至于可微函数 $f$, 考虑到多个 $\mathbf y$ 中，与 之前的 $ z $ 最相关的$\mathcal L({y}|x,z)$ 应该最小，所以，这个 $f$ 就简单采用了 min函数：</p>
+<script type="math/tex; mode=display">
+f(\{y\}|x,z) = \min_{\mathbf y \in \{ y\}} \mathcal l(\mathbf y |x, z)</script><h3 id="Training-with-RL"><a href="#Training-with-RL" class="headerlink" title="Training with RL"></a>Training with RL</h3><p>前半部分 Modeling $p(z|x)$, 是一个典型的生成词 (采样词) 的过程，作者这里用了RL里面的Policy Gradient去优化这个过程;</p>
 <ul>
-<li>为了缩小采样空间，作者先基于 $ x$ 和所有可能的<span class="math inline">\(\{y\}\)</span>构建了一个候选集 <span class="math inline">\(\mathbf Z_x\)</span>;</li>
-<li>为了增加 <span class="math inline">\(K\)</span> 次采样 <span class="math inline">\(z\)</span> 的多样性, 作者增加了一些在 <span class="math inline">\(\mathbf Z_x\)</span> 聚类和判重的技巧；</li>
+<li>为了缩小采样空间，作者先基于 $ x$  和所有可能的${y}$构建了一个候选集 $\mathbf Z_x$;</li>
+<li>为了增加 $K$ 次采样 $z$ 的多样性, 作者增加了一些在 $\mathbf Z_x$ 聚类和判重的技巧；</li>
 </ul>
-<p>Reward function 被定义为了简单的 F1 score 来衡量每个生成的句子 <span class="math inline">\(\mathbf{\hat{y}}\)</span> 和 ground truth <span class="math inline">\(\mathbf y\)</span> 的 overlapping.</p>
-<p>训练结束后，就可以用 <span class="math inline">\(p(z|x)\)</span> 概率 top-1000 的词作为候选集 <span class="math inline">\(\mathbf Z_x\)</span>, 然后再进行如上聚类和采样的过程，去生成多个responses.</p>
-<h3 id="实验">实验</h3>
-<p>实验数据就是用了微博和Twitter的数据，后面作者有公开源码和数据； Evaluation matrics用了 BLEU 和 Distinct-1/2, 其实感觉作者定义的 reward 函数就有点像 BLEU 这个metric…</p>
+<p>Reward function 被定义为了简单的 F1 score 来衡量每个生成的句子 $\mathbf{\hat{y}}$ 和 ground truth $\mathbf y$ 的 overlapping.</p>
+<p>训练结束后，就可以用 $p(z|x)$ 概率 top-1000 的词作为候选集 $\mathbf Z_x$, 然后再进行如上聚类和采样的过程，去生成多个responses.</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>实验数据就是用了微博和Twitter的数据，后面作者有公开源码和数据；<br>Evaluation matrics用了 BLEU 和 Distinct-1/2,<br>其实感觉作者定义的 reward 函数就有点像 BLEU 这个metric…</p>
 <blockquote>
 <p>不太知道这样定义合不合适，因为BLEU，和作者定义的reward函数都是比较粗糙的去衡量生成文本的质量。这样就导致了这个问题有些强行拟合指标的嫌疑…</p>
 </blockquote>
-<h3 id="总结">总结</h3>
-<p>这个问题很新，也比较切合实际，算是在挖一个很好的坑；</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个问题很新，也比较切合实际，算是在挖一个很好的坑；</p>
 <p>不过中间的一些过程可以尝试改进的地方应该还有很多，比如中间变量的设置，比如后面的reward函数</p>
 <p>甚至，如果没有中间的离散变量，是不是也可以不用RL的方法去优化呢？</p>
-<p>作者开放了源码：https://ai.tencent.com/ailab/nlp/dialogue.html</p>
+<p>作者开放了源码：<a href="https://ai.tencent.com/ailab/nlp/dialogue.html" target="_blank" rel="noopener">https://ai.tencent.com/ailab/nlp/dialogue.html</a></p>
 
         
       </div>
@@ -500,7 +486,7 @@ f(\{y\}|x,z) = \min_{\mathbf y \in \{ y\}} \mathcal l(\mathbf y |x, z)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#problem-formulation"><span class="nav-number">1.</span> <span class="nav-text">Problem formulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training-with-rl"><span class="nav-number">3.</span> <span class="nav-text">Training with RL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-formulation"><span class="nav-number">1.</span> <span class="nav-text">Problem formulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-with-RL"><span class="nav-number">3.</span> <span class="nav-text">Training with RL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

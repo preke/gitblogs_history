@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="Abstract First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:">
+<meta name="description" content="AbstractFirst learn a latent representation of input sentences by NMT model,then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:  s">
 <meta name="keywords" content="sentiment,dialog system,Style transfer">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Style Transfer Through Back-Translation">
 <meta property="og:url" content="http://yoursite.com/backup_posts/bst.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Abstract First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:">
+<meta property="og:description" content="AbstractFirst learn a latent representation of input sentences by NMT model,then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:  s">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png">
@@ -97,7 +97,7 @@
 <meta property="og:updated_time" content="2018-11-13T18:06:06.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Style Transfer Through Back-Translation">
-<meta name="twitter:description" content="Abstract First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:">
+<meta name="twitter:description" content="AbstractFirst learn a latent representation of input sentences by NMT model,then use adversarial generation to make the output with desired style. Evaluate on three different style transformations:  s">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png">
 
 
@@ -276,8 +276,7 @@
       <div class="post-body">
         
         
-          <h2 id="abstract">Abstract</h2>
-<p>First learn a latent representation of input sentences by NMT model, then use adversarial generation to make the output with desired style.</p>
+          <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>First learn a latent representation of input sentences by NMT model,<br>then use adversarial generation to make the output with desired style.</p>
 <p>Evaluate on three different style transformations:</p>
 <ul>
 <li>sentiment</li>
@@ -289,14 +288,12 @@
 <li>automatic evaluation of style transfer</li>
 <li>manual evaluation of meaning preservation and fluency</li>
 </ul>
-<h2 id="contribution">Contribution</h2>
-<ul>
-<li>A new approach to style transfer</li>
+<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ul>
+<li>A new approach to style transfer </li>
 <li>A new task that we propose to evaluate style transfer: transferring politi- cal slant</li>
 </ul>
-<h2 id="methodology">Methodology</h2>
-<p>Given two datasets: <span class="math inline">\(X_1=\{x_1^{(1)},...,x_1^{(n)}\}\)</span> <span class="math inline">\(X_2=\{x_2^{(1)},...,x_2^{(n)}\}\)</span> represent two different styles <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> (也就是说，所有的<span class="math inline">\(x_1^{(n)}\)</span>的style 都是<span class="math inline">\(s_1\)</span>, 所有的<span class="math inline">\(x_2^{(n)}\)</span>的style 都是<span class="math inline">\(s_2\)</span>)</p>
-<p>Then, generate samples of dataset <span class="math inline">\(X_1\)</span> such that they belong to style <span class="math inline">\(s_2\)</span> and samples of <span class="math inline">\(X_2\)</span> such that they belong to style <span class="math inline">\(s_1\)</span></p>
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><p>Given two datasets:<br>$X_1={x_1^{(1)},…,x_1^{(n)}}$<br>$X_2={x_2^{(1)},…,x_2^{(n)}}$<br>represent two different styles $s_1$ and $s_2$<br>(也就是说，所有的$x_1^{(n)}$的style 都是$s_1$, 所有的$x_2^{(n)}$的style 都是$s_2$)</p>
+<p>Then, generate samples of dataset $X_1$ such that they belong to style $s_2$ and samples of $X_2$ such that they belong to style $s_1$</p>
 <blockquote>
 <p>state-of-the-art</p>
 <ul>
@@ -304,33 +301,25 @@
 <li>cross-aligned autoencoders</li>
 </ul>
 </blockquote>
-<p>aim is to design a latent code <span class="math inline">\(z\)</span>: 1. represents the meaning of the input sentence grounded in back-translation 2. weakens the style attributes of author’s traits</p>
-<h2 id="dataset">Dataset</h2>
-<ul>
+<p>aim is to design a latent code $z$:</p>
+<ol>
+<li>represents the meaning of the input sentence grounded in back-translation</li>
+<li>weakens the style attributes of author’s traits</li>
+</ol>
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
 <li>Reddy and Knight’s (2016) dataset of reviews from Yelp annotated for two genders cor- responding to markers of sex.</li>
 <li>comprised of top-level comments on Facebook posts from all 412 current members of the United States Sen- ate and House who have public Facebook pages (Voigt et al., 2018)</li>
 </ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"><figcaption>Dataset</figcaption>
-</figure>
-<h2 id="model-and-experiments">Model and Experiments</h2>
-<figure>
-<img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"><figcaption>Style transfer pipeline</figcaption>
-</figure>
-<figure>
-<img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"><figcaption>style classifier feedback</figcaption>
-</figure>
+<p><img src="http://static.zybuluo.com/Preke/mozltnt19hb1zegjijdm3wqk/image_1cs60ditq1v151n5umbgimr95l9.png" alt="Dataset"></p>
+<h2 id="Model-and-Experiments"><a href="#Model-and-Experiments" class="headerlink" title="Model and Experiments"></a>Model and Experiments</h2><p><img src="http://static.zybuluo.com/Preke/9wlzvypbynyf7buxj6f165m3/image_1cs39rk0g13dka7q7j812vls0g9.png" alt="Style transfer pipeline"></p>
+<p><img src="http://static.zybuluo.com/Preke/p3fa7ra9emhb721o2sbo6tgt/image_1cs5vrov11tfu1b5p49bkfv1uiap.png" alt="style classifier feedback"></p>
 <ul>
 <li>CNN去做二分类问题，人工label</li>
 <li>A convolutional neural network (CNN) classifier to accurately predict the given style</li>
 <li>concatenate binary style indicators to each input word embedding in the classifier</li>
 </ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"><figcaption>result of classification</figcaption>
-</figure>
-<figure>
-<img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"><figcaption>result of human preferance</figcaption>
-</figure>
+<p><img src="http://static.zybuluo.com/Preke/4fqmqt59kcva12h34i69rpt5/image_1cs60jlg81stb1tdm1oda1v8ibhup.png" alt="result of classification"></p>
+<p><img src="http://static.zybuluo.com/Preke/oau4c5uc3c9aes5fxofkwv81/image_1cs60em6ts2c7sb1bkv12nu18sr16.png" alt="result of human preferance"></p>
 <hr>
 
         
@@ -503,7 +492,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">3.</span> <span class="nav-text">Methodology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">4.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-and-experiments"><span class="nav-number">5.</span> <span class="nav-text">Model and Experiments</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number">3.</span> <span class="nav-text">Methodology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">4.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-and-Experiments"><span class="nav-number">5.</span> <span class="nav-text">Model and Experiments</span></a></li></ol></div>
             
 
           </div>

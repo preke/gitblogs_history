@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
 
@@ -81,13 +83,13 @@
 
 
 
-<meta name="description" content="Abstract In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
+<meta name="description" content="AbstractIn this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
 <meta name="keywords" content="emotion,dialog system,conversation generation">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory">
 <meta property="og:url" content="http://yoursite.com/backup_posts/ECM.html">
 <meta property="og:site_name" content="Zhiyuan">
-<meta property="og:description" content="Abstract In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
+<meta property="og:description" content="AbstractIn this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Preke/m8ewuvddl5icqvaw4wey1tqu/image_1csoduq9ah88e04f5m1qcso18m.png">
@@ -96,7 +98,7 @@
 <meta property="og:updated_time" content="2018-11-20T11:30:03.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory">
-<meta name="twitter:description" content="Abstract In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
+<meta name="twitter:description" content="AbstractIn this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).">
 <meta name="twitter:image" content="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png">
 
 
@@ -275,48 +277,38 @@
       <div class="post-body">
         
         
-          <h2 id="abstract">Abstract</h2>
-<p>In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent).</p>
-<p>ECM addresses the factor using three new mechanisms that respectively： - Models the high-level abstraction of emotion expressions by embedding emotion categories - Captures the change of implicit internal emotion states - Uses explicit emotion expressions with an <strong>external emotion vocabulary</strong></p>
-<h2 id="contribution">Contribution</h2>
+          <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>In this paper, we propose Emotional Chatting Machine (ECM) that can generate appropriate responses not only in content (relevant and grammatical) but also in emotion (emotionally consistent). </p>
+<p>ECM addresses the factor using three new mechanisms that respectively：</p>
 <ul>
+<li>Models the high-level abstraction of emotion expressions by embedding emotion categories</li>
+<li>Captures the change of implicit internal emotion states</li>
+<li>Uses explicit emotion expressions with an <strong>external emotion vocabulary</strong></li>
+</ul>
+<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ul>
 <li>It proposes to address the <strong>emotion factor</strong> in large-scale conversation generation</li>
 <li>It proposes an end-to-end framework (called ECM) to incorporate the emotion influence in large-scale conversation generation. It has three novel mechanisms: emotion category embedding, an internal emotion memory, and an external memory.</li>
 <li>It shows that ECM can generate responses with higher content and emotion scores than the traditional seq2seq model.</li>
 </ul>
-<h2 id="problem">Problem:</h2>
-<p>Given post $ X = [x_1,…x_n] $ and emotion factor <span class="math inline">\(e\)</span>, Output response <span class="math inline">\(Y = [y_1,...y_m]\)</span> coherent with the emotion <span class="math inline">\(e\)</span></p>
-<p><span class="math display">\[
-P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{&lt;i},X,e)
-\]</span></p>
-<h2 id="model">Model</h2>
-<p><img src="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png" alt="ECM model"> 整体流程是： 先训练一个Emotion Classidier 来 annotate 训练数据的emotion; 然后将三元组(Post, response, target emotion)输入到ECM中，在decoder中结合target emotion的信息，依次生成每个word, (生成response) 然后再对response用同样的Emotion Classidier 做分类，得到response的情感来衡量效果</p>
-<figure>
-<img src="http://static.zybuluo.com/Preke/m8ewuvddl5icqvaw4wey1tqu/image_1csoduq9ah88e04f5m1qcso18m.png" alt="Internal Memory"><figcaption>Internal Memory</figcaption>
-</figure>
-<figure>
-<img src="http://static.zybuluo.com/Preke/ded8bdig3g83wz5xe2w5a3di/image_1csodvkvn1af2b9n1r6c1mk51ilo13.png" alt="External Memory"><figcaption>External Memory</figcaption>
-</figure>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem:"></a>Problem:</h2><p>Given post $ X = [x_1,…x_n] $ and emotion factor $e$,<br>Output response $Y = [y_1,…y_m]$ coherent with the emotion $e$</p>
+<script type="math/tex; mode=display">
+P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{<i},X,e)</script><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><img src="http://static.zybuluo.com/Preke/3w8q9xm5wvlwbhfw133fpz7z/image_1csodth9h1ka6q9mcm7m3k1huf9.png" alt="ECM model"><br>整体流程是：<br>先训练一个Emotion Classidier 来 annotate 训练数据的emotion;<br>然后将三元组(Post, response, target emotion)输入到ECM中，在decoder中结合target emotion的信息，依次生成每个word, (生成response)<br>然后再对response用同样的Emotion Classidier 做分类，得到response的情感来衡量效果</p>
+<p><img src="http://static.zybuluo.com/Preke/m8ewuvddl5icqvaw4wey1tqu/image_1csoduq9ah88e04f5m1qcso18m.png" alt="Internal Memory"></p>
+<p><img src="http://static.zybuluo.com/Preke/ded8bdig3g83wz5xe2w5a3di/image_1csodvkvn1af2b9n1r6c1mk51ilo13.png" alt="External Memory"></p>
 <p>(中间的数学推断，看倒是看明白了，有点懒得誊一次…</p>
-<h2 id="dataset">Dataset</h2>
-<ul>
-<li>NLPCC emotion classification dataset</li>
-<li>STC conversation dataset *could found in the github: <a href="https://github.com/tuxchow/ecm" target="_blank" rel="noopener">source code</a></li>
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><ul>
+<li>NLPCC emotion classification dataset </li>
+<li>STC conversation dataset<br>*could found in the github: <a href="https://github.com/tuxchow/ecm" target="_blank" rel="noopener">source code</a></li>
 </ul>
-<h2 id="experiment-and-metrics">Experiment and Metrics</h2>
-<ul>
-<li>BLEU is not suitable for measuring conversation generation due to its low correlation with human judgment.</li>
+<h2 id="Experiment-and-Metrics"><a href="#Experiment-and-Metrics" class="headerlink" title="Experiment and Metrics"></a>Experiment and Metrics</h2><ul>
+<li>BLEU is not suitable for measuring conversation generation due to its low correlation with human judgment. </li>
 <li>Perplexity(在读过的paper中最常见的）</li>
 <li>Emotion accuracy</li>
 </ul>
-<figure>
-<img src="http://static.zybuluo.com/Preke/0okuk2t5cip926nwjr4kokoa/image_1csoe3n91314cc21l9i16s8fom1g.png" alt="result1"><figcaption>result1</figcaption>
-</figure>
+<p><img src="http://static.zybuluo.com/Preke/0okuk2t5cip926nwjr4kokoa/image_1csoe3n91314cc21l9i16s8fom1g.png" alt="result1"></p>
 <ul>
 <li>Manual Evaluation</li>
 </ul>
-<h2 id="acquisition">Acquisition：</h2>
-<p>过程感觉有点琐碎，细节上的修改和优化还是挺多的，不能说是一个很眼前一亮的工作吧（不是效果和问题不好，而是没那么直观），但是运行一下代码应该会有更加深的体会</p>
+<h2 id="Acquisition："><a href="#Acquisition：" class="headerlink" title="Acquisition："></a>Acquisition：</h2><p>过程感觉有点琐碎，细节上的修改和优化还是挺多的，不能说是一个很眼前一亮的工作吧（不是效果和问题不好，而是没那么直观），但是运行一下代码应该会有更加深的体会</p>
 <hr>
 
         
@@ -489,7 +481,7 @@ P(Y|X,e)= \prod_{i=1}^m(P(y_i|y_{&lt;i},X,e)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#problem"><span class="nav-number">3.</span> <span class="nav-text">Problem:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">4.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">5.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-and-metrics"><span class="nav-number">6.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquisition"><span class="nav-number">7.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contribution"><span class="nav-number">2.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">3.</span> <span class="nav-text">Problem:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">4.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">5.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiment-and-Metrics"><span class="nav-number">6.</span> <span class="nav-text">Experiment and Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Acquisition："><span class="nav-number">7.</span> <span class="nav-text">Acquisition：</span></a></li></ol></div>
             
 
           </div>
