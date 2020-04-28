@@ -1521,190 +1521,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/31/进程同步/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiyuan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/Gold.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiyuan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/31/进程同步/" itemprop="url">进程同步</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-31T16:46:22+08:00">
-                2016-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/理解计算机/" itemprop="url" rel="index">
-                    <span itemprop="name">理解计算机</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在多道程序环境下，进程是并发执行的，不同进程之间存在着不同的相互制约关系。为了协调进程之间的相互制约关系，引入了进程同步的概念。</p>
-<h2 id="临界资源">临界资源</h2>
-<p>虽然多个进程可以共享系统中的各种资源，但其中许多资源一次只能为一个进程所使用，我们把一次仅允许一个进程使用的资源称为临界资源。许多物理设备都属于临界资源，如打印机等。此外，还有许多变量、数据等都可以被若干进程共享，也属于临界资源。</p>
-<p>对临界资源的访问，必须互斥地进行，在每个进程中，访问临界资源的那段代码称为临界区。为了保证临界资源的正确使用，可以把临界资源的访问过程分成四个部分：</p>
-<ul>
-<li>进入区。为了进入临界区使用临界资源，在进入区要检查可否进入临界区，如果可以进入临界区，则应设置正在访问临界区的标志，以阻止其他进程同时进入临界区。</li>
-<li>临界区。进程中访问临界资源的那段代码，又称临界段。</li>
-<li>退出区。将正在访问临界区的标志清除。</li>
-<li>剩余区。代码中的其余部分。</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    entry section;  <span class="comment">//进入区</span></span><br><span class="line">    critical section;  <span class="comment">//临界区</span></span><br><span class="line">    <span class="built_in">exit</span> section;  <span class="comment">//退出区</span></span><br><span class="line">    remainder section;  <span class="comment">//剩余区</span></span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="同步">同步</h2>
-<p>同步亦称<strong>直接制约关系</strong>，它是指为完成某种任务而建立的两个或多个进程，这些进程因为需要在某些位置上协调它们的工作次序而等待、传递信息所产生的制约关系。进程间的直接制约关系就是源于它们之间的相互合作。</p>
-<p>例如，输入进程A通过单缓冲向进程B提供数据。当该缓冲区空时，进程B不能获得所需数据而阻塞，一旦进程A将数据送入缓冲区，进程B被唤醒。反之，当缓冲区满时，进程A被阻塞，仅当进程B取走缓冲数据时，才唤醒进程A。</p>
-<h2 id="互斥">互斥</h2>
-<p>互斥亦称<strong>间接制约关系</strong>。当一个进程进入临界区使用临界资源时，另一个进程必须等待, 当占用临界资源的进程退出临界区后，另一进程才允许去访问此临界资源。</p>
-<p>例如，在仅有一台打印机的系统中，有两个进程A和进程B，如果进程A需要打印时, 系统已将打印机分配给进程B,则进程A必须阻塞。一旦进程B将打印机释放，系统便将进程A唤醒，并将其由阻塞状态变为就绪状态。</p>
-<p>为禁止两个进程同时进入临界区，同步机制应遵循以下准则：</p>
-<ul>
-<li>空闲让进。临界区空闲时，可以允许一个请求进入临界区的进程立即进入临界区。</li>
-<li>忙则等待。当已有进程进入临界区时，其他试图进入临界区的进程必须等待。</li>
-<li>有限等待。对请求访问的进程，应保证能在有限时间内进入临界区。</li>
-<li>让权等待。当进程不能进入临界区时，应立即释放处理器，防止进程忙等待。</li>
-</ul>
-<p>进一步阐释： http://blog.csdn.net/theone10211024/article/details/14052035</p>
-<h1 id="实现临界区互斥的基本方法">实现临界区互斥的基本方法</h1>
-<h2 id="算法一单标志法">算法一：单标志法。</h2>
-<p>该算法设置一个公用整型变量turn,用于指示被允许进入临界区的进程编号，即若turn=0，则允许P0进程进入临界区。该算法可确保每次只允许一个进程进入临界区。但两个进程必须交替进入临界区，如果某个进程不再进入临界区了，那么另一个进程想再次进入临界区，则它将无法进入临界区（违背“空闲让进”）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// P0进程</span></span><br><span class="line"><span class="keyword">while</span>(turn!=<span class="number">0</span>);</span><br><span class="line">critical section;</span><br><span class="line">turn=<span class="number">1</span>;</span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"><span class="comment">// P1进程</span></span><br><span class="line"><span class="keyword">while</span>(turn!=<span class="number">1</span>);  <span class="comment">// 进入区</span></span><br><span class="line">critical section;  <span class="comment">// 临界区</span></span><br><span class="line">turn = <span class="number">0</span>;  <span class="comment">// 退出区</span></span><br><span class="line">remainder section;  <span class="comment">// 剩余区</span></span><br></pre></td></tr></table></figure>
-<h2 id="算法二双标志法先检查">算法二：双标志法先检查。</h2>
-<p>该算法的基本思想是在每一个进程访问临界区资源之前，先查看一下临界资源是否正被访问，若正被访问，该进程需等待；否则，进程才进入自己的临界区。为此，设置了一个数据flag[i]，如第i个元素值为FALSE，表示Pi进程未进入临界区，值为TRUE，表示Pi进程进入临界区。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pi 进程</span></span><br><span class="line"><span class="keyword">while</span>(flag[j]);  <span class="comment">// ①    </span></span><br><span class="line">flag[i]=TRUE;  <span class="comment">// ③  </span></span><br><span class="line">critical section;   </span><br><span class="line">flag[i] = FALSE; </span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pj 进程</span></span><br><span class="line"><span class="keyword">while</span>(flag[i]);  <span class="comment">// ② 进入区</span></span><br><span class="line">flag[j] =TRUE;  <span class="comment">// ④ 进入区</span></span><br><span class="line">critical section;  <span class="comment">// 临界区</span></span><br><span class="line">flag[j] = FALSE;  <span class="comment">// 退出区</span></span><br><span class="line">remainder section;  <span class="comment">// 剩余区</span></span><br></pre></td></tr></table></figure>
-<p>优点：不用交替进入，可连续使用；缺点：Pi和Pj可能同时进入临界区。按序列①②③④ 执行时，会同时进入临界区（违背“忙则等待”)。即在检查对方flag之后和切换自己flag 之前有一段时间，结果都检查通过。这里的问题出在检查和修改操作不能一次进行。</p>
-<h2 id="算法三双标志法后检查">算法三：双标志法后检查。</h2>
-<p>算法二是先检测对方进程状态标志后，再置自己标志，由于在检测和放置中可插入另一个进程到达时的检测操作，会造成两个进程在分别检测后，同时进入临界区。为此，算法三釆用先设置自己标志为TRUE后,再检测对方状态标志，若对方标志为TURE，则进程等待；否则进入临界区。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pi进程</span></span><br><span class="line">flag[i] =TRUE;</span><br><span class="line"><span class="keyword">while</span>(flag[j]);</span><br><span class="line">critical section;</span><br><span class="line">flag[i] =FLASE;</span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pj进程</span></span><br><span class="line">flag[j] =TRUE;  <span class="comment">// 进入区</span></span><br><span class="line"><span class="keyword">while</span>(flag[i]);  <span class="comment">// 进入区</span></span><br><span class="line">critical section;  <span class="comment">// 临界区</span></span><br><span class="line">flag [j] =FLASE;   <span class="comment">// 退出区</span></span><br><span class="line">remainder section;  <span class="comment">// 剩余区</span></span><br></pre></td></tr></table></figure>
-<p>当两个进程几乎同时都想进入临界区时，它们分别将自己的标志值flag设置为TRUE，并且同时检测对方的状态（执行while语句），发现对方也要进入临界区，于是双方互相谦让，结果谁也进不了临界区，从而导致“饥饿”现象。</p>
-<h2 id="算法四petersons-algorithm">算法四：Peterson’s Algorithm。</h2>
-<p>为了防止两个进程为进入临界区而无限期等待，又设置变量turn，指示不允许进入临界区的进程编号，每个进程在先设置自己标志后再设置turn 标志，不允许另一个进程进入。这时，再同时检测另一个进程状态标志和不允许进入标志，这样可以保证当两个进程同时要求进入临界区，只允许一个进程进入临界区。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pi进程</span></span><br><span class="line">flag[i]=TURE; turn=j;</span><br><span class="line"><span class="keyword">while</span>(flag[j]&amp;&amp;turn==j); </span><br><span class="line">critical section;</span><br><span class="line">flag[i]=FLASE;</span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pj进程</span></span><br><span class="line">flag[j] =TRUE;turn=i;  <span class="comment">// 进入区</span></span><br><span class="line"><span class="keyword">while</span>(flag[i]&amp;&amp;turn==i);   <span class="comment">// 进入区</span></span><br><span class="line">critical section;  <span class="comment">// 临界区</span></span><br><span class="line">flag[j]=FLASE;  <span class="comment">// 退出区</span></span><br><span class="line">remainder section;  <span class="comment">// 剩余区</span></span><br></pre></td></tr></table></figure>
-<p>本算法的基本思想是算法一和算法三的结合。利用flag解决临界资源的互斥访问，而利用turn解决“饥饿”现象。</p>
-<h2 id="reference">Reference:</h2>
-<p>http://c.biancheng.net/cpp/html/2596.html http://c.biancheng.net/cpp/html/2597.html</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1753,7 +1569,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1764,7 +1580,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1979,24 +1795,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
