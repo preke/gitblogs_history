@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Softmax">
+<meta property="og:url" content="http://yoursite.com/backup_posts/Softmax.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png">
+<meta property="og:updated_time" content="2018-10-20T14:40:04.540Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Softmax">
+<meta name="twitter:description" content="自己的一点理解，感觉还是要记下来… Softmax 是将LR用于多分类, 就按照类比的思路写下来。 先简单说一下LR 首先，还是要基于这个框架（如下）做一个假设函数 （hypothesis function)  假设自变量 x 是多维向量，也可以理解为多维特征吧： \[x = [x_1, x_2, ..., x_n] \] 我们就可以把假设函数设为：  为了简化，\(x_0 = 1\), 即 $x">
+<meta name="twitter:image" content="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/backup_posts/Softmax.html">
+
+
+
+
+
+  <title>Softmax | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">Softmax</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>自己的一点理解，感觉还是要记下来…</p>
+<p>Softmax 是将LR用于多分类, 就按照类比的思路写下来。</p>
+<p>先简单说一下LR</p>
+<p>首先，还是要基于这个框架（如下）做一个假设函数 <em>（hypothesis function)</em> <img src="http://static.zybuluo.com/Preke/0srm35jug5vuz26h6zlawwtn/image_1bnhtkrng19injn51ch81mah1vhu9.png" alt="image_1bnhtkrng19injn51ch81mah1vhu9.png-38.7kB"></p>
+<p>假设自变量 x 是多维向量，也可以理解为多维特征吧： <span class="math display">\[x = [x_1, x_2, ..., x_n] \]</span> 我们就可以把假设函数设为： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> 为了简化，<span class="math inline">\(x_0 = 1\)</span>, 即 $x = [1, x_1, x_2, …, x_n] $， 就有： <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"> ### 此时 <span class="math inline">\(\theta\)</span> 是一个1 * n+1的向量 然后我们在将这个假设函数代入Sigmoid函数： <img src="http://static.zybuluo.com/Preke/t8f0yq2xipveelhvxb8b6a5d/image_1bnhuejle1ako1thb1vel1mdc71b2g.png" alt="image_1bnhuejle1ako1thb1vel1mdc71b2g.png-11kB"></p>
+<p>然后定义loss function, 做梯度下降。</p>
+<p>那类比到Softmax；因为解决的问题是多分类，Sigmoid函数就解决不了问题了。 但有的时候我不想这样，因为这样会造成分值小的那个饥饿。所以我希望分值大的那一项经常取到，分值小的那一项也偶尔可以取到，那么我用softmax就可以了 现在还是a和b，a&gt;b，如果我们取按照softmax来计算取a和b的概率，那a的softmax值大于b的，所以a会经常取到，而b也会偶尔取到，概率跟它们本来的大小有关。所以说不是max，而是 Soft max 所以这里引入Softmax函数： 假设 <span class="math inline">\(V = [v_1, v_2, ... v_m]\)</span> 那么第i个元素的Softmax值： <span class="math display">\[S_{i} = \frac{e^{v_i}}{\sum_{j=1}^me^{v_j}} \]</span></p>
+<p>那如果现在将softmax应用到多分类： 依然用同样的自变量x, 同样的假设函数，如上： <img src="http://static.zybuluo.com/Preke/5apb38y9rbtfiv00lg2uvtcs/image_1bnhu1jfihjv7ebokv1ok311upm.png" alt="image_1bnhu1jfihjv7ebokv1ok311upm.png-9.2kB"> <img src="http://static.zybuluo.com/Preke/89a1cqx30q71xmzgbz88ensw/image_1bnhu4s0tk8a195a16e57fjulo13.png" alt="image_1bnhu4s0tk8a195a16e57fjulo13.png-10.4kB"></p>
+<h3 id="但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵">但是这里的 <span class="math inline">\(\theta\)</span> 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 <span class="math inline">\(\theta\)</span> 是一个k * n+1的矩阵。</h3>
+<p>和上面一样，<span class="math inline">\(\theta\)</span>就是我们要训练的参数； 这里可以列出LR 和 softmax的loss function 做对比： LR： <img src="http://static.zybuluo.com/Preke/hdvjkow48tifcdafxqr17b4y/image_1bni13u0ec77erp1cbhuqng512t.png" alt="image_1bni13u0ec77erp1cbhuqng512t.png-21.9kB"> Softmax: <img src="http://static.zybuluo.com/Preke/x57fudisitq8helhpzlmgl1b/image_1bni14rgogv81i6orrt14r54gi3q.png" alt="image_1bni14rgogv81i6orrt14r54gi3q.png-22.3kB"></p>
+<p>可以看到，Softmax代价函数与logistic 代价函数在形式上非常类似，只是在Softmax损失函数中对类标记的 <span class="math inline">\(\textstyle k\)</span> 个可能值进行了累加。注意在Softmax回归中将 $x <span class="math inline">\(分类为类别\)</span> j$ 的概率为： <img src="http://static.zybuluo.com/Preke/syydz0jjarxeciwlyap7lukc/image_1bni187lu1ddi1rli1d751o3uoim47.png" alt="image_1bni187lu1ddi1rli1d751o3uoim47.png-16.8kB"></p>
+<h2 id="总结">总结：</h2>
+<p>softmax对于LR来说</p>
+<ul>
+<li>目标函数不同（sigmoid 和 softmax）</li>
+<li>优化参数 <span class="math inline">\(\textstyle \theta\)</span> 的形式不同</li>
+</ul>
+<p>至于loss function的推导，暂时还没有深究；</p>
+<h2 id="ref">ref:</h2>
+<p>http://ufldl.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92 http://blog.csdn.net/supercally/article/details/54234115</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#但是这里的-theta-不再是一个1-n1的向量我们假设目标类别-y-有-k-个类别-这里的-theta-是一个k-n1的矩阵"><span class="nav-number">1.</span> <span class="nav-text">但是这里的 \(\theta\) 不再是一个1 * n+1的向量，我们假设目标类别 y 有 k 个类别， 这里的 \(\theta\) 是一个k * n+1的矩阵。</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number"></span> <span class="nav-text">ref:</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

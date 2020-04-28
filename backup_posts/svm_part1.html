@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 先说我对线性SVM的整体理解吧： 其实就是一个最优间隔的二分类器（如下图）  目标就是找到中间那个最优的分类超平面，而如图在虚线上的点，就是所谓的支持向量（support vectors) 。在求解这一问题的时候用到了对偶问题来帮助解决（为什么要用对偶问题？）而想要这样的话，我们定义了一个满足KKT条件的原问题，这里很巧妙的一点在于，KKT 的总体思想是认为极值会在可行域边界上取得，我觉得这">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SVM part1 线性SVM">
+<meta property="og:url" content="http://yoursite.com/backup_posts/svm_part1.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="前言 先说我对线性SVM的整体理解吧： 其实就是一个最优间隔的二分类器（如下图）  目标就是找到中间那个最优的分类超平面，而如图在虚线上的点，就是所谓的支持向量（support vectors) 。在求解这一问题的时候用到了对偶问题来帮助解决（为什么要用对偶问题？）而想要这样的话，我们定义了一个满足KKT条件的原问题，这里很巧妙的一点在于，KKT 的总体思想是认为极值会在可行域边界上取得，我觉得这">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/3xkz3sjhntpf9erb5621afg7/image_1bnu4e0u11fqut6917rh1jos62j3o.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/18uzcewxcnack2et745ntqml/image_1bnu5ddne111f1jcq1649ebe1qpq45.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/fw2eels4sf4u6j4eu40gxbvj/image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png">
+<meta property="og:image" content="http://static.zybuluo.com/Preke/5mvvg20kv2e0gxdqdp812c8h/image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png">
+<meta property="og:updated_time" content="2018-10-20T14:40:04.545Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SVM part1 线性SVM">
+<meta name="twitter:description" content="前言 先说我对线性SVM的整体理解吧： 其实就是一个最优间隔的二分类器（如下图）  目标就是找到中间那个最优的分类超平面，而如图在虚线上的点，就是所谓的支持向量（support vectors) 。在求解这一问题的时候用到了对偶问题来帮助解决（为什么要用对偶问题？）而想要这样的话，我们定义了一个满足KKT条件的原问题，这里很巧妙的一点在于，KKT 的总体思想是认为极值会在可行域边界上取得，我觉得这">
+<meta name="twitter:image" content="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/backup_posts/svm_part1.html">
+
+
+
+
+
+  <title>SVM part1 线性SVM | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">SVM part1 线性SVM</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <h2 id="前言">前言</h2>
+<p>先说我对线性SVM的整体理解吧： 其实就是一个最优间隔的二分类器（如下图） <img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"></p>
+<p>目标就是找到中间那个最优的分类超平面，而如图在虚线上的点，就是所谓的支持向量（support vectors) 。在求解这一问题的时候用到了对偶问题来帮助解决（为什么要用对偶问题？）而想要这样的话，我们定义了一个满足KKT条件的原问题，这里很巧妙的一点在于，<strong>KKT 的总体思想是认为极值会在可行域边界上取得</strong>，我觉得这一点是线性SVM的核心思想。</p>
+<p>在总结下来这些的时候，我主要是根据</p>
+<ul>
+<li>Andrew Ng的机器学习公开课（Stanford cs229 2003)</li>
+<li>当年课程的学习讲义</li>
+<li>JerryLead 的中文笔记</li>
+<li>Matrix cookbook</li>
+</ul>
+<p>其实很多问题，很多人都阐述的非常清楚透彻，自己写下来只是理一下自己的思路，确认是否真正的理解； 我在看讲义和听课的过程中，经常暂停下来提一些奇怪的问题，有些能够解决，有些却不能，我也会在下面写出，供大家思考，这部分我用引用格式表示，如：</p>
+<blockquote>
+<h2 id="为什么最优间隔">为什么最优间隔？</h2>
+<p>最优间隔，就是这个分类器（超平面）要尽可能的离两边的样本数据都很远才好； 我们知道，分类器是根据已有样本数据来训练得到，以便预测测试数据的，在这一点上，我们考虑到，最优间隔的分类器，在未来的测试数据上，更保险，更不容易出错。</p>
+</blockquote>
+<h2 id="问题的数学表示">问题的数学表示</h2>
+<p>我们有很多样本点： <span class="math display">\[(x^{(i)}, y^{(i)}), i = 1...m\]</span> 其中 <span class="math inline">\(x^{(i)} = [x_{1}^{(i)},x_{2}^{(i)},...,x_{n}^{(i)}]\)</span> 是一个向量， <span class="math inline">\(y^{(i)} \in \left\{ 1, -1 \right\}\)</span> 是类别标签；</p>
+<p>既然还是一个线性的分类器，那么我们可以将这个分类超平面定义为：</p>
+<p><span class="math display">\[ 
+h_{w,b} = g(w^Tx+b)\\
+\\
+g(z)=\left\{ 
+\begin{aligned} 
+1, &amp;z&gt;=0\\
+-1, &amp;z&lt;0\\
+\end{aligned}
+\right.
+\]</span></p>
+<p>其中 <span class="math inline">\(w, b\)</span> 就是我们需要学习到的分类器的参数</p>
+<blockquote>
+<p>这里我想说一下这个 <span class="math inline">\(g(z)\)</span> ，我们知道： 在LR里面，这个 <span class="math inline">\(g(z)\)</span> 就是 sigmoid 函数 在softmax里面，这个 <span class="math inline">\(g(z)\)</span> 就是softmax函数 那么在这里，写到这的时候还没有一个 <span class="math inline">\(g(z)\)</span> 的显式表出； 我们考虑一个特殊情况，因为我上面说到,KKT条件的整体思想，引发了我的思考，也就是SVM的核心思想就是边界值，那么，我们索性假设有一个边界值点 <span class="math inline">\((x^{(j)}, y^{(j)}) , y^{(j)} = 0\)</span> ：那也就是说 <span class="math inline">\(g(z) = 0\)</span> 当然，这个边界值点在被分类数据中不会存在，但是我们先继续， <span class="math inline">\(g(z) = 0\)</span> 的唯一取到的可能就是 <span class="math inline">\(z = 0\)</span>, 那此时，也就是说 <span class="math inline">\(w^Tx+b = 0\)</span>; 既然对于一个合法的分类器来说，这个点不会存在于被分类数据中，那么在这个空间内，它唯一存在的地方就是在这个分类超平面上，也就是说，这个超平面的性质就是： <span class="math display">\[w^Tx+b = 0\]</span></p>
+</blockquote>
+<h2 id="函数间隔functional-margin-几何间隔geometric-margin">函数间隔（functional margin) &amp; 几何间隔（geometric margin)</h2>
+<h3 id="函数间隔">函数间隔</h3>
+<p>对于一个样本点 <span class="math inline">\((x^{(i)}, y^{(i)})\)</span>，函数间隔为：<span class="math inline">\(\hat \gamma^{(i)} = y^{(i)}(w^Tx^{(i)}+b)\)</span> 考虑到 $y $ 的正负性，则有： <span class="math inline">\(\hat \gamma^{(i)} = |w^Tx^{(i)}+b|\)</span> 下面这点我觉得讲的很好： 如果<span class="math inline">\(y_{(i)} &gt; 0\)</span> , <span class="math inline">\(w^Tx^{(i)}+b\)</span>应该是一个大正数，反之是个大负数 <strong>因此函数间隔代表了我们认为特征是正例还是反例的确信度</strong></p>
+<blockquote>
+<p>这里，函数间隔还没有什么具体的实际数值意义，因为随着参数 <span class="math inline">\(w,b\)</span> 的改变，函数间隔可以随意变化</p>
+</blockquote>
+<h3 id="几何间隔">几何间隔</h3>
+<p>简单来说，几何间隔就是归一化的函数间隔 归一化之后，几何间隔就是某个样本点到分类平面的距离 <img src="http://static.zybuluo.com/Preke/3xkz3sjhntpf9erb5621afg7/image_1bnu4e0u11fqut6917rh1jos62j3o.png" alt="image_1bnu4e0u11fqut6917rh1jos62j3o.png-23.4kB"></p>
+<p>上图中， B 点位于 <span class="math display">\[w^Tx+b = 0\]</span> 这个分割面上， 设 A 点到 B 点的距离用 <span class="math inline">\(\gamma^{(i)}\)</span> 表示，即 A 的几何间隔， 那么， <span class="math inline">\(w\)</span> 就是 BA 方向上的梯度， 单位向量为 $ $ ;</p>
+<blockquote>
+<p>这里我又瞎想了一下， <span class="math inline">\(w\)</span> 为啥是梯度呢？ 首先这个问题是一个线性的问题，也就是 <span class="math inline">\(w^Tx+b = 0\)</span> 是一个 <span class="math inline">\(x\)</span> 的线性组合，那么我们先从二维着手， 假设 <span class="math inline">\(x\)</span> 就是一个一维变量，那么 <span class="math inline">\(w^Tx+b = 0\)</span> 就是一条分类直线， <strong><span class="math inline">\(w\)</span> 就是斜率</strong> 那么二维空间的梯度，不就是斜率吗？ 换句话讲，梯度就是函数的走势方向，因为想想梯度下降，不就是选择函数下降最快的方向作为梯度吗？ 或者你也可以这么理解，梯度是怎样得到的？求导得到的 你在二维空间，将 <span class="math inline">\(wx+b\)</span> 对 <span class="math inline">\(x\)</span> 求导就是 <span class="math inline">\(w\)</span> 或者直接在高维将 <span class="math inline">\(w^Tx+b = 0\)</span> 对 <span class="math inline">\(x\)</span> 求导， 得到的就是 <span class="math inline">\(w\)</span> 这里可以参考matrix cookbook, 有一系列的求导规则，这里用到了： <img src="http://static.zybuluo.com/Preke/18uzcewxcnack2et745ntqml/image_1bnu5ddne111f1jcq1649ebe1qpq45.png" alt="image_1bnu5ddne111f1jcq1649ebe1qpq45.png-5.9kB"></p>
+</blockquote>
+<p>回归正题：所以如果 A 是 <span class="math inline">\((x^{(i)}, y^{(i)})\)</span> ， B 就是 <span class="math inline">\((x^{(i)} - \hat \gamma^{(i)}\frac {w}{||w||}, 0)\)</span>。 这里我一度将这个运算和上面的示意图混淆，不知道为什么这样计算 B， 但是，当我意识到， <span class="math inline">\(y\)</span> 并不是示意图的一个维度，知识一个类别标签，把这个运算单纯作为向量运算，就很明了了。 把 B 代入 <span class="math inline">\(w^Tx+b = 0\)</span>， 运算得到： <span class="math display">\[ \gamma^{(i)} = y^{(i)} \big( (\frac {w}{||w||})^Tx^{(i)}+\frac{b}{||w||} \big) \]</span></p>
+<p>当 <span class="math inline">\(||w|| = 1\)</span> 时， 几何间隔就是函数间隔了，所以说几何间隔就是归一化的函数间隔；</p>
+<h2 id="最优间隔分类器">最优间隔分类器</h2>
+<p>我们的目标是寻找一个超平面，使得离超平面比较近的点能有更大的间距。也就是我们不考虑所有的点都必须远离超平面，我们关心求得的超平面能够让所有点中离它最近的点具有最大间距。将问题形式化表示： <span class="math display">\[
+max_{\gamma ,w,b}\quad\gamma \\
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad\gamma \\
+\quad\quad\quad\quad||w|| = 1
+\]</span> 这里约束了 <span class="math inline">\(||w|| = 1\)</span>, <span class="math inline">\(w^Tx+b\)</span> 就是几何间隔，也就是点到分类平面的距离 ，至此我们定义出的问题，借助这个优化目标，如果求出了 <span class="math inline">\(w,b\)</span> 就可以借助之前定义的 <span class="math inline">\(h(x), g(z)\)</span> 来判别 <span class="math inline">\(y\)</span> 的类别了。</p>
+<h3 id="其实我觉得这部分是精髓转化的思想也可以应用到其他地方">其实我觉得这部分是精髓，转化的思想也可以应用到其他地方</h3>
+<p>我们虽然有了这个 <span class="math inline">\(||w|| = 1\)</span> 的约束，但是用这个约束，却有点手足无措，因为这不是一个凸函数。所以开始了<strong>奇妙的转化：</strong></p>
+<p>第一步：</p>
+<p>考虑到几何间隔和函数间隔的关系 <span class="math inline">\(\gamma = \frac{\hat \gamma}{||w||}\)</span>, 先将问题转化成： <span class="math display">\[
+max_{\gamma ,w,b}\quad\frac{\hat \gamma}{||w||} \\
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad\hat\gamma \\
+\]</span> 这里，把 <span class="math inline">\(||w|| = 1\)</span> 这个约束条件转化到优化目标问题里，我们就不用单独去考虑这个非凸优化的条件，但是优化目标还不是凸函数，那就继续</p>
+<p>第二步：</p>
+<p><img src="http://static.zybuluo.com/Preke/hivu0uxdn4u9d34hr9pk1bdl/image_1bntvf1v43lt7391rpb1l5n1u6r2h.png" alt="image_1bntvf1v43lt7391rpb1l5n1u6r2h.png-25.1kB"> 之前简略提过，分类面的确立只与那些离分类面最近的那些点有关； 我们在上图中，考虑这些离分类面最近的那些点，把他们的函数间隔设为1， <span class="math inline">\(\hat \gamma = 1\)</span> ;（这里只是对 <span class="math inline">\(w,b\)</span> 进行了缩放，因为本身函数间隔的大小就是可以改变的） 那么他们的几何间隔 <span class="math inline">\(\gamma = \frac{\hat \gamma}{||w||} = \frac{1}{||w||}\)</span> 也即他们到分类面的距离。 那么问题就转化成： <span class="math display">\[
+max_{\gamma ,w,b}\quad\frac{1}{||w||} \\
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\
+\]</span> 由于 <span class="math inline">\(||w||\)</span> 是二范数，本质还是一个数值，我们求 <span class="math inline">\(\frac{1}{||w||}\)</span> 的最大值，也就是求 <span class="math inline">\(\frac{1}{2}||w||^2\)</span>的最小值 所以问题转化为： <span class="math display">\[
+min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2 \\
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\quad\geq\quad 1 \\
+\]</span></p>
+<p>这就成了一个带有不等式约束的二次规划问题，带条件的优化问题，我们可以用拉格朗日乘子法来解决；</p>
+<h2 id="拉格朗日乘数法-对偶问题-kkt-条件">拉格朗日乘数法， 对偶问题， KKT 条件</h2>
+<p>先看一下一般形式的拉格朗日乘数法： 假设有问题： <span class="math display">\[
+min_w \quad f(w)\\
+\quad\quad\quad\quad\quad\quad\quad s.t. \quad g_i(w) \leq0 \quad i = 1,...,k\\
+\quad\quad\quad\quad\quad\quad\quad\quad\quad h_i(w)=0 \quad i = 1,...,l
+\]</span></p>
+<p>为了解决有两个约束（一个等式约束 <span class="math inline">\(h_i(w)=0\)</span>, 一个不等式约束 $ g_i(w) 0$ )的优化问题，引入拉格朗日乘数法，先定义拉格朗日公式： <span class="math display">\[
+\mathcal{L}(w,\alpha, \beta) = f(w) + \sum_{i=1}^k\alpha_ig_i(w)+\sum_{i=1}^l\beta_ih_i(w)
+\]</span> 其中 <span class="math inline">\(\alpha_i, \beta_i\)</span> 是拉格朗日算子，然后联立如下方程组，就可以解出<strong>可能的</strong>极值点： <span class="math display">\[
+\frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial w} = 0\\
+\frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial \alpha_i} = 0\\
+\frac {\partial\mathcal{L}(w,\alpha, \beta)}{\partial \beta_i} = 0
+\]</span></p>
+<blockquote>
+<p>(这部分我自己理解的时候也有点乱，条理可能不太清晰，如果看一次没看懂，再看一遍可能会有帮助） 至于为什么能够这样的条件约束下的优化问题能够用拉格朗日乘数法求解， 首先，我看到了这样一篇博客 <a href="http://www.cnblogs.com/maybe2030/p/4946256.html" target="_blank" rel="noopener">拉格朗日乘数法</a>，第二部分中数学实例的例子不错，提出了拉格朗日乘数法的思想： <strong>通过引入拉格朗日乘子将原来的约束优化问题转化为无约束的方程组问题</strong> 其次这个 <a href="https://zh.wikipedia.org/wiki/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%95%B0" target="_blank" rel="noopener">维基百科</a> 的图，觉得对自己理解很有帮助 <img src="http://static.zybuluo.com/Preke/fw2eels4sf4u6j4eu40gxbvj/image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png" alt="image_1bnvinmmk1o99r2hd9e12sh1b7f4i.png-40.6kB"> 简单来说，虽然还是寻找极值点，但是约束条件的存在使得这个寻找的轨迹只能由上图绿线所决定；绿线就是问题的可行域。那么我们沿着绿线的方向走，向着 <span class="math inline">\(f(x,y)\)</span> 下降（或上升，取决于问题求极大还是极小）的方向走，走到 <span class="math inline">\(g(x,y)\)</span> 的变化率为0的时候，我们就找到了极值点, 这里的图中就表现为与 <span class="math inline">\(f(x,y)\)</span> 的等高线相切。 此时：从图上理解，曲面相切，法向量共线，曲面的法向量就是偏导（偏导是各个分量的变化率，法向量是各个方向变化率叠加的结果，如果不太明白，推荐一篇博客：<a href="http://www.cnblogs.com/jerrylead/archive/2011/03/09/1978280.html" target="_blank" rel="noopener">小谈导数、梯度和极值</a> 或者也可以从一元函数来理解，两个曲线相切，意味着此刻在切点，斜率相同，曲线法向量共线； Anyway, 我们定义一个只有一个不等约束的拉格朗日问题方便理解，这里再从解析的角度去理解： <span class="math display">\[
+min_w \quad f(w)\\
+s.t. \quad g(w) \leq0 
+\]</span> 先看求解过程： <span class="math display">\[
+\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)
+\]</span> 联立方程组： <span class="math display">\[
+\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = 0\quad\quad\quad\quad\quad(1) \\
+\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} = 0\quad\quad\quad\quad\quad(2) 
+\]</span> 我们先看 <span class="math inline">\((1)\)</span> , 进一步： <span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial w} = \frac {\partial f(w)}{\partial w}+\alpha \frac {\partial g(w)}{\partial w} = 0\)</span> 回想我们刚刚说的法向量共线，是不是这个公式就是对于法向量共线的解释呢？ 我们继续看 <span class="math inline">\((2)\)</span>：<span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha} =g(w)= 0\)</span>，这说明了什么？ <span class="math inline">\(\mathcal{L}(w,\alpha) = f(w) + \alpha g(w)\)</span>， 现在 <span class="math inline">\(g(w) = 0\)</span> ,那说明在极值点： <span class="math inline">\(\mathcal{L}(w,\alpha) = f(w)\)</span> 现在再回来看 <span class="math inline">\((1)\)</span>， 相当于是在求 <span class="math inline">\(\frac {\partial\mathcal{L}(w,\alpha)}{\partial \alpha}\)</span>的极值点，是不是就是原问题 <span class="math inline">\(f(w)\)</span> 的极值点了呢？ 这样这种解法就能解释得通了吧。 不过有点不严谨的地方是，记得我们在学的时候，是有一条：就是原问题 <span class="math inline">\(f(w)\)</span> 的极值是 $ {(w,)}$ 的极值的子集，之后还需继续验证 扩展到高维不难，如果有多个约束条件无非就是多个条件的线性组合，相信在理解的过程中是一样的。</p>
+</blockquote>
+<p>回到正题，但是我们不能直接求解，有 <span class="math inline">\(g_i(w)\leq0\)</span>，求极小值可以发散到负无穷，这样我们先定义一个这样的函数： <span class="math display">\[\theta_\mathcal{P}(w)=\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta) \]</span> 作为我们的原问题。由于有 <span class="math inline">\(g_i(w)\leq0\)</span>, 为了求极大值，我们这里约束 <span class="math inline">\(\alpha_i \geq 0\)</span></p>
+<blockquote>
+<p>讲义上这里直接说 <img src="http://static.zybuluo.com/Preke/5mvvg20kv2e0gxdqdp812c8h/image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png" alt="image_1bo1eb93hdmqn8gqvm1ts1m3s4v.png-20kB"> 但是我觉得这个式子只有在提出KKT条件再提比较合适，因为在不满足KKT条件的情况下，<span class="math inline">\(\alpha_ig_i(w)=0\)</span> 是不一定能成立的。但是为了方便表述，这里暂且先默认满足</p>
+</blockquote>
+<p>当 <span class="math inline">\(w\)</span> 满足所有约束时，我们就可以将问题转化如下： <span class="math display">\[\min_w\theta_\mathcal{P}(w)=\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)\]</span></p>
+<p>我们使用 <span class="math inline">\(p^*\)</span> 来表示 <span class="math inline">\(\min_w\theta_\mathcal{P}(w)\)</span> 原问题 <span class="math inline">\(p*\)</span> 是先求最大，再求最小，那么我们定义一个它的对偶问题 <span class="math inline">\(d*\)</span> ，即先求最小，再求最大； 首先： <span class="math display">\[ \theta_{\mathcal{D}}(\alpha, \beta)=\min_w\mathcal{L}(w,\alpha, \beta)\]</span> 那么： <span class="math display">\[ d^* = \max_{\alpha, \beta:\alpha_i\geq0}\theta_{\mathcal{D}}(\alpha, \beta)=\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)\]</span> 就有: <span class="math display">\[d^* =\max_{\alpha, \beta:\alpha_i\geq0}\min_w\mathcal{L}(w,\alpha, \beta)\leq\min_w\max_{\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha, \beta)=p^*\]</span></p>
+<blockquote>
+<p>这一点，我们有这样一个事实： <span class="math display">\[\max \min f(x) \leq \min \max f(x)\]</span></p>
+</blockquote>
+<p>那么，再什么时候两者会等价呢？</p>
+<p><strong><em>首先，是三个假设：</em></strong></p>
+<ul>
+<li><span class="math inline">\(f,g\)</span> 是凸函数</li>
+<li><span class="math inline">\(h\)</span> 是仿射函数： $a_i, b_i, s.t. h_i(w)=a_i^Tw+b_i $</li>
+<li>存在 $ w $, 使对于所有 <span class="math inline">\(i\)</span>, <span class="math inline">\(g_i(w)&lt;0\)</span></li>
+</ul>
+<p><strong>满足上述假设，就是一个凸优化问题</strong></p>
+<p>满足之后，一定存在 <span class="math inline">\(w^*\)</span> , <span class="math inline">\(\alpha^*\)</span> , <span class="math inline">\(\beta^*\)</span>：</p>
+<ul>
+<li><span class="math inline">\(w^*\)</span> 是原问题的解</li>
+<li><span class="math inline">\(\alpha^*, \beta^*\)</span> 是对偶问题的解</li>
+<li><span class="math inline">\(p^* = d^* = \mathcal{L}(w^*,\alpha^*, \beta^*)\)</span></li>
+</ul>
+<p>同时 <span class="math inline">\(w^*, \alpha^*, \beta^*\)</span> 满足K.K.T.条件：</p>
+<ul>
+<li><span class="math inline">\(\frac{\partial}{\partial w_i}\mathcal{L}(w^*,\alpha^*, \beta^*)=0, \quad i = 1,...,n\)</span></li>
+<li><span class="math inline">\(\frac{\partial}{\partial \beta_i}\mathcal{L}(w^*,\alpha^*, \beta^*)=0, \quad i = 1,...,l\)</span></li>
+<li><span class="math inline">\(\alpha_i^*g_i(w^*)=0, \quad\quad\quad\quad i=1,...,k\)</span></li>
+<li><span class="math inline">\(g_i(w^*)\leq0,\quad\quad\quad\quad\quad i=1,...,k\)</span></li>
+<li><span class="math inline">\(\alpha^*\geq0, \quad\quad\quad\quad\quad\quad\quad i=1,...,k\)</span></li>
+</ul>
+<p>我们看后三条： 如果我们限定 <span class="math inline">\(\alpha_i &gt; 0\)</span> 那么 <span class="math inline">\(g_i(w) = 0\)</span> 就一定成立。 由于 <span class="math inline">\(g_i(w)\)</span> 是限定条件， <span class="math inline">\(g_i(w) = 0\)</span> 意味着，<span class="math inline">\(w\)</span> 处于可行域的边界上 &gt; 这也就是我之前提到过的 (其实是别人提到过，我只是印象深刻)，K.K.T.条件是在可行域边界上取得极值；至于在可行域内部的点 <span class="math inline">\(g_i(w^*)&lt;0\)</span> 的约束是不起作用的，我总觉得这里和支持向量的思想很像；</p>
+<h2 id="最优间隔分类器-1">最优间隔分类器</h2>
+<p>讲了一大堆，回到刚刚的优化问题： <span class="math display">\[
+min_{\gamma ,w,b}\quad\frac{1}{2}||w||^2 \\
+\quad\quad\quad\quad\quad\quad\quad\quad s.t.  \quad y^{(i)}(w^Tx^{(i)}+b)\geq1 ,\quad\quad i=1,...,m\\
+\]</span> 现在将约束条件改为： <span class="math inline">\(g_i(w) = -y^{(i)}(w^Tx^{(i)}+b) + 1\leq 0\)</span> 现在原问题是凸函数，不等式约束是一个线性函数，也是一个广义的凸函数 所以满足了K.K.T.条件的假设前提。</p>
+<p>约束条件表明了，函数间隔为1是边界上的点 由K.K.T条件得知，(通常来说，在边界上的点，$ g_i(w)=0 $ 时， <span class="math inline">\(\alpha_i&gt;0\)</span>, 而在其余的点上，当，$ g_i(w)&gt;0 $ 时， <span class="math inline">\(\alpha_i=0\)</span> ）</p>
+<p>现在可以构造拉格朗日函数如下： <span class="math display">\[\mathcal{L}(w,b, \alpha)=\frac{1}{2}||w||^2 -\sum_{i=1}^m\alpha_i[y^{(i)}(w^Tx^{(i)}+b) - 1], \quad \alpha_i\geq0\]</span> 注意参数不同了，是 <span class="math inline">\(w,b, \alpha\)</span> ; 和上面一样，我们构造一个 <span class="math inline">\(p^*\)</span> ,然后找到对偶问题 <span class="math inline">\(d^*\)</span>: <span class="math display">\[d^* =\max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)\leq\min_{w,b}\max_{\alpha:\alpha_i\geq0} \mathcal{L}(w,b,\alpha)=p^*\]</span></p>
+<p>先求解$ _{w,b} (w,b, )$， 对 <span class="math inline">\(w\)</span> , <span class="math inline">\(b\)</span> 求偏导： <span class="math display">\[
+\frac{\partial}{\partial w}\mathcal{L}(w,b,\alpha)=w-\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}=0\\
+\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 得到 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span>, 代回原拉格朗日函数： （省略计算过程） <span class="math display">\[\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}-b\sum_{i=1}^m\alpha_iy^{(i)} \]</span> 由于如上： <span class="math inline">\(\frac{\partial}{\partial b}\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_iy^{(i)}=0\)</span>，最后一项为0，得： <span class="math display">\[\mathcal{L}(w,b,\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}\]</span></p>
+<p>现在用 <span class="math inline">\(W(\alpha)\)</span> 表示 <span class="math inline">\(\min_{w,b}\mathcal{L}(w,b,\alpha)\)</span> , 再来求最大值: <span class="math display">\[d^* = \max_{\alpha:\alpha_i\geq0}\min_{w,b}\mathcal{L}(w,b,\alpha)=\max_{\alpha:\alpha_i\geq0}W(\alpha)\\
+ \\
+\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\max_\alpha\quad W(\alpha)=\sum_{i=1}^m\alpha_i-\frac{1}{2}\sum_{i,j=1}^my^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}\\
+s.t.\quad \alpha_i\geq0,\quad i=1,...,m\\
+\sum_{i=1}^m\alpha_iy^{(i)}=0
+\]</span> 这个问题，留给之后解决，假设我们解决了这个问题，找到了 <span class="math inline">\(\alpha\)</span>, 又有样本点数据，我们很容易由 <span class="math inline">\(w=\sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\)</span> 得出 <span class="math inline">\(w\)</span>, 但是我们没有直接求出 <span class="math inline">\(b\)</span>, 但是我们知道离超平面最近的正的函数间隔要等于离超平面最近的负的函数间隔，据此，可以用其他变量将 <span class="math inline">\(b\)</span> 表出： <span class="math display">\[b=-\frac{\max_{i:y^{(i)}=-1}w^Tx^{(i)}+\min_{i:y^{(i)}=1}w^Tx^{(i)}}{2}\]</span></p>
+<blockquote>
+<p>这里我将 <span class="math inline">\(\alpha^*, w^*, b^*\)</span> 都用 <span class="math inline">\(\alpha,w,b\)</span> 表示，因为原问题的解和对偶问题相同</p>
+</blockquote>
+<p>这样，问题就解决了，我们只要找到那些函数间隔为1的样本点，代入上面的公式求出 <span class="math inline">\(w\)</span>, 和 <span class="math inline">\(b\)</span>，就能确定目标超平面 <span class="math inline">\(w^Tx+b\)</span> 了</p>
+<p>所以，起到作用的只有那些“支持向量”，也就是，只有边界值决定了分类面。</p>
+<p>That’s all for now.</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么最优间隔"><span class="nav-number">2.</span> <span class="nav-text">为什么最优间隔？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题的数学表示"><span class="nav-number">3.</span> <span class="nav-text">问题的数学表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数间隔functional-margin-几何间隔geometric-margin"><span class="nav-number">4.</span> <span class="nav-text">函数间隔（functional margin) &amp; 几何间隔（geometric margin)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数间隔"><span class="nav-number">4.1.</span> <span class="nav-text">函数间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何间隔"><span class="nav-number">4.2.</span> <span class="nav-text">几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优间隔分类器"><span class="nav-number">5.</span> <span class="nav-text">最优间隔分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#其实我觉得这部分是精髓转化的思想也可以应用到其他地方"><span class="nav-number">5.1.</span> <span class="nav-text">其实我觉得这部分是精髓，转化的思想也可以应用到其他地方</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉格朗日乘数法-对偶问题-kkt-条件"><span class="nav-number">6.</span> <span class="nav-text">拉格朗日乘数法， 对偶问题， KKT 条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优间隔分类器-1"><span class="nav-number">7.</span> <span class="nav-text">最优间隔分类器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

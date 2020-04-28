@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,,,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="不久前放出了ACL2019的paper list, 但是还没有具体的文章，这里立一些flag, 找一些感兴趣的paper来读。 Text style transfer Towards Fine-grained Text Sentiment Transfer Fuli Luo, Peng Li, Pengcheng Yang, Jie Zhou, Yutong Tan, Baobao Chang,">
+<meta name="keywords" content="dialog system,text style transfer,conversation generation,emotion,personalization">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ACL 2019 一些感兴趣的paper">
+<meta property="og:url" content="http://yoursite.com/backup_posts/acl_2019.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="不久前放出了ACL2019的paper list, 但是还没有具体的文章，这里立一些flag, 找一些感兴趣的paper来读。 Text style transfer Towards Fine-grained Text Sentiment Transfer Fuli Luo, Peng Li, Pengcheng Yang, Jie Zhou, Yutong Tan, Baobao Chang,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-09T13:35:40.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACL 2019 一些感兴趣的paper">
+<meta name="twitter:description" content="不久前放出了ACL2019的paper list, 但是还没有具体的文章，这里立一些flag, 找一些感兴趣的paper来读。 Text style transfer Towards Fine-grained Text Sentiment Transfer Fuli Luo, Peng Li, Pengcheng Yang, Jie Zhou, Yutong Tan, Baobao Chang,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/backup_posts/acl_2019.html">
+
+
+
+
+
+  <title>ACL 2019 一些感兴趣的paper | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">ACL 2019 一些感兴趣的paper</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>不久前放出了ACL2019的paper list, 但是还没有具体的文章，这里立一些flag, 找一些感兴趣的paper来读。</p>
+<h2 id="text-style-transfer">Text style transfer</h2>
+<p><strong><em>Towards Fine-grained Text Sentiment Transfer</em></strong> Fuli Luo, Peng Li, Pengcheng Yang, Jie Zhou, Yutong Tan, Baobao Chang, Zhifang Sui and Xu SUN</p>
+<p>这个跟我之前做的问题比较像，比较感兴趣…</p>
+<p><strong><em>A Hierarchical Reinforced Sequence Operation Method for Unsupervised Text Style Transfer</em></strong> Chen Wu, Xuancheng Ren, Fuli Luo and Xu SUN</p>
+<h2 id="open-domain-dialog-system-text-generation">Open-domain Dialog System &amp; Text Generation</h2>
+<h3 id="emotion">Emotion</h3>
+<p><strong><em>Generating Responses with a Specific Emotion in Dialog</em></strong> Zhenqiao Song, Xiaoqing Zheng, Lu Liu, Mu Xu and Xuanjing Huang</p>
+<p>这个很直接的老问题…不知道为什么还被录，可能是效果确实很牛或者模型很新吧..</p>
+<p><strong><em>Towards Empathetic Open-domain Conversation Models: a New Benchmark and Dataset</em></strong> Hannah Rashkin, Eric Michael Smith, Margaret Li and Y-Lan Boureau</p>
+<p>这个像是一个开坑的工作…虽然 Empathetic computing 之前也有一些work, 但是不知道 ACL 为什么今年只有一篇…</p>
+<p><strong><em>Adversarial Attention Modeling for Multi-dimensional Emotion Regression</em></strong> Suyang Zhu, Shoushan Li and Guodong Zhou</p>
+<p>Emotion Regression 可以科普一下</p>
+<p><strong><em>Divide, Conquer and Combine: Hierarchical Feature Fusion Network with Local and Global Perspectives for Multimodal Affective Computing</em></strong> Sijie Mai, Haifeng Hu and Songlong Xing</p>
+<p>Affective Computing的</p>
+<p><strong><em>Entity-Centric Contextual Affective Analysis</em></strong> Anjalie Field and Yulia Tsvetkov</p>
+<p>Affective Computing的</p>
+<h3 id="personalization">Personalization</h3>
+<p><strong><em>Persuasion for Good: Towards a Personalized Persuasive Dialogue System for Social Good</em></strong> Xuewei Wang, Weiyan Shi, Richard Kim, Yoojung Oh, Sijia Yang, Jingwen Zhang and Zhou Yu</p>
+<p>特殊场景？</p>
+<p><strong><em>Personalizing Dialogue Agents via Meta-Learning</em></strong> Andrea Madotto, Zhaojiang Lin, Chien-Sheng Wu and Pascale Fung</p>
+<p>Meta-learning没了解过，通过这个科普一下</p>
+<p><strong><em>Automatic Generation of Personalized Comment Based on User Profile</em></strong> Wenhuan Zeng, Abulikemu Abuduweili, Lei Li and Pengcheng Yang</p>
+<p>可以看一下是如何利用 User Profile 的</p>
+<p><strong><em>Incorporating Textual Information on User Behavior for Personality Prediction</em></strong> Kosuke Yamada, Ryohei Sasano and Koichi Takeda</p>
+<p>关于心理学定义的人格的paper感觉都可以关注一下…</p>
+<h3 id="others">Others</h3>
+<p><strong><em>Semantically Conditioned Dialog Response Generation via Hierarchical Disentangled Self-Attention</em></strong> Wenhu Chen, Jianshu Chen, Pengda Qin, Xifeng Yan and William Yang Wang</p>
+<p>William Yang Wang在微博上推广过这个…</p>
+<p><strong><em>Learning from Dialogue after Deployment: Feed Yourself, Chatbot!</em></strong> Braden Hancock, Antoine Bordes, Pierre-Emmanuel Mazare and Jason Weston</p>
+<p>看标题像是一个online-learning的问题</p>
+<p><strong><em>Dialogue Natural Language Inference</em></strong> Sean Welleck, Jason Weston, Arthur Szlam and Kyunghyun Cho</p>
+<p>这个title, 结合了不知道什么意思</p>
+<p><strong><em>Are Training Samples Correlated? Learning to Generate Dialogue Responses with Multiple References</em></strong> Lisong Qiu, Juntao Li, Wei Bi, Dongyan Zhao and Rui Yan</p>
+<p>看起来像是一个Grounding的问题</p>
+<p><strong><em>Pretraining Methods for Dialog Context Representation Learning</em></strong> Shikib Mehri, Evgeniia Razumovskaia, Tiancheng Zhao and Maxine Eskenazi</p>
+<p>问题很感兴趣，应用场景应该是多轮对话吧</p>
+<p><strong><em>Self-Supervised Dialogue Learning</em></strong> Jiawei Wu, Xin Wang and William Yang Wang</p>
+<p>自监督？</p>
+<p><strong><em>Domain Adaptive Dialog Generation via Meta Learning</em></strong> Kun Qian and Zhou Yu</p>
+<p>每个名词都很感兴趣…</p>
+<p><strong><em>Know More about Each Other: Evolving Dialogue Strategy via Compound Assessment</em></strong> Siqi Bao, Huang He, Fan Wang, Rongzhong Lian and Hua Wu</p>
+<p>关于策略的也很感兴趣，看是如何用其他Knowledge</p>
+<p><strong><em>Do Neural Dialog Systems Use the Conversation History Effectively? An Empirical Study</em></strong> Chinnadhurai Sankar, Sandeep Subramanian, Chris Pal, Sarath Chandar and Yoshua Bengio</p>
+<p>多轮对话？Bengio？</p>
+<p><strong><em>Boosting Dialog Response Generation</em></strong> Wenchao Du and Alan W Black</p>
+<p>Boosting有点意思…</p>
+<p><strong><em>Implicit Discourse Relation Identification for Open-domain Dialogues</em></strong> Mingyu Derek Ma, Kevin Bowden, Jiaqi Wu, Wen Cui and Marilyn Walker</p>
+<p>这个一作好像认识…</p>
+<p><strong><em>ConvLab: Multi-Domain End-to-End Dialog System Platform</em></strong> Sungjin Lee, Qi Zhu, Ryuichi Takanobu, Xiang Li, Yaoqin Zhang, Zheng Zhang, Jinchao Li, Baolin Peng, Xiujun Li, Minlie Huang and Jianfeng Gao</p>
+<p>感兴趣 Multi-Domain</p>
+<p><strong><em>ADVISER: A Dialog System Framework for Education &amp; Research Daniel Ortega, Dirk Väth, Gianna Weber, Lindsey Vanderlyn, Maximilian</em></strong> Schmidt, Moritz Völkel, Zorica Karacevic and Ngoc Thang Vu</p>
+<p>特定应用场景</p>
+<p><strong><em>Dialogue-Act Prediction of Future Responses based on Conversation History</em></strong> Koji Tanaka, Junya Takayama and Yuki Arase</p>
+<p>Prediction 感兴趣</p>
+<p><strong><em>Vocabulary Pyramid Network: Multi-Pass Encoding and Decoding with Multi-Level Vocabularies for Response Generation</em></strong> Cao Liu, Shizhu He, Kang Liu and Jun Zhao</p>
+<p>刘康老师的work呀</p>
+<p><strong><em>Learning to Abstract for Memory-augmented Conversational Response Generation</em></strong> Zhiliang Tian, Wei Bi, Xiaopeng Li and Nevin L. Zhang</p>
+<p>Memory-augmented感兴趣</p>
+<p><strong><em>Neural Response Generation with Meta-words</em></strong> Can Xu, wei wu, Chongyang Tao, Huang Hu, Matt Schuerman and Ying Wang</p>
+<p>Meta-words很感兴趣</p>
+<p><strong><em>OpenDialKG: Explainable Conversational Reasoning with Attention-based Walks over Knowledge Graphs</em></strong> Seungwhan Moon, Pararth Shah, Anuj Kumar and Rajen Subba</p>
+<p>和Knowledge graph的结合</p>
+<p><strong><em>E3: Entailment-driven Extracting and Editing for Conversational Machine Reading</em></strong> Victor Zhong and Luke Zettlemoyer</p>
+<p><strong><em>Interconnected Question Generation with Coreference Alignment and Conversation Flow Modeling</em></strong> Yifan Gao, Piji Li, Irwin King and Michael R. Lyu</p>
+<p><strong><em>Proactive Human-Machine Conversation with Explicit Conversation Goal</em></strong> Wenquan Wu, Zhen Guo, Xiangyang Zhou, Hua Wu, Xiyuan Zhang, Rongzhong Lian and Haifeng Wang</p>
+<p><strong><em>Fine-Grained Sentence Functions for Short-Text Conversation</em></strong> Wei Bi, Jun Gao, Xiaojiang Liu and Shuming Shi</p>
+<p><strong><em>Target-Guided Open-Domain Conversation</em></strong> Jianheng Tang, Tiancheng Zhao, Chenyan Xiong, Xiaodan Liang, Eric Xing and Zhiting Hu</p>
+<p><strong><em>Microsoft Icecaps: An Open-Source Toolkit for Conversation Modeling</em></strong> Vighnesh Leonardo Shiv, Chris Quirk, Anshuman Suri, Xiang Gao, Khuram Shahid, Nithya Govindarajan, Yizhe Zhang, Jianfeng Gao, Michel Galley, Chris Brockett, Tulasi Menon and Bill Dolan</p>
+<p>小冰升级了么…</p>
+<p><strong><em>Sentence Level Curriculum Learning for Improved Neural Conversational Models</em></strong> Sean Paulsen</p>
+<p>Curriculum Learning很感兴趣</p>
+<h2 id="general-nlp">General NLP</h2>
+<p><strong><em>Towards Explainable NLP: A Generative Explanation Framework for Text Classification</em></strong> Hui Liu, Qingyu Yin and William Yang Wang</p>
+<p>这个看标题挺厉害的…</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#text-style-transfer"><span class="nav-number">1.</span> <span class="nav-text">Text style transfer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open-domain-dialog-system-text-generation"><span class="nav-number">2.</span> <span class="nav-text">Open-domain Dialog System &amp; Text Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#emotion"><span class="nav-number">2.1.</span> <span class="nav-text">Emotion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#personalization"><span class="nav-number">2.2.</span> <span class="nav-text">Personalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#others"><span class="nav-number">2.3.</span> <span class="nav-text">Others</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#general-nlp"><span class="nav-number">3.</span> <span class="nav-text">General NLP</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

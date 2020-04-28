@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
+<meta name="keywords" content="personalization,dialog system,conversation generation">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小冰如何生成个性化回复">
+<meta property="og:url" content="http://yoursite.com/backup_posts/xiaobing.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-129d192aff85f8f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2675254-ce68704903dae579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T14:09:28.902Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小冰如何生成个性化回复">
+<meta name="twitter:description" content="小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。  The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.  那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/backup_posts/xiaobing.html">
+
+
+
+
+
+  <title>小冰如何生成个性化回复 | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">小冰如何生成个性化回复</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>小冰被设计为一个18岁的女孩，可靠，富有同情，感性而幽默。</p>
+<blockquote>
+<p>The XiaoIce persona is designed as a 18-year-old girl who is always reliable, sympathetic, affectionate, and has a wonderful sense of humor.</p>
+</blockquote>
+<p>那这些属性在生成回复的时候如何产生影响呢？ 这里就涉及到两个模块：Empathetic Computing 和 Core Chat</p>
+<h2 id="empathetic-computing">Empathetic Computing</h2>
+<p>这部分包括：</p>
+<ul>
+<li>Contextual Query Understanding</li>
+<li>User Understanding</li>
+<li>Interpersonal Response Generation</li>
+</ul>
+<h3 id="contextual-query-understanding">Contextual Query Understanding</h3>
+<p>这一部分就可以理解为是根据上下文进行query expansion, 做一些指代消歧，上下文补充等。 总的来说就是对输入query <span class="math inline">\(Q\)</span>, 结合上下文 <span class="math inline">\(C\)</span> (历史会话信息），生成带有上下文信息的query <span class="math inline">\(Q_c\)</span>:</p>
+<p><span class="math display">\[
+Q_c = f_{cqu}(Q, C)
+\]</span></p>
+<h3 id="user-understanding">User Understanding</h3>
+<p>这一部分是根据上下文 <span class="math inline">\(C\)</span> 和 query <span class="math inline">\(Q_c\)</span> 生成用户的信息 <span class="math inline">\(e_Q\)</span>，是一个用户共情向量，包括用户的属性信息（如果有的话），对话的topic, intent；也还包括emotion 和 sentiment的分析；<span class="math inline">\(e_Q\)</span>就如下图（一直用neural来表示中立，不知道是不是typo…)：</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-09a2c70e80ce9bca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figcaption>image.png</figcaption>
+</figure>
+<p>形式化就是：</p>
+<p><span class="math display">\[
+e_Q = f_{uu}(Q_c, C)
+\]</span></p>
+<h3 id="interpersonal-response-generation">Interpersonal Response Generation</h3>
+<p>这一部分是通过<span class="math inline">\(e_Q\)</span>中的会话信息和小冰预设的 persona profile (key-value pairs) 生成一个回复共情向量<span class="math inline">\(e_R\)</span>:</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-129d192aff85f8f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image1.png"><figcaption>image1.png</figcaption>
+</figure>
+<p>形式化就是：</p>
+<p><span class="math display">\[
+e_R = f_{irg}(e_R, Persona\  profile\  of \ Xiaoice)
+\]</span></p>
+<h2 id="core-chat">Core Chat</h2>
+<p>有了上述的 <span class="math inline">\(\{Q_c, C, e_Q, e_R\}\)</span> 之后，在这部分结合这些信息生成回复。我这里只比较关系如何用generation-based方法去生成，如下图所示：</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/2675254-ce68704903dae579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figcaption>image.png</figcaption>
+</figure>
+<p>模型基于RNN的seq2seq model, 将 <span class="math inline">\(Q_c\)</span> 作为 encoder的输入，得到hidden state vector再输入到decoder; 而在解码每个词的时候，都是通过一个包含了<span class="math inline">\(e_Q, e_R\)</span> 信息的向量 <span class="math inline">\(v\)</span> 去加入上下文和小冰的属性信息；而这个 <span class="math inline">\(v\)</span> 是通过如下公式来得到：</p>
+<p><span class="math display">\[
+v = \sigma (W^T_Qe_Q + W^T_Re_R)
+\]</span></p>
+<p>（我猜想每次结合的方式就是 <span class="math inline">\(v\)</span> 和 当前输入词向量<span class="math inline">\(e_t\)</span> concat一起之后再过一个线性层去规范维度</p>
+<hr>
+<p>通过以上这两个部分，小冰就能生成个性化的回复； 其实还是有两个点比较简单：</p>
+<ol type="1">
+<li>对于属性的描述，用了很简单的key-value直接输入，对于具体属性如何影响回复生成并没有更深的modeling;</li>
+<li>属性的表达上，其实也是比较简单的作用在了每次解码结合同样的信息，参考Emotional Chatting Machine这篇paper的思路的话，其实表达方式上，也是有一些多变的因素的。</li>
+</ol>
+<p>当然，可能具体使用上没办法去部署比较复杂的模型，也可能是因为小冰的数据足够多，而且其实大部分都还是用检索式，所以整体呈现的效果还确实不错~</p>
+<h2 id="ref">Ref:</h2>
+<p>Zhou L, Gao J, Li D, et al. The design and implementation of XiaoIce, an empathetic social chatbot[J]. arXiv preprint arXiv:1812.08989, 2018.</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#empathetic-computing"><span class="nav-number">1.</span> <span class="nav-text">Empathetic Computing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#contextual-query-understanding"><span class="nav-number">1.1.</span> <span class="nav-text">Contextual Query Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user-understanding"><span class="nav-number">1.2.</span> <span class="nav-text">User Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interpersonal-response-generation"><span class="nav-number">1.3.</span> <span class="nav-text">Interpersonal Response Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#core-chat"><span class="nav-number">2.</span> <span class="nav-text">Core Chat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number">3.</span> <span class="nav-text">Ref:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

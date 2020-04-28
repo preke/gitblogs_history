@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhiyuan" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
+<meta property="og:type" content="website">
+<meta property="og:title" content="朴素贝叶斯">
+<meta property="og:url" content="http://yoursite.com/backup_posts/Naive_Bayes.html">
+<meta property="og:site_name" content="Zhiyuan">
+<meta property="og:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-10-20T14:40:04.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="朴素贝叶斯">
+<meta name="twitter:description" content="回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了 贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。 ###贝叶斯定理： \[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/backup_posts/Naive_Bayes.html">
+
+
+
+
+
+  <title>朴素贝叶斯 | Zhiyuan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiyuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">三尺微命，一介书生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">朴素贝叶斯</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>回去看完了Andrew Ng的关于这一节的公开课，还有中文的课堂笔记 然后参照了一下《集体智慧编程》这本书，现在对这个算法有一个全面的理解了</p>
+<p>贝叶斯决策，基本上，从直观理解就是做了这样的事情： 给定历史的数据和类别，然后新来一个数据，计算新来的数据属于每个类别的概率，然后将新来的数据归为概率最大的那一类。</p>
+<p>###贝叶斯定理：</p>
+<p><span class="math display">\[p(c|w) =  \frac{p(w|c)p(c)}{p(w)}\]</span></p>
+<p>###为什么说是朴素贝叶斯： * n个特征相互独立 （为了简化条件概率的计算） * n个特征同等重要</p>
+<p>###问题场景： 就举《机器学习实战》的例子吧，做一个文本分类，如果一段文本里，包含侮辱性词汇，标记为不当言论。</p>
+<p>###直观理解： c is category, w is words,可以理解成邮件 c = 0 : 不是垃圾邮件 c = 1 : 是垃圾邮件</p>
+<p>###先看怎样运作： 对一个特定的邮件 w, 我计算 <span class="math inline">\(p(c = 1|w)\)</span> 和 <span class="math inline">\(p(c = 0|w)\)</span> 判断这两个概率哪个大，就把文档归为哪一类。</p>
+<p>本来我们计算两个概率，是应该根据贝叶斯定理的公式（如上）的，但是对于一篇文档来说， <span class="math inline">\(p(w)\)</span> 是相同的，反正我们的目的只是比大小，定性分析，同除 <span class="math inline">\(p(w)\)</span> 并不影响结果，所以</p>
+<p>###目标函数：</p>
+<p><span class="math display">\[p(c|w) =  p(w|c)p(c)\]</span></p>
+<p>以下阐述帮助理解，实际用时要做优化，优化在最后提一下</p>
+<p>该如何建模？</p>
+<p>###生成词集模型： 把所有邮件（假设我把我目前邮箱里的所有邮件都用做训练），分词，将所有出现过的词语包含到一个set当中。</p>
+<p>###生成文本向量： 假设刚刚set有1000个词，那么我将每个邮件做成一个1000维的向量，每一维对应这个词是否在该文档出现，用0，1表示。</p>
+<p>###训练模型： 我们是对这样一个生成模型建模，生成模型求的是联合概率。 先说个简单的，<span class="math inline">\(p(c)\)</span> 是什么？是人工标记训练集中垃圾邮件的频率，是一个固定的数值，比如我的邮箱里50封邮件全都作为训练，我人工标记，有10封为垃圾邮件，那么<span class="math inline">\(p(c = 1) = 0.2\)</span>； <span class="math inline">\(p(c = 0) = 0.8\)</span></p>
+<p>那么$p(w|c) $ 呢，既然朴素贝叶斯做出了特征相互独立的假设，那么我们就假定，在任意一封邮件中，每个词语出现的概率是不会相互影响的。我们设词集中1000个词分别为：<span class="math inline">\(x_1 , x_2, ... x_{1000}\)</span> , 这样就有</p>
+<p><span class="math display">\[p(w|c)  = \prod_{i=1}^{1000}p(x_{i}|y)\]</span></p>
+<p>我们还是分为两部分：</p>
+<h4 id="pwc-1">$p(w|c = 1) $ ：</h4>
+<p>在那些标记为垃圾邮件的文本向量中，假设有n个： 我们把他们全部加起来，得到一个向量，然后再将这个向量的每一位都除以n。</p>
+<p>好的我们就得到了一个特征向量<span class="math inline">\(p_{1}\)</span>， 这个特征向量每一位表示对应的词语在垃圾邮件中出现的概率 同理可得<span class="math inline">\(p_{0}\)</span></p>
+<p>这里就可以看出，生成模型是什么，我们之前不知道参数的大小，是通过训练集生成参数，然后再来求条件概率，换句话说，我们是对参数进行了最大似然估计。</p>
+<p>###验证方法：</p>
+<p>用了向量乘积来判别</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p1 = sum(vec2Classify * p1Vec) + log(pClass1)    <span class="comment">#element-wise mult</span></span><br><span class="line">p0 = sum(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</span><br><span class="line"><span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>vec2Classify 为待检验的文本向量； 这里做了一下数学处理（log）</p>
+<p>我想说的是，为什么验证方法中的前半部分是文本向量与特征向量对位相乘然后求和呢？ 我们知道，特征向量中是对位该词出现的概率，而文本向量中是是否出现，用0，1表示 所以，对位相乘，粗浅理解，就是表现该文档中这些特征词一共出现了多少。</p>
+<p>换句话说吧，我们会不会有这样的疑问？ 为什么我们不建立一个dirty words的dict，然后去扫新邮件中有没有包含dict中的词语，这样不就可以直接确定分类了么？要概率干嘛？</p>
+<p>我个人的理解，特征向量，就是最能够表示该类别特性的一个向量，那些再特征向量中出现的概率高的词，最能代表了该类别文本的特性，也就是说，如果有一个文档，包含了这些词，是有极大可能属于该类别的。</p>
+<p>所以，如果只建立dict的话，有这样的问题，垃圾邮件只是说明包含这些特征词的概率大，但是不能完全确定一封邮件只要有这个词，就是属于垃圾邮件，所以只是概率的问题。</p>
+<p>这样结合考虑，应该能够明白了吧。</p>
+<p>所以，上述只是帮助理解的一个小例子，如果实用，要优化： 1. 换词集为词袋，考虑文本中单词出现的频次，而不是简单用0，1表示是否出现 2. 中间步骤<span class="math inline">\(p(w|c) = \prod_{i=1}^{1000}p(x_{i}|y)\)</span>，有多个概率相乘，如果有一个概率0，则结果为0，不合理，所以用一下Laplace平滑</p>
+<p>还有更多优化步骤，我就不多说了…..</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+   <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/Gold.jpg" alt="Zhiyuan">
+            
+              <p class="site-author-name" itemprop="name">Zhiyuan</p>
+              <p class="site-description motion-element" itemprop="description">三尺微命，一介书生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/preke" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:geek00021@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/PrekeWen" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u013398398" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-home"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/85555f21e657" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-home"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://scholar.google.com.hk/citations?user=bLhErOwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                      
+                        <i class="fa fa-fw fa-graduation-cap"></i>Google Scholar</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://preke.github.io/cv/resume.html" target="_blank" title="Resume">
+                      
+                        <i class="fa fa-fw fa-user"></i>Resume</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#pwc-1"><span class="nav-number">1.</span> <span class="nav-text">$p(w|c = 1) $ ：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiyuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '4e62580c7a91eb62b9cd',
+          clientSecret: '7d270eff9cf5d368751189f959651f45529e467a',
+          repo: 'preke.github.io',
+          owner: 'preke',
+          admin: ['preke'],
+          id: location.pathname,
+          labels: ['Gitalk'],
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
